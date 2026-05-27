@@ -46,12 +46,31 @@ export class SiteStack extends cdk.Stack {
       enableAcceptEncodingBrotli: true,
     });
 
+    const indexRewrite = new cloudfront.Function(this, 'IndexRewrite', {
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
+      code: cloudfront.FunctionCode.fromInline(`
+function handler(event) {
+  var req = event.request;
+  var uri = req.uri;
+  if (uri.endsWith('/')) {
+    req.uri = uri + 'index.html';
+  } else if (!uri.split('/').pop().includes('.')) {
+    req.uri = uri + '/index.html';
+  }
+  return req;
+}
+      `),
+    });
+
     this.distribution = new cloudfront.Distribution(this, 'SiteDistribution', {
       defaultBehavior: {
         origin: s3Origin,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
         compress: true,
+        functionAssociations: [
+          { function: indexRewrite, eventType: cloudfront.FunctionEventType.VIEWER_REQUEST },
+        ],
       },
       additionalBehaviors: {
         '/.well-known/*': {
