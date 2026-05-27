@@ -36,12 +36,30 @@ export class SiteStack extends cdk.Stack {
       autoDeleteObjects: props.ephemeral ?? false,
     });
 
+    const s3Origin = origins.S3BucketOrigin.withOriginAccessControl(this.bucket);
+
+    const shortCachePolicy = new cloudfront.CachePolicy(this, 'ShortCachePolicy', {
+      defaultTtl: cdk.Duration.minutes(5),
+      minTtl: cdk.Duration.seconds(0),
+      maxTtl: cdk.Duration.minutes(5),
+      enableAcceptEncodingGzip: true,
+      enableAcceptEncodingBrotli: true,
+    });
+
     this.distribution = new cloudfront.Distribution(this, 'SiteDistribution', {
       defaultBehavior: {
-        origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
+        origin: s3Origin,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
         compress: true,
+      },
+      additionalBehaviors: {
+        '/.well-known/*': {
+          origin: s3Origin,
+          viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: shortCachePolicy,
+          compress: true,
+        },
       },
       defaultRootObject: 'index.html',
       domainNames: props.domainNames,
