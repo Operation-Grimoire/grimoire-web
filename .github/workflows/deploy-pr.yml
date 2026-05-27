@@ -22,6 +22,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            webapp/package-lock.json
+            cdk/package-lock.json
 
       - name: Install webapp deps
         working-directory: webapp
