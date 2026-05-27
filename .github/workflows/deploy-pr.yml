@@ -45,7 +45,7 @@ jobs:
         working-directory: cdk
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: npx cdk deploy GrimoireSite-pr-${PR_NUMBER} --context prNumber=${PR_NUMBER} --require-approval never
+        run: npx cdk deploy GrimoireSite-pr-${PR_NUMBER} --context prNumber=${PR_NUMBER} --exclusively --require-approval never
 
       - name: Comment preview URL on PR
         uses: marocchino/sticky-pull-request-comment@v2

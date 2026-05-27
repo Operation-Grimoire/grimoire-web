@@ -31,6 +31,14 @@ const certs = new CertStack(app, 'GrimoireCerts', {
 
 new GithubOidcStack(app, 'GrimoireGithubOidc', { env, githubOwner, githubRepo });
 
+new SiteStack(app, 'GrimoireSite-prod', {
+  env,
+  domainNames: [domainName, `www.${domainName}`],
+  certificate: certs.prodCert,
+  hostedZone: dns.hostedZone,
+  assetPath: webappDist,
+});
+
 if (prNumber) {
   const fqdn = `pr-${prNumber}.${previewSubdomain}.${domainName}`;
   new SiteStack(app, `GrimoireSite-pr-${prNumber}`, {
@@ -40,13 +48,5 @@ if (prNumber) {
     hostedZone: dns.hostedZone,
     assetPath: webappDist,
     ephemeral: true,
-  });
-} else {
-  new SiteStack(app, 'GrimoireSite-prod', {
-    env,
-    domainNames: [domainName, `www.${domainName}`],
-    certificate: certs.prodCert,
-    hostedZone: dns.hostedZone,
-    assetPath: webappDist,
   });
 }
