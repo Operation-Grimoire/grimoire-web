@@ -1,20 +1,52 @@
 #!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { CdkStack } from '../lib/cdk-stack';
+import * as path from 'path';
+import { DnsStack } from '../lib/dns-stack';
+import { CertStack } from '../lib/cert-stack';
+import { SiteStack } from '../lib/site-stack';
+import { GithubOidcStack } from '../lib/github-oidc-stack';
 
 const app = new cdk.App();
-new CdkStack(app, 'CdkStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+const domainName = app.node.tryGetContext('domainName') ?? 'grimoireapp.org';
+const previewSubdomain = app.node.tryGetContext('previewSubdomain') ?? 'preview';
+const githubOwner = app.node.tryGetContext('githubOwner') ?? 'Operation-Grimoire';
+const githubRepo = app.node.tryGetContext('githubRepo') ?? 'grimoire-web';
+const prNumber: string | undefined = app.node.tryGetContext('prNumber');
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_ACCOUNT_ID;
+const region = 'us-east-1';
+const env = { account, region };
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+const webappDist = path.join(__dirname, '..', '..', 'webapp', 'dist');
+
+const dns = new DnsStack(app, 'GrimoireDns', { env, domainName });
+
+const certs = new CertStack(app, 'GrimoireCerts', {
+  env,
+  domainName,
+  previewSubdomain,
+  hostedZone: dns.hostedZone,
 });
+
+new GithubOidcStack(app, 'GrimoireGithubOidc', { env, githubOwner, githubRepo });
+
+if (prNumber) {
+  const fqdn = `pr-${prNumber}.${previewSubdomain}.${domainName}`;
+  new SiteStack(app, `GrimoireSite-pr-${prNumber}`, {
+    env,
+    domainNames: [fqdn],
+    certificate: certs.previewCert,
+    hostedZone: dns.hostedZone,
+    assetPath: webappDist,
+    ephemeral: true,
+  });
+} else {
+  new SiteStack(app, 'GrimoireSite-prod', {
+    env,
+    domainNames: [domainName, `www.${domainName}`],
+    certificate: certs.prodCert,
+    hostedZone: dns.hostedZone,
+    assetPath: webappDist,
+  });
+}

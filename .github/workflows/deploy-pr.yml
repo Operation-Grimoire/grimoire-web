@@ -1,0 +1,55 @@
+name: Deploy PR Preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: deploy-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install webapp deps
+        working-directory: webapp
+        run: npm ci
+
+      - name: Build webapp
+        working-directory: webapp
+        run: npm run build
+
+      - name: Install cdk deps
+        working-directory: cdk
+        run: npm ci
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: CDK deploy preview
+        working-directory: cdk
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: npx cdk deploy GrimoireSite-pr-${PR_NUMBER} --context prNumber=${PR_NUMBER} --require-approval never
+
+      - name: Comment preview URL on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: preview-url
+          message: |
+            Preview deployed: https://pr-${{ github.event.pull_request.number }}.preview.grimoireapp.org
