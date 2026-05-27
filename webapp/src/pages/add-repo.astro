@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../site.config';
+---
+
+<Layout title="Add Repository" description="Add an extension repository to the Grimoire reader app.">
+  <main class="max-w-2xl mx-auto px-6 py-16 sm:py-24">
+    <header>
+      <p class="font-mono text-xs uppercase tracking-widest text-ember">Extensions</p>
+      <h1 class="mt-3 font-display text-5xl sm:text-6xl text-vellum">
+        Add a repository to <span class="text-ember">{site.brand}</span>
+      </h1>
+      <p class="mt-6 text-vellum-dim leading-relaxed">
+        Extension repositories provide public content-source extensions for the {site.brand} reader app.
+        Each extension is a small Android module the app loads at runtime to fetch novels from a given source.
+      </p>
+    </header>
+
+    <section class="mt-12">
+      <a
+        id="magic-link"
+        href="#"
+        class="inline-flex items-center gap-2 px-8 py-4 rounded-md bg-ember text-ink font-semibold hover:bg-ember-bright transition-colors shadow-lg shadow-ember/20"
+      >
+        <span id="magic-link-label">Add to {site.brand}</span>
+        <span aria-hidden="true">→</span>
+      </a>
+      <p class="mt-3 text-sm text-vellum-dim/80">
+        If {site.brand} is installed, this opens the app directly with the Add Repository dialog pre-filled.
+      </p>
+    </section>
+
+    <section class="mt-12 p-6 rounded-lg border border-rune bg-ink-soft/60">
+      <h2 class="font-display text-2xl text-vellum">Don't have {site.brand} yet?</h2>
+      <p class="mt-2 text-sm text-vellum-dim">Install the app first, then come back and tap the button above.</p>
+      <a
+        href={site.android.latestApkUrl}
+        class="mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-md border border-ember/60 text-ember hover:bg-ember hover:text-ink transition-colors"
+      >
+        Download {site.brand} APK
+      </a>
+    </section>
+
+    <section class="mt-16">
+      <h2 class="font-display text-3xl text-vellum">Manual fallback</h2>
+      <p class="mt-2 text-vellum-dim">
+        Use this if the magic link doesn't open the app, or if you'd rather add it by hand.
+      </p>
+
+      <ol class="mt-6 space-y-4 text-vellum-dim">
+        <li>
+          <span class="text-ember font-semibold">1.</span>
+          Open {site.brand} → <span class="text-vellum">Browse</span> →
+          <span class="text-vellum">Extensions</span>
+          (top-right
+          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block align-middle" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M352-120H200q-33 0-56.5-23.5T120-200v-152q48 0 84-30.5t36-77.5q0-47-36-77.5T120-568v-152q0-33 23.5-56.5T200-800h160q0-42 29-71t71-29q42 0 71 29t29 71h160q33 0 56.5 23.5T800-720v160q42 0 71 29t29 71q0 42-29 71t-71 29v160q0 33-23.5 56.5T720-120H568q0-50-31.5-85T460-240q-45 0-76.5 35T352-120Z"/></svg>
+          icon) →
+          <span class="text-vellum">Repos</span>
+          (top-right
+          <svg xmlns="http://www.w3.org/2000/svg" class="inline-block align-middle" width="16" height="16" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M120-160v-160h720v160H120Zm80-40h80v-80h-80v80Zm-80-440v-160h720v160H120Zm80-40h80v-80h-80v80Zm-80 280v-160h720v160H120Zm80-40h80v-80h-80v80Z"/></svg>
+          icon) →
+          <span class="text-vellum">+</span> to add a repository.
+        </li>
+        <li>
+          <span class="text-ember font-semibold">2.</span>
+          Fill in:
+          <div class="mt-3 ml-6 p-4 rounded border border-rune bg-ink font-mono text-sm">
+            <div class="flex flex-col gap-1">
+              <div><span class="text-vellum-dim/70">Name:</span> <span id="manual-name" class="text-vellum break-all">—</span></div>
+              <div><span class="text-vellum-dim/70">Index URL:</span> <span id="manual-url" class="text-vellum break-all">—</span></div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="text-ember font-semibold">3.</span>
+          Tap <span class="text-vellum">Save</span>. Available extensions appear in the list within a few seconds.
+        </li>
+      </ol>
+    </section>
+
+    <section
+      id="empty-state"
+      class="mt-12 p-6 rounded-lg border border-arcane/40 bg-arcane/5 hidden"
+    >
+      <p class="text-vellum-dim">
+        <span class="text-arcane-bright font-semibold">No repository specified.</span>
+        This page is meant to be reached from an extension repo's "Add to {site.brand}" link.
+      </p>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('name');
+  const url = params.get('url');
+
+  const magicLink = document.getElementById('magic-link') as HTMLAnchorElement | null;
+  const magicLabel = document.getElementById('magic-link-label');
+  const manualName = document.getElementById('manual-name');
+  const manualUrl = document.getElementById('manual-url');
+  const emptyState = document.getElementById('empty-state');
+
+  if (name && url) {
+    if (magicLink) magicLink.href = window.location.href;
+    if (magicLabel) magicLabel.textContent = `Add ${name} to Grimoire`;
+    if (manualName) manualName.textContent = name;
+    if (manualUrl) manualUrl.textContent = url;
+  } else {
+    emptyState?.classList.remove('hidden');
+    if (magicLink) magicLink.classList.add('opacity-50', 'pointer-events-none');
+  }
+</script>
