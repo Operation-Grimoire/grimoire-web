@@ -1,11 +1,45 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import { site } from '../site.config';
 ---
 
 <Layout>
-	<Welcome />
+  <main class="min-h-screen flex items-center justify-center px-6 py-20">
+    <section class="max-w-2xl text-center">
+      <h1 class="font-display text-7xl sm:text-8xl font-semibold text-vellum tracking-tight">
+        {site.brand}
+      </h1>
+      <p class="mt-6 text-lg sm:text-xl text-vellum-dim leading-relaxed">
+        {site.tagline}
+      </p>
+
+      <div class="mt-12 flex flex-col sm:flex-row gap-4 items-center justify-center">
+        <a
+          href={site.android.latestApkUrl}
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-md bg-ember text-ink font-semibold hover:bg-ember-bright transition-colors shadow-lg shadow-ember/20"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download APK
+        </a>
+        <a
+          href={site.android.latestReleaseUrl}
+          rel="noopener"
+          class="inline-flex items-center gap-2 px-8 py-3 rounded-md border border-rune text-vellum-dim hover:border-ember hover:text-ember transition-colors"
+        >
+          All releases
+        </a>
+      </div>
+
+      <p class="mt-8 text-sm text-vellum-dim/70">
+        Open source on
+        <a href={site.android.repoUrl} rel="noopener" class="text-arcane-bright hover:text-ember underline-offset-4 hover:underline">
+          GitHub
+        </a>
+      </p>
+    </section>
+  </main>
 </Layout>

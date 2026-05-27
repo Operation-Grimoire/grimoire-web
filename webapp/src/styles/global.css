@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@source "../../node_modules/preline/dist/*.js";
+
+@theme {
+  --color-ink: #0b0a14;
+  --color-ink-soft: #15132a;
+  --color-vellum: #f3ead3;
+  --color-vellum-dim: #c8bfa4;
+  --color-ember: #c9a14a;
+  --color-ember-bright: #e6bf6a;
+  --color-arcane: #6d4ea8;
+  --color-arcane-bright: #9c7bd8;
+  --color-rune: #2a2545;
+
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html {
+  background-color: var(--color-ink);
+  color: var(--color-vellum);
+  font-family: var(--font-body);
+}
+
+body {
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse at top, rgba(109, 78, 168, 0.12), transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(201, 161, 74, 0.08), transparent 60%),
+    var(--color-ink);
+}
+
+::selection {
+  background: var(--color-ember);
+  color: var(--color-ink);
+}
