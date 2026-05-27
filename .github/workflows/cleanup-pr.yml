@@ -36,4 +36,4 @@ jobs:
         working-directory: cdk
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: npx cdk destroy GrimoireSite-pr-${PR_NUMBER} --context prNumber=${PR_NUMBER} --exclusively --force
+        run: npx cdk destroy GrimoireSite-pr-${PR_NUMBER} --context prNumber=${PR_NUMBER} --force

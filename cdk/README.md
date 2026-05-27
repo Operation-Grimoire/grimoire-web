@@ -7,7 +7,8 @@ Deploys Astro webapp (`../webapp`) as static site on S3 + CloudFront with custom
 | Stack | Purpose | Lifetime |
 |---|---|---|
 | `GrimoireDns` | Route53 HostedZone for `grimoireapp.org` | Permanent |
-| `GrimoireCerts` | ACM certs (apex + `*.preview.grimoireapp.org`) | Permanent |
+| `GrimoireProdCert` | ACM cert for apex + `www.grimoireapp.org` | Permanent |
+| `GrimoirePreviewCert` | ACM wildcard cert `*.preview.grimoireapp.org` | Permanent (created on first PR) |
 | `GrimoireGithubOidc` | IAM role assumed by GitHub Actions via OIDC | Permanent |
 | `GrimoireSite-prod` | S3 + CloudFront + A records for prod | Permanent |
 | `GrimoireSite-pr-<N>` | Per-PR ephemeral preview at `pr-<N>.preview.grimoireapp.org` | Destroyed on PR close |
@@ -54,15 +55,15 @@ Note outputs:
 2. Authoritative Nameservers — paste the 4 NS values from step 4
 3. Wait ~30min to few hours for propagation (`dig NS grimoireapp.org`)
 
-### 6. Deploy cert + prod site
+### 6. Deploy prod site (creates ProdCert as dependency)
 
 ACM cert DNS-validates via Route53 — only works once NS swap propagates.
 
 ```bash
-npx cdk deploy GrimoireCerts GrimoireSite-prod
+npx cdk deploy GrimoireSite-prod
 ```
 
-Visit `https://grimoireapp.org`.
+Visit `https://grimoireapp.org`. `GrimoirePreviewCert` gets created lazily on the first PR.
 
 ### 7. GitHub repo secrets
 

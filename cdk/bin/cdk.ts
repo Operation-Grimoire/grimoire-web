@@ -2,7 +2,8 @@
 import * as cdk from 'aws-cdk-lib';
 import * as path from 'path';
 import { DnsStack } from '../lib/dns-stack';
-import { CertStack } from '../lib/cert-stack';
+import { ProdCertStack } from '../lib/prod-cert-stack';
+import { PreviewCertStack } from '../lib/preview-cert-stack';
 import { SiteStack } from '../lib/site-stack';
 import { GithubOidcStack } from '../lib/github-oidc-stack';
 
@@ -22,29 +23,35 @@ const webappDist = path.join(__dirname, '..', '..', 'webapp', 'dist');
 
 const dns = new DnsStack(app, 'GrimoireDns', { env, domainName });
 
-const certs = new CertStack(app, 'GrimoireCerts', {
+new GithubOidcStack(app, 'GrimoireGithubOidc', { env, githubOwner, githubRepo });
+
+const prodCert = new ProdCertStack(app, 'GrimoireProdCert', {
   env,
   domainName,
-  previewSubdomain,
   hostedZone: dns.hostedZone,
 });
-
-new GithubOidcStack(app, 'GrimoireGithubOidc', { env, githubOwner, githubRepo });
 
 new SiteStack(app, 'GrimoireSite-prod', {
   env,
   domainNames: [domainName, `www.${domainName}`],
-  certificate: certs.prodCert,
+  certificate: prodCert.certificate,
   hostedZone: dns.hostedZone,
   assetPath: webappDist,
 });
 
 if (prNumber) {
+  const previewCert = new PreviewCertStack(app, 'GrimoirePreviewCert', {
+    env,
+    domainName,
+    previewSubdomain,
+    hostedZone: dns.hostedZone,
+  });
+
   const fqdn = `pr-${prNumber}.${previewSubdomain}.${domainName}`;
   new SiteStack(app, `GrimoireSite-pr-${prNumber}`, {
     env,
     domainNames: [fqdn],
-    certificate: certs.previewCert,
+    certificate: previewCert.certificate,
     hostedZone: dns.hostedZone,
     assetPath: webappDist,
     ephemeral: true,
