@@ -37,4 +37,25 @@ body {
   color: var(--color-ink);
 }
 
+/* Preline tooltip visibility (no Tailwind plugin registered).
+   Preline toggles `.show` on the .hs-tooltip wrapper. */
+.hs-tooltip.show .hs-tooltip-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Preline accordion: rotate chevron when open (Preline adds `.active`). */
+.hs-accordion.active .faq-chevron {
+  transform: rotate(180deg);
+}
+
+/* Copy toast (Preline-styled) enter/leave */
+.copy-toast {
+  transform: translate(-50%, 0);
+}
+.copy-toast.hs-removing {
+  opacity: 0;
+  transform: translate(-50%, 0.5rem);
+}
+
 
