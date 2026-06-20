@@ -100,7 +100,14 @@ const jsonLd = {
     <slot />
     <Footer />
     <script>
-      import 'preline';
+      // Preline v4 does not auto-init on import — call autoInit after DOM is ready.
+      import HSStaticMethods from 'preline';
+      const init = () => HSStaticMethods.autoInit();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
     </script>
   </body>
 </html>
