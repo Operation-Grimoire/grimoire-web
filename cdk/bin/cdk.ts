@@ -14,6 +14,8 @@ const previewSubdomain = app.node.tryGetContext('previewSubdomain') ?? 'preview'
 const githubOwner = app.node.tryGetContext('githubOwner') ?? 'Operation-Grimoire';
 const githubRepo = app.node.tryGetContext('githubRepo') ?? 'grimoire-web';
 const prNumber: string | undefined = app.node.tryGetContext('prNumber');
+const googleSiteVerification: string | undefined =
+  process.env.GOOGLE_SITE_VERIFICATION || app.node.tryGetContext('googleSiteVerification') || undefined;
 
 const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_ACCOUNT_ID;
 const region = 'us-east-1';
@@ -21,7 +23,7 @@ const env = { account, region };
 
 const webappDist = path.join(__dirname, '..', '..', 'webapp', 'dist');
 
-const dns = new DnsStack(app, 'GrimoireDns', { env, domainName });
+const dns = new DnsStack(app, 'GrimoireDns', { env, domainName, googleSiteVerification });
 
 new GithubOidcStack(app, 'GrimoireGithubOidc', { env, githubOwner, githubRepo });
 

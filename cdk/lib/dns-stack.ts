@@ -4,6 +4,8 @@ import * as route53 from 'aws-cdk-lib/aws-route53';
 
 export interface DnsStackProps extends cdk.StackProps {
   readonly domainName: string;
+  /** Google Search Console verification token (the full `google-site-verification=...` string). */
+  readonly googleSiteVerification?: string;
 }
 
 export class DnsStack extends cdk.Stack {
@@ -15,6 +17,15 @@ export class DnsStack extends cdk.Stack {
     this.hostedZone = new route53.PublicHostedZone(this, 'HostedZone', {
       zoneName: props.domainName,
     });
+
+    if (props.googleSiteVerification) {
+      new route53.TxtRecord(this, 'GoogleSiteVerification', {
+        zone: this.hostedZone,
+        recordName: '', // apex
+        values: [props.googleSiteVerification],
+        ttl: cdk.Duration.minutes(5),
+      });
+    }
 
     new cdk.CfnOutput(this, 'HostedZoneId', {
       value: this.hostedZone.hostedZoneId,
