@@ -14,9 +14,9 @@
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",
     "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/starlight": "^0.40.0",
     "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/inter": "^5.2.8",
-    "@tailwindcss/typography": "^0.5.20",
     "astro": "^6.3.8"
   },
   "devDependencies": {

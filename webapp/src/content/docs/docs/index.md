@@ -1,10 +1,7 @@
 ---
 title: Documentation
 description: Guides for using Grimoire, building extensions, and contributing to the app.
-order: 0
 ---
-
-## Grimoire docs
 
 Everything you need to use Grimoire, extend it, or contribute.
 

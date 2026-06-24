@@ -1,16 +1,9 @@
-import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { defineCollection } from 'astro:content';
+import { docsLoader } from '@astrojs/starlight/loaders';
+import { docsSchema } from '@astrojs/starlight/schema';
 
-// Docs live as Markdown/MDX under src/content/docs/<section>/<page>.{md,mdx}.
-// The folder is the section (users | extensions | development); the file is the
-// page. `order` controls sidebar position within a section.
-const docs = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/docs' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    order: z.number().default(99),
-  }),
-});
-
-export const collections = { docs };
+// Starlight owns the `docs` collection (src/content/docs/**). Content is nested
+// one level under docs/ so routes resolve to /docs/* — see src/content/docs/docs/.
+export const collections = {
+  docs: defineCollection({ loader: docsLoader(), schema: docsSchema() }),
+};

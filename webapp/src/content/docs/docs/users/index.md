@@ -1,10 +1,9 @@
 ---
 title: Overview
 description: What Grimoire is and how to get started.
-order: 1
+sidebar:
+  order: 1
 ---
-
-## Welcome to Grimoire
 
 Grimoire is an open-source Android novel reader. It reads web novels and EPUBs,
 and expands through community-maintained **extensions** — content sources shipped

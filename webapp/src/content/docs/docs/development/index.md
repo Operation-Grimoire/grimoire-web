@@ -1,10 +1,9 @@
 ---
 title: Overview
 description: Build Grimoire from source and contribute.
-order: 1
+sidebar:
+  order: 1
 ---
-
-## Development overview
 
 Grimoire is a native Android app written in Kotlin. This section covers building
 it from source, the project architecture, and how to contribute.
@@ -28,4 +27,6 @@ it from source, the project architecture, and how to contribute.
 - **Coding conventions** — style and patterns (coming soon).
 - **Contributing** — workflow and PR process (coming soon).
 
-> This section is under construction.
+:::caution
+This section is under construction.
+:::

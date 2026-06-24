@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "@tailwindcss/typography";
 
 /* Self-hosted fonts (woff2, latin subset via unicode-range, font-display: swap).
    Served same-origin from _astro/ — no render-blocking Google Fonts round-trip. */
@@ -67,30 +66,6 @@ html.repo-empty #empty-state {
 html.repo-empty #magic-link {
   opacity: 0.5;
   pointer-events: none;
-}
-
-/* Docs prose — typography plugin themed to the vellum/ink palette. */
-.prose-docs {
-  @apply prose prose-invert max-w-none;
-  --tw-prose-body: var(--color-vellum-dim);
-  --tw-prose-headings: var(--color-vellum);
-  --tw-prose-links: var(--color-ember);
-  --tw-prose-bold: var(--color-vellum);
-  --tw-prose-code: var(--color-ember-bright);
-  --tw-prose-quotes: var(--color-vellum-dim);
-  --tw-prose-quote-borders: var(--color-rune);
-  --tw-prose-bullets: var(--color-rune);
-  --tw-prose-counters: var(--color-vellum-dim);
-  --tw-prose-hr: var(--color-rune);
-  --tw-prose-th-borders: var(--color-rune);
-  --tw-prose-td-borders: var(--color-rune);
-}
-.prose-docs :is(h1, h2, h3, h4) {
-  font-family: var(--font-display);
-}
-/* Offset anchored headings below the sticky layout. */
-.prose-docs :is(h2, h3) {
-  scroll-margin-top: 5rem;
 }
 
 /* Copy toast enter/leave */

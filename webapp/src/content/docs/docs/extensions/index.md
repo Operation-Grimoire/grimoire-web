@@ -1,10 +1,9 @@
 ---
 title: Overview
 description: How Grimoire extensions and repositories work.
-order: 1
+sidebar:
+  order: 1
 ---
-
-## Extensions overview
 
 A Grimoire **extension** is a content source — it knows how to fetch novels from
 one website or service. Extensions ship as **separate Android APKs** and are
@@ -21,4 +20,6 @@ sources a repo offers.
 - **Build an extension** — implement a source against the API (coming soon).
 - **Publish a repository** — host and submit your repo (coming soon).
 
-> This section is under construction. Structure first; details land page by page.
+:::caution
+This section is under construction. Structure first; details land page by page.
+:::

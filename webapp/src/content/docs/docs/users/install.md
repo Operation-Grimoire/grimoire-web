@@ -1,7 +1,8 @@
 ---
 title: Install & updates
 description: Install Grimoire on your Android device and keep it up to date.
-order: 2
+sidebar:
+  order: 2
 ---
 
 ## Download the APK
@@ -12,8 +13,10 @@ Grimoire is distributed as an Android APK from GitHub Releases.
 2. Download `grimoire.apk`.
 3. Open the file and allow installation from your browser if prompted.
 
-> Grimoire isn't on the Play Store. You install it directly, which is why Android
-> asks you to confirm the source the first time.
+:::note
+Grimoire isn't on the Play Store. You install it directly, which is why Android
+asks you to confirm the source the first time.
+:::
 
 ## In-app updates
 

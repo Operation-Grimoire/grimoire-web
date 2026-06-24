@@ -1,0 +1,55 @@
+/* Grimoire theme for Starlight docs pages.
+   Maps Starlight's design tokens onto the vellum/ink palette and self-hosts
+   the same fonts the rest of the site uses. Dark only. */
+
+/* Self-hosted fonts (Starlight pages don't load global.css). */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/700.css";
+
+/* Apply the palette to every theme so "light" still renders dark. */
+:root,
+:root[data-theme="light"],
+:root[data-theme="dark"] {
+  /* Accent — ember gold */
+  --sl-color-accent-low: #3a2e12;
+  --sl-color-accent: #c9a14a;
+  --sl-color-accent-high: #e6bf6a;
+  --sl-color-text-accent: #e6bf6a;
+
+  /* Text + gray scale — vellum down to ink */
+  --sl-color-white: #f3ead3;
+  --sl-color-gray-1: #ece3cc;
+  --sl-color-gray-2: #c8bfa4;
+  --sl-color-gray-3: #9b9482;
+  --sl-color-gray-4: #6b6656;
+  --sl-color-gray-5: #3a3550;
+  --sl-color-gray-6: #211e3a;
+  --sl-color-gray-7: #15132a;
+  --sl-color-black: #0b0a14;
+
+  /* Surfaces + borders */
+  --sl-color-bg: #0b0a14;
+  --sl-color-bg-nav: #0b0a14;
+  --sl-color-bg-sidebar: #0b0a14;
+  --sl-color-bg-inline-code: #15132a;
+  --sl-color-hairline: #2a2545;
+  --sl-color-hairline-light: #2a2545;
+  --sl-color-hairline-shade: #2a2545;
+
+  --sl-font: "Inter", system-ui, sans-serif;
+}
+
+/* Display serif for headings + the site title, matching the landing page. */
+.site-title,
+.sl-markdown-content :is(h1, h2, h3, h4) {
+  font-family: "Cormorant Garamond", ui-serif, Georgia, serif;
+  letter-spacing: -0.01em;
+}
+
+/* Dark only — hide the theme toggle. */
+starlight-theme-select {
+  display: none;
+}

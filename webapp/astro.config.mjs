@@ -2,20 +2,40 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import starlight from '@astrojs/starlight';
 import mdx from '@astrojs/mdx';
 import { site } from './src/site.config';
 
 // https://astro.build/config
 export default defineConfig({
   site: site.url,
-  integrations: [sitemap(), mdx()],
-  markdown: {
-    shikiConfig: {
-      // Dark code theme to sit on the ink background.
-      theme: 'night-owl',
-      wrap: true,
-    },
-  },
+  // Starlight turns on link prefetch globally, which injects a ~2 KB script into
+  // every page (incl. the 0-JS landing). Disable it — Starlight nav works without.
+  prefetch: false,
+  integrations: [
+    starlight({
+      title: 'Grimoire Docs',
+      description: 'Guides for using Grimoire, building extensions, and contributing.',
+      // Docs live under /docs (content nested in src/content/docs/docs/**).
+      // The custom landing + add-repo pages keep src/pages/ and stay untouched.
+      customCss: ['./src/styles/starlight.css'],
+      social: [
+        { icon: 'github', label: 'GitHub', href: site.android.repoUrl },
+      ],
+      // Force dark only — the brand is a dark grimoire look.
+      // (theme toggle hidden in starlight.css)
+      sidebar: [
+        { label: 'Users', items: [{ autogenerate: { directory: 'docs/users' } }] },
+        { label: 'Extensions', items: [{ autogenerate: { directory: 'docs/extensions' } }] },
+        { label: 'Development', items: [{ autogenerate: { directory: 'docs/development' } }] },
+      ],
+      // Send "Edit page" + repo links to the app/site source as appropriate later.
+      pagefind: true,
+    }),
+    sitemap(),
+    // Added after Starlight so .mdx works in docs (and anywhere else) later.
+    mdx(),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
