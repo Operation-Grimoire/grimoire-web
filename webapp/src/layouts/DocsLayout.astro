@@ -1,0 +1,137 @@
+---
+import type { MarkdownHeading } from 'astro';
+import Layout from './Layout.astro';
+import { fonts } from './Layout.astro';
+import {
+  buildSidebar,
+  flattenPages,
+  entryUrl,
+  entrySection,
+  type DocEntry,
+} from '../lib/docs';
+
+interface Props {
+  entry: DocEntry;
+  headings: MarkdownHeading[];
+  docs: DocEntry[];
+}
+
+const { entry, headings, docs } = Astro.props;
+
+const currentUrl = entryUrl(entry);
+const currentSection = entrySection(entry);
+const groups = buildSidebar(docs);
+const flat = flattenPages(groups);
+const idx = flat.findIndex((p) => p.url === currentUrl);
+const prev = idx > 0 ? flat[idx - 1] : null;
+const next = idx >= 0 && idx < flat.length - 1 ? flat[idx + 1] : null;
+
+// Only h2/h3 in the table of contents.
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+
+const title = entry.data.title;
+const description = entry.data.description;
+---
+
+<Layout
+  title={title}
+  description={description}
+  fontPreloads={[fonts.cormorant600, fonts.interBody]}
+>
+  <div class="mx-auto flex max-w-7xl gap-8 px-6 py-10">
+    {/* Sidebar */}
+    <aside class="hidden w-60 shrink-0 lg:block">
+      <nav class="sticky top-10 space-y-2" aria-label="Docs">
+        {
+          groups.map((group) => (
+            <details open={group.id === currentSection} class="group">
+              <summary class="flex cursor-pointer items-center justify-between py-1.5 text-xs font-semibold uppercase tracking-widest text-ember">
+                {group.label}
+                <svg class="faq-chevron h-4 w-4 text-vellum-dim transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
+              </summary>
+              <ul class="mt-1 mb-3 space-y-0.5 border-l border-rune pl-3">
+                {group.pages.map((page) => (
+                  <li>
+                    <a
+                      href={page.url}
+                      aria-current={page.url === currentUrl ? 'page' : undefined}
+                      class:list={[
+                        'block rounded py-1 text-sm transition-colors',
+                        page.url === currentUrl
+                          ? 'text-ember font-medium'
+                          : 'text-vellum-dim hover:text-vellum',
+                      ]}
+                    >
+                      {page.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))
+        }
+      </nav>
+    </aside>
+
+    {/* Main column */}
+    <div class="min-w-0 flex-1">
+      {/* Mobile nav */}
+      <details class="mb-6 rounded border border-rune lg:hidden">
+        <summary class="cursor-pointer px-4 py-2 text-sm font-medium text-vellum">
+          Menu
+        </summary>
+        <nav class="space-y-2 px-4 pb-4" aria-label="Docs">
+          {
+            groups.map((group) => (
+              <div>
+                <p class="py-1 text-xs font-semibold uppercase tracking-widest text-ember">{group.label}</p>
+                <ul class="mb-2 space-y-0.5 border-l border-rune pl-3">
+                  {group.pages.map((page) => (
+                    <li>
+                      <a href={page.url} class:list={['block py-1 text-sm', page.url === currentUrl ? 'text-ember' : 'text-vellum-dim']}>{page.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </nav>
+      </details>
+
+      <article class="prose-docs">
+        <slot />
+      </article>
+
+      {(prev || next) && (
+        <nav class="mt-16 flex justify-between gap-4 border-t border-rune pt-6 text-sm">
+          {prev ? (
+            <a href={prev.url} class="text-vellum-dim hover:text-ember transition-colors">
+              ← {prev.title}
+            </a>
+          ) : <span />}
+          {next ? (
+            <a href={next.url} class="text-vellum-dim hover:text-ember transition-colors text-right">
+              {next.title} →
+            </a>
+          ) : <span />}
+        </nav>
+      )}
+    </div>
+
+    {/* TOC */}
+    <aside class="hidden w-56 shrink-0 xl:block">
+      {toc.length > 0 && (
+        <nav class="sticky top-10 text-sm" aria-label="On this page">
+          <p class="mb-2 text-xs font-semibold uppercase tracking-widest text-vellum-dim/70">On this page</p>
+          <ul class="space-y-1">
+            {toc.map((h) => (
+              <li class:list={[h.depth === 3 && 'pl-3']}>
+                <a href={`#${h.slug}`} class="text-vellum-dim hover:text-ember transition-colors">{h.text}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </aside>
+  </div>
+</Layout>
