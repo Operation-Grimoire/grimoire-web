@@ -23,6 +23,16 @@
   --color-fd-ring: #c9a14a;
 }
 
+/* Callout accent colors. Fumadocs declares these via `@theme static`, which
+   Tailwind emits to :root *after* our rules — so override with a higher-
+   specificity selector (html.dark beats :root) to win the cascade. */
+html.dark {
+  --color-fd-info: #9c7bd8;
+  --color-fd-warning: #e6bf6a;
+  --color-fd-error: #d98b8b;
+  --color-fd-success: #8fbf8f;
+}
+
 html {
   scrollbar-gutter: stable;
   font-family: var(--font-sans), system-ui, sans-serif;
