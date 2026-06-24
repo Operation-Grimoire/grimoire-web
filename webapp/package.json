@@ -13,8 +13,9 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^6.3.8",
-    "preline": "^4.2.0"
+    "@fontsource/cormorant-garamond": "^5.2.11",
+    "@fontsource/inter": "^5.2.8",
+    "astro": "^6.3.8"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.0",

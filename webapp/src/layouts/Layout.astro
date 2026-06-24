@@ -3,13 +3,30 @@ import '../styles/global.css';
 import { site } from '../site.config';
 import Footer from '../components/Footer.astro';
 
+// Above-the-fold woff2, preloaded so the heading + body paint in the right
+// face immediately (same hashed asset the @font-face uses — one fetch, no FOIT).
+// Pages pick the faces they actually render above the fold via the `fontPreloads`
+// prop, so we never preload an unused weight.
+import interBody from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+import cormorant400 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2?url';
+import cormorant600 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2?url';
+
+export const fonts = { interBody, cormorant400, cormorant600 };
+
 interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** Above-the-fold woff2 urls to preload. Defaults to the home page's faces. */
+  fontPreloads?: string[];
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  noindex = false,
+  fontPreloads = [cormorant600, interBody],
+} = Astro.props;
 const fullTitle = title ? `${title} — ${site.brand}` : `${site.brand} — ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
 const ogImage = new URL('/icon-512.png', site.url).toString();
@@ -89,25 +106,12 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
-    />
+    {fontPreloads.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
   </head>
   <body class="font-body antialiased">
     <slot />
     <Footer />
-    <script>
-      // Preline v4 does not auto-init on import — call autoInit after DOM is ready.
-      import HSStaticMethods from 'preline';
-      const init = () => HSStaticMethods.autoInit();
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-      } else {
-        init();
-      }
-    </script>
   </body>
 </html>

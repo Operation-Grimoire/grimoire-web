@@ -46,6 +46,25 @@ export class SiteStack extends cdk.Stack {
       enableAcceptEncodingBrotli: true,
     });
 
+    // Browser Cache-Control headers (Lighthouse "use efficient cache lifetimes").
+    // Content-hashed assets under /_astro/ are immutable — cache for a year.
+    const immutableHeaders = new cloudfront.ResponseHeadersPolicy(this, 'ImmutableAssetHeaders', {
+      customHeadersBehavior: {
+        customHeaders: [
+          { header: 'Cache-Control', value: 'public, max-age=31536000, immutable', override: true },
+        ],
+      },
+    });
+
+    // HTML must revalidate so deploys are picked up immediately (CloudFront still edge-caches).
+    const htmlHeaders = new cloudfront.ResponseHeadersPolicy(this, 'HtmlHeaders', {
+      customHeadersBehavior: {
+        customHeaders: [
+          { header: 'Cache-Control', value: 'public, max-age=0, must-revalidate', override: true },
+        ],
+      },
+    });
+
     const indexRewrite = new cloudfront.Function(this, 'IndexRewrite', {
       runtime: cloudfront.FunctionRuntime.JS_2_0,
       code: cloudfront.FunctionCode.fromInline(`
@@ -67,12 +86,20 @@ function handler(event) {
         origin: s3Origin,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+        responseHeadersPolicy: htmlHeaders,
         compress: true,
         functionAssociations: [
           { function: indexRewrite, eventType: cloudfront.FunctionEventType.VIEWER_REQUEST },
         ],
       },
       additionalBehaviors: {
+        '/_astro/*': {
+          origin: s3Origin,
+          viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          responseHeadersPolicy: immutableHeaders,
+          compress: true,
+        },
         '/.well-known/*': {
           origin: s3Origin,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,

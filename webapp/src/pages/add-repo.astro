@@ -1,10 +1,25 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout, { fonts } from '../layouts/Layout.astro';
 import CopyField from '../components/CopyField.astro';
 import { site } from '../site.config';
 ---
 
-<Layout title="Add Repository" description="Add an extension repository to the Grimoire reader app.">
+<Layout
+  title="Add Repository"
+  description="Add an extension repository to the Grimoire reader app."
+  fontPreloads={[fonts.cormorant400, fonts.interBody]}
+>
+  <script is:inline>
+    // Resolve the no-params vs has-params UI before first paint (synchronous,
+    // pre-paint) so the page doesn't visibly flip ~1s later when the module
+    // script runs. CSS keys off these classes; the module script only fills values.
+    (function () {
+      var p = new URLSearchParams(window.location.search);
+      document.documentElement.classList.add(
+        p.get('name') && p.get('url') ? 'repo-known' : 'repo-empty'
+      );
+    })();
+  </script>
   <main class="max-w-2xl mx-auto px-6 py-16 sm:py-24">
     <header>
       <p class="font-mono text-xs uppercase tracking-widest text-ember">Extensions</p>
@@ -80,71 +95,41 @@ import { site } from '../site.config';
     <section class="mt-16">
       <h2 class="font-display text-3xl text-vellum">FAQ</h2>
 
-      <div class="hs-accordion-group mt-6 divide-y divide-rune border-y border-rune">
-        <div class="hs-accordion" id="faq-index-url">
-          <button
-            class="hs-accordion-toggle group flex w-full items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors"
-            aria-controls="faq-index-url-content"
-          >
+      <div class="mt-6 divide-y divide-rune border-y border-rune">
+        <details class="faq-item group" name="faq">
+          <summary class="flex w-full cursor-pointer items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors">
             <span class="font-medium">What is an index URL?</span>
             <svg class="faq-chevron shrink-0 text-vellum-dim transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
-          </button>
-          <div
-            id="faq-index-url-content"
-            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
-            role="region"
-            aria-labelledby="faq-index-url"
-          >
-            <p class="pb-4 text-vellum-dim leading-relaxed">
-              It points to a repository's <span class="font-mono text-sm text-vellum">index.min.json</span>,
-              which lists the extensions the repo offers. {site.brand} reads it to show available sources.
-            </p>
-          </div>
-        </div>
+          </summary>
+          <p class="pb-4 text-vellum-dim leading-relaxed">
+            It points to a repository's <span class="font-mono text-sm text-vellum">index.min.json</span>,
+            which lists the extensions the repo offers. {site.brand} reads it to show available sources.
+          </p>
+        </details>
 
-        <div class="hs-accordion" id="faq-magic-link">
-          <button
-            class="hs-accordion-toggle group flex w-full items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors"
-            aria-controls="faq-magic-link-content"
-          >
+        <details class="faq-item group" name="faq">
+          <summary class="flex w-full cursor-pointer items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors">
             <span class="font-medium">The magic link didn't open the app</span>
             <svg class="faq-chevron shrink-0 text-vellum-dim transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
-          </button>
-          <div
-            id="faq-magic-link-content"
-            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
-            role="region"
-            aria-labelledby="faq-magic-link"
-          >
-            <p class="pb-4 text-vellum-dim leading-relaxed">
-              {site.brand} must be installed for the deep link to resolve. If it's installed and still
-              won't open, use the manual fallback above — tap each field to copy and paste it into the
-              app's Add Repository dialog.
-            </p>
-          </div>
-        </div>
+          </summary>
+          <p class="pb-4 text-vellum-dim leading-relaxed">
+            {site.brand} must be installed for the deep link to resolve. If it's installed and still
+            won't open, use the manual fallback above — tap each field to copy and paste it into the
+            app's Add Repository dialog.
+          </p>
+        </details>
 
-        <div class="hs-accordion" id="faq-safe">
-          <button
-            class="hs-accordion-toggle group flex w-full items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors"
-            aria-controls="faq-safe-content"
-          >
+        <details class="faq-item group" name="faq">
+          <summary class="flex w-full cursor-pointer items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors">
             <span class="font-medium">Is adding a repository safe?</span>
             <svg class="faq-chevron shrink-0 text-vellum-dim transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
-          </button>
-          <div
-            id="faq-safe-content"
-            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
-            role="region"
-            aria-labelledby="faq-safe"
-          >
-            <p class="pb-4 text-vellum-dim leading-relaxed">
-              Extensions are community-maintained and run inside {site.brand} to fetch content from public
-              sources. Only add repositories you trust. You can remove a repository at any time from the
-              same Repos screen.
-            </p>
-          </div>
-        </div>
+          </summary>
+          <p class="pb-4 text-vellum-dim leading-relaxed">
+            Extensions are community-maintained and run inside {site.brand} to fetch content from public
+            sources. Only add repositories you trust. You can remove a repository at any time from the
+            same Repos screen.
+          </p>
+        </details>
       </div>
     </section>
 
@@ -180,20 +165,20 @@ import { site } from '../site.config';
   const magicLabel = document.getElementById('magic-link-label');
   const manualName = document.getElementById('manual-name');
   const manualUrl = document.getElementById('manual-url');
-  const emptyState = document.getElementById('empty-state');
 
   const copyButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>('button[data-copy]')
   );
 
+  // Empty-state reveal + magic-link dim are handled in CSS via the html
+  // .repo-empty class set pre-paint (see the inline script above). Here we
+  // only fill in the dynamic values / disable the copy buttons when empty.
   if (name && url) {
     if (magicLink) magicLink.href = window.location.href;
     if (magicLabel) magicLabel.textContent = `Add ${name} to Grimoire`;
     if (manualName) manualName.textContent = name;
     if (manualUrl) manualUrl.textContent = url;
   } else {
-    emptyState?.classList.remove('hidden');
-    if (magicLink) magicLink.classList.add('opacity-50', 'pointer-events-none');
     copyButtons.forEach((b) => (b.disabled = true));
   }
 

@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
-@source "../../node_modules/preline/dist/*.js";
+/* Self-hosted fonts (woff2, latin subset via unicode-range, font-display: swap).
+   Served same-origin from _astro/ — no render-blocking Google Fonts round-trip. */
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/700.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
 
 @theme {
   --color-ink: #0b0a14;
@@ -37,19 +46,29 @@ body {
   color: var(--color-ink);
 }
 
-/* Preline tooltip visibility (no Tailwind plugin registered).
-   Preline toggles `.show` on the .hs-tooltip wrapper. */
-.hs-tooltip.show .hs-tooltip-content {
-  opacity: 1;
-  visibility: visible;
+/* FAQ accordion = native <details>. Hide the default disclosure marker
+   and rotate the chevron when open. */
+.faq-item > summary {
+  list-style: none;
 }
-
-/* Preline accordion: rotate chevron when open (Preline adds `.active`). */
-.hs-accordion.active .faq-chevron {
+.faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+.faq-item[open] .faq-chevron {
   transform: rotate(180deg);
 }
 
-/* Copy toast (Preline-styled) enter/leave */
+/* add-repo: the no-params vs has-params UI is resolved before first paint by
+   an inline script that sets html.repo-empty / .repo-known — no 1s JS flash. */
+html.repo-empty #empty-state {
+  display: block;
+}
+html.repo-empty #magic-link {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Copy toast enter/leave */
 .copy-toast {
   transform: translate(-50%, 0);
 }
