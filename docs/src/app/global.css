@@ -47,3 +47,19 @@ html > body[data-scroll-locked] {
   margin-right: 0px !important;
   --removed-body-scroll-bar-size: 0px !important;
 }
+
+/* Comparison tables: a row whose first cell is bold (e.g. `**Reader**`) becomes
+   a full-width section-header bar. Markdown can't colspan, so the whole row is
+   tinted with its inner borders removed to read as one cell. */
+table tbody tr:has(td:first-child strong) td {
+  background: var(--color-fd-muted);
+  border-color: transparent;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-fd-muted-foreground);
+}
+table tbody tr:has(td:first-child strong) td:first-child strong {
+  font-weight: 600;
+}
