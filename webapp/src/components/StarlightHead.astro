@@ -1,0 +1,15 @@
+---
+// Extends Starlight's <Head> to preload the above-the-fold docs fonts.
+// Without this the page paints in the fallback face and swaps once the webfont
+// loads — Inter/Cormorant have different metrics than the fallbacks, so text
+// resizes and shifts on every load. Preloading lands them before first paint.
+import Default from '@astrojs/starlight/components/Head.astro';
+import interBody from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
+import cormorant600 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2?url';
+import cormorant700 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-700-normal.woff2?url';
+---
+
+<Default><slot /></Default>
+<link rel="preload" href={interBody} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={cormorant600} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={cormorant700} as="font" type="font/woff2" crossorigin />

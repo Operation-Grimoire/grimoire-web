@@ -18,7 +18,18 @@ export default defineConfig({
       description: 'Guides for using Grimoire, building extensions, and contributing.',
       // Docs live under /docs (content nested in src/content/docs/docs/**).
       // The custom landing + add-repo pages keep src/pages/ and stay untouched.
-      customCss: ['./src/styles/starlight.css'],
+      // Theme colors first (no @import → applies on first paint), fonts second.
+      customCss: ['./src/styles/starlight.css', './src/styles/starlight-fonts.css'],
+      // Tell the browser the page is already dark so Edge's auto-dark-mode
+      // filter skips it (otherwise it tints the background and re-evaluates ~1s in).
+      head: [
+        { tag: 'meta', attrs: { name: 'color-scheme', content: 'dark' } },
+      ],
+      // Preload the above-the-fold docs fonts to stop the load-time font swap
+      // (fallback -> webfont) that resized/shifted text on every navigation.
+      components: {
+        Head: './src/components/StarlightHead.astro',
+      },
       social: [
         { icon: 'github', label: 'GitHub', href: site.android.repoUrl },
       ],

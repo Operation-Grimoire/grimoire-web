@@ -1,0 +1,8 @@
+/* Self-hosted fonts for Starlight docs pages. Kept in a separate stylesheet so
+   the leading @import statements don't defer the theme's color rules (which
+   caused a ~1s background flash in Edge). Font swap here only affects text. */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/700.css";
