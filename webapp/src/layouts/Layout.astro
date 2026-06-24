@@ -109,6 +109,9 @@ const jsonLd = {
     {fontPreloads.map((href) => (
       <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
     ))}
+
+    {/* Pages can inject head content (e.g. the docs view-transitions router). */}
+    <slot name="head" />
   </head>
   <body class="font-body antialiased">
     <slot />
