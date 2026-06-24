@@ -3,18 +3,30 @@ import '../styles/global.css';
 import { site } from '../site.config';
 import Footer from '../components/Footer.astro';
 
-// Preload the two above-the-fold woff2 (LCP heading + body). Same hashed asset
-// the @font-face uses, so this is one fetch, started early — no FOIT/render block.
+// Above-the-fold woff2, preloaded so the heading + body paint in the right
+// face immediately (same hashed asset the @font-face uses — one fetch, no FOIT).
+// Pages pick the faces they actually render above the fold via the `fontPreloads`
+// prop, so we never preload an unused weight.
 import interBody from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
-import cormorantHeading from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2?url';
+import cormorant400 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2?url';
+import cormorant600 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2?url';
+
+export const fonts = { interBody, cormorant400, cormorant600 };
 
 interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** Above-the-fold woff2 urls to preload. Defaults to the home page's faces. */
+  fontPreloads?: string[];
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  noindex = false,
+  fontPreloads = [cormorant600, interBody],
+} = Astro.props;
 const fullTitle = title ? `${title} — ${site.brand}` : `${site.brand} — ${site.tagline}`;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
 const ogImage = new URL('/icon-512.png', site.url).toString();
@@ -94,8 +106,9 @@ const jsonLd = {
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-    <link rel="preload" href={cormorantHeading} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={interBody} as="font" type="font/woff2" crossorigin />
+    {fontPreloads.map((href) => (
+      <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+    ))}
   </head>
   <body class="font-body antialiased">
     <slot />

@@ -1,10 +1,25 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout, { fonts } from '../layouts/Layout.astro';
 import CopyField from '../components/CopyField.astro';
 import { site } from '../site.config';
 ---
 
-<Layout title="Add Repository" description="Add an extension repository to the Grimoire reader app.">
+<Layout
+  title="Add Repository"
+  description="Add an extension repository to the Grimoire reader app."
+  fontPreloads={[fonts.cormorant400, fonts.interBody]}
+>
+  <script is:inline>
+    // Resolve the no-params vs has-params UI before first paint (synchronous,
+    // pre-paint) so the page doesn't visibly flip ~1s later when the module
+    // script runs. CSS keys off these classes; the module script only fills values.
+    (function () {
+      var p = new URLSearchParams(window.location.search);
+      document.documentElement.classList.add(
+        p.get('name') && p.get('url') ? 'repo-known' : 'repo-empty'
+      );
+    })();
+  </script>
   <main class="max-w-2xl mx-auto px-6 py-16 sm:py-24">
     <header>
       <p class="font-mono text-xs uppercase tracking-widest text-ember">Extensions</p>
@@ -150,20 +165,20 @@ import { site } from '../site.config';
   const magicLabel = document.getElementById('magic-link-label');
   const manualName = document.getElementById('manual-name');
   const manualUrl = document.getElementById('manual-url');
-  const emptyState = document.getElementById('empty-state');
 
   const copyButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>('button[data-copy]')
   );
 
+  // Empty-state reveal + magic-link dim are handled in CSS via the html
+  // .repo-empty class set pre-paint (see the inline script above). Here we
+  // only fill in the dynamic values / disable the copy buttons when empty.
   if (name && url) {
     if (magicLink) magicLink.href = window.location.href;
     if (magicLabel) magicLabel.textContent = `Add ${name} to Grimoire`;
     if (manualName) manualName.textContent = name;
     if (manualUrl) manualUrl.textContent = url;
   } else {
-    emptyState?.classList.remove('hidden');
-    if (magicLink) magicLink.classList.add('opacity-50', 'pointer-events-none');
     copyButtons.forEach((b) => (b.disabled = true));
   }
 

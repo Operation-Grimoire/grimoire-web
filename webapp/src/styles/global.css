@@ -58,6 +58,16 @@ body {
   transform: rotate(180deg);
 }
 
+/* add-repo: the no-params vs has-params UI is resolved before first paint by
+   an inline script that sets html.repo-empty / .repo-known — no 1s JS flash. */
+html.repo-empty #empty-state {
+  display: block;
+}
+html.repo-empty #magic-link {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 /* Copy toast enter/leave */
 .copy-toast {
   transform: translate(-50%, 0);
