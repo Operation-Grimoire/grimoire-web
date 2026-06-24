@@ -23,23 +23,29 @@ const shots = [
     </p>
   </div>
 
-  <div class="mt-14 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4 [scrollbar-width:none] sm:justify-center">
-    {
-      shots.map((s) => (
-        <figure class="shrink-0 snap-center">
-          <div class="overflow-hidden rounded-[1.75rem] border border-rune bg-ink-soft shadow-xl shadow-ink/50">
-            <Image
-              src={s.src}
-              alt={`${s.label} screen`}
-              width={240}
-              densities={[2]}
-              loading="lazy"
-              class="block h-auto w-[200px] sm:w-[220px]"
-            />
-          </div>
-          <figcaption class="mt-3 text-center text-sm text-vellum-dim">{s.label}</figcaption>
-        </figure>
-      ))
-    }
+  <div class="relative mt-12">
+    {/* Edge fades hint that the row scrolls. */}
+    <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-ink to-transparent sm:w-16"></div>
+    <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-ink to-transparent sm:w-16"></div>
+
+    <div class="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-6 px-6 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-6 [&::-webkit-scrollbar]:hidden">
+      {
+        shots.map((s) => (
+          <figure class="shrink-0 snap-center">
+            <div class="overflow-hidden rounded-[1.5rem] border border-rune bg-ink-soft shadow-xl shadow-ink/50 sm:rounded-[1.75rem]">
+              <Image
+                src={s.src}
+                alt={`${s.label} screen`}
+                width={240}
+                densities={[2]}
+                loading="lazy"
+                class="block h-auto w-[150px] sm:w-[185px] lg:w-[210px]"
+              />
+            </div>
+            <figcaption class="mt-3 text-center text-xs text-vellum-dim sm:text-sm">{s.label}</figcaption>
+          </figure>
+        ))
+      }
+    </div>
   </div>
 </section>
