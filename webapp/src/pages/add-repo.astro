@@ -80,71 +80,41 @@ import { site } from '../site.config';
     <section class="mt-16">
       <h2 class="font-display text-3xl text-vellum">FAQ</h2>
 
-      <div class="hs-accordion-group mt-6 divide-y divide-rune border-y border-rune">
-        <div class="hs-accordion" id="faq-index-url">
-          <button
-            class="hs-accordion-toggle group flex w-full items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors"
-            aria-controls="faq-index-url-content"
-          >
+      <div class="mt-6 divide-y divide-rune border-y border-rune">
+        <details class="faq-item group" name="faq">
+          <summary class="flex w-full cursor-pointer items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors">
             <span class="font-medium">What is an index URL?</span>
             <svg class="faq-chevron shrink-0 text-vellum-dim transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
-          </button>
-          <div
-            id="faq-index-url-content"
-            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
-            role="region"
-            aria-labelledby="faq-index-url"
-          >
-            <p class="pb-4 text-vellum-dim leading-relaxed">
-              It points to a repository's <span class="font-mono text-sm text-vellum">index.min.json</span>,
-              which lists the extensions the repo offers. {site.brand} reads it to show available sources.
-            </p>
-          </div>
-        </div>
+          </summary>
+          <p class="pb-4 text-vellum-dim leading-relaxed">
+            It points to a repository's <span class="font-mono text-sm text-vellum">index.min.json</span>,
+            which lists the extensions the repo offers. {site.brand} reads it to show available sources.
+          </p>
+        </details>
 
-        <div class="hs-accordion" id="faq-magic-link">
-          <button
-            class="hs-accordion-toggle group flex w-full items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors"
-            aria-controls="faq-magic-link-content"
-          >
+        <details class="faq-item group" name="faq">
+          <summary class="flex w-full cursor-pointer items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors">
             <span class="font-medium">The magic link didn't open the app</span>
             <svg class="faq-chevron shrink-0 text-vellum-dim transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
-          </button>
-          <div
-            id="faq-magic-link-content"
-            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
-            role="region"
-            aria-labelledby="faq-magic-link"
-          >
-            <p class="pb-4 text-vellum-dim leading-relaxed">
-              {site.brand} must be installed for the deep link to resolve. If it's installed and still
-              won't open, use the manual fallback above — tap each field to copy and paste it into the
-              app's Add Repository dialog.
-            </p>
-          </div>
-        </div>
+          </summary>
+          <p class="pb-4 text-vellum-dim leading-relaxed">
+            {site.brand} must be installed for the deep link to resolve. If it's installed and still
+            won't open, use the manual fallback above — tap each field to copy and paste it into the
+            app's Add Repository dialog.
+          </p>
+        </details>
 
-        <div class="hs-accordion" id="faq-safe">
-          <button
-            class="hs-accordion-toggle group flex w-full items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors"
-            aria-controls="faq-safe-content"
-          >
+        <details class="faq-item group" name="faq">
+          <summary class="flex w-full cursor-pointer items-center justify-between gap-3 py-4 text-left text-vellum hover:text-ember transition-colors">
             <span class="font-medium">Is adding a repository safe?</span>
             <svg class="faq-chevron shrink-0 text-vellum-dim transition-transform" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" fill="currentColor" aria-hidden="true"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
-          </button>
-          <div
-            id="faq-safe-content"
-            class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
-            role="region"
-            aria-labelledby="faq-safe"
-          >
-            <p class="pb-4 text-vellum-dim leading-relaxed">
-              Extensions are community-maintained and run inside {site.brand} to fetch content from public
-              sources. Only add repositories you trust. You can remove a repository at any time from the
-              same Repos screen.
-            </p>
-          </div>
-        </div>
+          </summary>
+          <p class="pb-4 text-vellum-dim leading-relaxed">
+            Extensions are community-maintained and run inside {site.brand} to fetch content from public
+            sources. Only add repositories you trust. You can remove a repository at any time from the
+            same Repos screen.
+          </p>
+        </details>
       </div>
     </section>
 
@@ -172,16 +142,6 @@ import { site } from '../site.config';
 </Layout>
 
 <script>
-  // Preline powers the FAQ accordion + tooltips on this page only.
-  // v4 does not auto-init on import — call autoInit once the DOM is ready.
-  import HSStaticMethods from 'preline';
-  const initPreline = () => HSStaticMethods.autoInit();
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initPreline);
-  } else {
-    initPreline();
-  }
-
   const params = new URLSearchParams(window.location.search);
   const name = params.get('name');
   const url = params.get('url');
