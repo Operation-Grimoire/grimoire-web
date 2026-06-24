@@ -88,7 +88,8 @@ body {
   .header > .right-group {
     justify-self: end;
   }
-  .header site-search button {
+  /* Only the trigger button — not the buttons inside the search modal. */
+  .header site-search button[data-open-modal] {
     width: 100%;
     max-width: none;
   }
