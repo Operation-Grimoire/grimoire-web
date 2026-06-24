@@ -172,6 +172,16 @@ import { site } from '../site.config';
 </Layout>
 
 <script>
+  // Preline powers the FAQ accordion + tooltips on this page only.
+  // v4 does not auto-init on import — call autoInit once the DOM is ready.
+  import HSStaticMethods from 'preline';
+  const initPreline = () => HSStaticMethods.autoInit();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPreline);
+  } else {
+    initPreline();
+  }
+
   const params = new URLSearchParams(window.location.search);
   const name = params.get('name');
   const url = params.get('url');
