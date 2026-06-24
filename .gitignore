@@ -136,3 +136,5 @@ dist
 .pnp.*
 
 .idea/
+# Combined deploy output (assemble-site.sh)
+/dist-site/

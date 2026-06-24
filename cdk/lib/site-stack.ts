@@ -100,6 +100,14 @@ function handler(event) {
           responseHeadersPolicy: immutableHeaders,
           compress: true,
         },
+        // Next.js hashed assets for the docs app — immutable, same as /_astro.
+        '/_next/*': {
+          origin: s3Origin,
+          viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          responseHeadersPolicy: immutableHeaders,
+          compress: true,
+        },
         '/.well-known/*': {
           origin: s3Origin,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
