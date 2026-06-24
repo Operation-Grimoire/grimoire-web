@@ -1,0 +1,80 @@
+---
+title: Feature comparison
+description: How Grimoire compares to other Android novel readers, feature by feature.
+---
+
+How Grimoire stacks up against other open-source Android novel readers. We start
+with **LNReader** and will add more apps over time.
+
+<Callout type="info" title="Legend">
+✅ supported · 🟡 partial / limited · ❌ not available
+</Callout>
+
+<Callout type="warn" title="Accuracy">
+Compiled from each project's source as of **June 2026**. Both apps are open
+source and move fast — if something here is wrong or out of date, please
+[open an issue](https://github.com/Operation-Grimoire/grimoire-web/issues) or PR.
+</Callout>
+
+| Feature | Grimoire | LNReader |
+| --- | :---: | :---: |
+| **Platform & project** | | |
+| Platform | Android | Android |
+| Built with | Kotlin · Compose | React Native |
+| Open source | ✅ | ✅ (MIT) |
+| <Feature title="UI translations" sub="Community-translated interface" /> | ❌ | ✅ |
+| **Sources & extensions** | | |
+| <Feature title="Pluggable sources" sub="Add content sources without updating the app" /> | ✅ | ✅ |
+| <Feature title="Source format" sub="How sources are packaged & installed" href="/docs/extensions" /> | Installed APKs | JS plugins from repo |
+| Add custom repositories | ✅ | ✅ |
+| Official repository bundled | ✅ | ✅ |
+| <Feature title="Private repositories" sub="Add private GitHub repos via OAuth" /> | ✅ | ❌ |
+| <Feature title="Global search" sub="Search every installed source at once" /> | ✅ | ✅ |
+| <Feature title="EPUB sources" sub="Browse & fetch from Z-Library, Libgen — like any source" /> | ✅ | ❌ |
+| <Feature title="Source login" sub="Sign in to sources that require an account" /> | ✅ | <Note text="LNReader has no dedicated source-login screen. You sign in to a source through the in-app WebView, and the resulting cookies carry into the plugin's requests.">🟡</Note> |
+| <Feature title="Locked / premium chapters" sub="Recognize and read paywalled chapters" /> | ✅ | ❌ |
+| <Feature title="In-app WebView" sub="Built-in browser for logins & checks" /> | ✅ | ✅ |
+| **Library & organization** | | |
+| Categories | ✅ | ✅ |
+| <Feature title="Hidden categories" sub="PIN-lock categories to keep them private" /> | ✅ | ❌ |
+| <Feature title="Background refresh" sub="Auto-check the library for new chapters" /> | ✅ | ✅ |
+| Sort, filter & search | ✅ | ✅ |
+| <Feature title="EPUB / local import" sub="Import EPUB files into your library" /> | ✅ | ✅ |
+| Reading history | ✅ | ✅ |
+| Reading statistics | ✅ | ✅ |
+| **Reader** | | |
+| <Feature title="Typography" sub="Font, size, spacing, line height" /> | ✅ | ✅ |
+| Themes & orientation | ✅ | ✅ |
+| <Feature title="Text-to-speech" sub="On-device voices" /> | ✅ | ✅ |
+| <Feature title="Premium TTS voices" sub="ElevenLabs neural voices" /> | ✅ | ❌ |
+| <Feature title="Image privacy mode" sub="Mask inline images" /> | ✅ | ❌ |
+| <Feature title="Incognito reading" sub="Read without saving to history" /> | ❌ | ✅ |
+| **Offline & downloads** | | |
+| <Feature title="Chapter downloads" sub="Save chapters & images for offline reading" /> | ✅ | ✅ |
+| **Tracking & metadata** | | |
+| AniList | ❌ | ✅ |
+| MyAnimeList | ❌ | ✅ |
+| Kitsu | ❌ | ✅ |
+| MangaUpdates | ❌ | ✅ |
+| <Feature title="NovelUpdates" sub="Metadata, rankings, releases & source matching" /> | ✅ | ❌ |
+| **Backup & data** | | |
+| Local backup & restore | ✅ | ✅ |
+| <Feature title="Cloud backup" sub="Google Drive or self-hosted" /> | ❌ | ✅ |
+| <Feature title="Scheduled backups" sub="Automatic backups on a schedule" /> | ✅ | ❌ |
+| <Feature title="Source migration" sub="Move a novel to another source, keep history" /> | ✅ | ✅ |
+| <Feature title="In-app updates" sub="Pull new releases from GitHub" /> | ✅ | ✅ |
+
+<Callout type="info" title="Different strengths">
+Neither app is strictly "more featured" — they lead in different places.
+**LNReader** brings external trackers (AniList, MyAnimeList, Kitsu,
+MangaUpdates), cloud backup, and incognito reading. **Grimoire** brings private
+GitHub repositories, EPUB sources (browse and fetch from Z-Library, Libgen and
+the like as if they were any other source), source login with locked-chapter
+support, NovelUpdates integration, ElevenLabs text-to-speech, and PIN-locked
+hidden categories.
+</Callout>
+
+---
+
+Want another app added to this comparison? Open an issue with the app and a link
+to its source.
