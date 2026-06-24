@@ -14,7 +14,7 @@ export default defineConfig({
   prefetch: false,
   integrations: [
     starlight({
-      title: 'Grimoire Docs',
+      title: 'Grimoire',
       description: 'Guides for using Grimoire, building extensions, and contributing.',
       // Docs live under /docs (content nested in src/content/docs/docs/**).
       // The custom landing + add-repo pages keep src/pages/ and stay untouched.
