@@ -21,7 +21,9 @@ const account = process.env.CDK_DEFAULT_ACCOUNT ?? process.env.AWS_ACCOUNT_ID;
 const region = 'us-east-1';
 const env = { account, region };
 
-const webappDist = path.join(__dirname, '..', '..', 'webapp', 'dist');
+// Combined deploy dir: Astro landing at root + Fumadocs docs under /docs.
+// Assembled by scripts/assemble-site.sh after both builds.
+const siteDist = path.join(__dirname, '..', '..', 'dist-site');
 
 const dns = new DnsStack(app, 'GrimoireDns', { env, domainName, googleSiteVerification });
 
@@ -38,7 +40,7 @@ new SiteStack(app, 'GrimoireSite-prod', {
   domainNames: [domainName, `www.${domainName}`],
   certificate: prodCert.certificate,
   hostedZone: dns.hostedZone,
-  assetPath: webappDist,
+  assetPath: siteDist,
 });
 
 if (prNumber) {
@@ -55,7 +57,7 @@ if (prNumber) {
     domainNames: [fqdn],
     certificate: previewCert.certificate,
     hostedZone: dns.hostedZone,
-    assetPath: webappDist,
+    assetPath: siteDist,
     ephemeral: true,
   });
 }

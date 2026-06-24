@@ -25,6 +25,7 @@ jobs:
           cache: 'npm'
           cache-dependency-path: |
             webapp/package-lock.json
+            docs/package-lock.json
             cdk/package-lock.json
 
       - name: Install webapp deps
@@ -34,6 +35,17 @@ jobs:
       - name: Build webapp
         working-directory: webapp
         run: npm run build
+
+      - name: Install docs deps
+        working-directory: docs
+        run: npm ci
+
+      - name: Build docs
+        working-directory: docs
+        run: npm run build
+
+      - name: Assemble combined site
+        run: bash scripts/assemble-site.sh
 
       - name: Install cdk deps
         working-directory: cdk
