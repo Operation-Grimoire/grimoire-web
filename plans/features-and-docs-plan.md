@@ -1,6 +1,6 @@
 # Grimoire features and reader documentation
 
-Original proposal, 2026-11-08. Local implementation now follows this plan. See [implementation validation](features-and-docs-validation.md) for current checks and proof limits. The coverage counts and static sketch below record the original planning snapshot.
+Original proposal, 2026-11-08. The implementation was based on this proposal; later readability and layout changes are recorded in the validation follow-up. See [implementation validation](features-and-docs-validation.md) for current checks and proof limits. The coverage counts and static sketch below record the original planning snapshot.
 
 ## Recommendation
 

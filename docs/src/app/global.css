@@ -59,7 +59,7 @@ a { text-underline-offset: 4px; }
 #nd-page:has(table) .prose > :is(p, ul, ol, blockquote) { max-width: 608px; }
 #nd-page [role='none'].w-0\.5 { display: none; }
 #nd-page :has(> [role='none'].w-0\.5) { padding-inline-start: .75rem; }
-#nd-sidebar a:is([href='/'], [href='/#features'], [href='https://github.com/Operation-Grimoire/grimoire']) { display: none; }
+@media (min-width: 768px) { #nd-sidebar a:is([href='/'], [href='/#features'], [href='https://github.com/Operation-Grimoire/grimoire']) { display: none; } }
 .docs-mark { display: inline-flex; vertical-align: -3px; }
 .docs-mark-yes { color: #9ed7c4; }
 .docs-mark-partial { color: #e7c78b; }

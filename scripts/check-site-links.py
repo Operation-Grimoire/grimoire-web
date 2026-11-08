@@ -38,6 +38,9 @@ def page_url(path, base):
 
 
 def main():
+    config = (ROOT / "webapp/src/site.config.ts").read_text(encoding="utf-8")
+    site_url = re.search(r"\burl: '([^']+)'", config)[1]
+    site_host = urlsplit(site_url).netloc
     pages = {
         page_url(path, SITE): Page(path.read_text(encoding="utf-8"))
         for path in SITE.rglob("*.html")
@@ -47,8 +50,8 @@ def main():
     checked = 0
     for origin, page in pages.items():
         for href in page.links:
-            url = urlsplit(urljoin("https://grimoire.invalid" + origin, href))
-            if url.netloc != "grimoire.invalid" or url.scheme not in ("http", "https"):
+            url = urlsplit(urljoin(site_url.rstrip("/") + origin, href))
+            if url.netloc != site_host or url.scheme not in ("http", "https"):
                 continue
             path = unquote(url.path)
             key = path if path in pages else path.rstrip("/") + "/"
@@ -84,6 +87,16 @@ def main():
         for fragment in fragments:
             if url not in pages or fragment not in pages[url].headings:
                 errors.add(f"Legacy heading removed: {url}#{fragment}")
+
+    # Published headings at master 0cf971b, in addition to the prior-worktree snapshot.
+    published_aliases = {
+        "/docs/users/": ("get-started", "what-you-can-do"),
+        "/docs/users/install/": ("download-the-apk",),
+    }
+    for url, fragments in published_aliases.items():
+        for fragment in fragments:
+            if fragment not in pages[url].ids:
+                errors.add(f"Published fragment removed: {url}#{fragment}")
 
     if errors:
         print("\n".join(sorted(errors)))

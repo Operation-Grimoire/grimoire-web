@@ -2,7 +2,7 @@
 
 - **Reviewer model:** Sonnet 5.5 (`claude-sonnet-5-5`), run by Claude Code as the Orca worker for task_68c80e9f2cb2
 - **Date:** 2026-11-05
-- **Workspace:** `C:/Users/Rambe/orca/workspaces/grimoire-web/lusca` (uncommitted tree, untracked files included)
+- **Workspace:** `the grimoire-web repository root` (uncommitted tree, untracked files included)
 
 ## Scope and evidence
 

@@ -10,7 +10,7 @@ OWN-WORLD: Midnight navy, indigo surfaces, ice-blue controls, pearl serif titles
 
 STORY: Understand the app, download it, install a source, settle into reading. Docs turn those steps into concrete guides.
 
-FIRST VIEWPORT: Serif headline and download button left; overlapping library and reader screens right. The ghost peeks over the library screen. Below, three linked feature rows. Docs have the same brand, dark sidebar, search and quiet article layout.
+FIRST VIEWPORT: App icon, name, description and download button centered between the library and reader screens. The ghost peeks over the library screen. Below, the reading overview has separate guide links beside three unlinked, ruled benefit rows. Docs have the same brand, dark sidebar, search and quiet article layout.
 
 FORM: User-pinned E, seed d34b210a superseded by explicit dark/magical brief. One ghost arrival, reduced-motion supported. Preserve original screenshot pixels even where generated comps changed the app theme. Do not literalize outer mockup frames or invented guide text.
 

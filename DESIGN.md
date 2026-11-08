@@ -24,9 +24,9 @@ colors:
 typography:
   display:
     fontFamily: "Fraunces, Georgia, serif"
-    fontSize: "clamp(3.3rem, 4.9vw, 4.8rem)"
+    fontSize: "clamp(4rem, 7vw, 6rem)"
     fontWeight: 400
-    lineHeight: 1.13
+    lineHeight: 1.05
     letterSpacing: "-0.03em"
   headline:
     fontFamily: "Fraunces, Georgia, serif"
@@ -139,8 +139,8 @@ The serif carries the literary personality; the sans keeps navigation, instructi
 
 ### Hierarchy
 
-- **Display:** homepage hero, using the frontmatter desktop clamp; responsive overrides become `clamp(3rem, 5.3vw, 4rem)` below 1100px, `clamp(2.9rem, 7.8vw, 4.5rem)` below 800px and `2.95rem` below 450px.
-- **Headline:** the homepage Features and Download headings. Feature category names use 26px Fraunces.
+- **Display:** homepage hero uses `clamp(4rem, 7vw, 6rem)` at 1.05 line height, changing to `clamp(3rem, 14vw, 4.5rem)` at 800px and below.
+- **Headline:** the homepage All features heading uses the frontmatter headline role. Download uses `clamp(2.2rem, 4.4vw, 3.4rem)` at 1.18 line height. Feature category names use 26px Fraunces.
 - **Docs headings:** regular Fraunces with slight negative tracking (-0.015em). H1 uses `clamp(2.2rem, 4vw, 3rem)` at 1.16 line height; H2 uses 1.85rem at 1.3; H3 uses 1.4rem.
 - **Body:** homepage supporting text varies by context: hero introduction (18px/1.75, reducing to 16px), hero note (14px/1.7), matrix feature names (16px/1.5), matrix note (13px/1.7), release note (12px/1.8). Docs prose uses the docs-body role.
 - **Label:** semibold action text; navigation is 14px, reducing to 13px in the homepage mobile header.
@@ -159,14 +159,14 @@ The documentation header is sticky, 80px tall with 16px minimum inline padding, 
 
 ## Elevation & Depth
 
-Fine borders and neighboring navy tones establish the basic structure. Product imagery carries the substantial depth: dark phone shadows, inset edges, slight rotations and a diffuse radial blue light. The spirit hovers above the library phone, then drifts after the page scroll with a soft delay: it hovers over the Features heading, follows the left margin, and settles over the closing Download button. It fades as it falls behind, and on a fast scroll it dissolves and re-forms at its destination. Documentation uses quieter tonal separation.
+Fine borders and neighboring navy tones establish the basic structure. Product imagery carries the substantial depth: dark phone shadows, inset edges, slight rotations and a diffuse radial blue light. The spirit hovers above the library phone, then drifts after the page scroll with a soft delay: it hovers above the reading overview heading, follows the left margin, and settles above the Download Grimoire heading, leaving the download button clear. It fades as it falls behind, and on a fast scroll it dissolves and re-forms at its destination. Documentation uses quieter tonal separation.
 
 ### Shadow Vocabulary
 
 - **Phone frame:** `0 18px 38px #0007, inset 0 0 0 1px #60728b`.
 - **Story screenshot:** `0 16px 48px #0006`.
 
-The ghost arrival lasts 900ms with `cubic-bezier(.16,1,.3,1)`, moving from 10px below with partial opacity and blur into place. Homepage navigation and primary/row hover transitions last 180ms. Both apps disable animation and transitions for reduced motion; homepage smooth scrolling also becomes automatic.
+The ghost arrival lasts 900ms with `cubic-bezier(.16,1,.3,1)`, moving from 10px below with opacity 0 to 1 and no blur into place. Homepage navigation and primary/row hover transitions last 180ms. Both apps disable animation and transitions for reduced motion; homepage smooth scrolling also becomes automatic.
 
 ## Shapes
 

@@ -8,7 +8,7 @@ import { site } from '../site.config';
 import FeatureDirectory from '../components/FeatureDirectory.astro';
 ---
 <Layout title="3D ghost test" noindex>
-  <main id="main-content" class="ghost3d-page">
+  <main id="main-content" tabindex="-1" class="ghost3d-page">
     <Hero ghost={false} />
     <FeatureDirectory />
     <section class="closing page-width" aria-label="Download Grimoire">

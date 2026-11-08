@@ -87,7 +87,7 @@ export const featureGroups = [
           "Add custom repositories",
           "Sources"
         ],
-        "condition": "Extra collections of website add-ons"
+        "condition": "Extra collections of add-ons for novel websites"
       },
       {
         "id": "sources-one-tap-repository-links",
@@ -115,7 +115,7 @@ export const featureGroups = [
       },
       {
         "id": "sources-install-and-update-extensions",
-        "label": "Install and update website add-ons",
+        "label": "Install and update add-ons for novel websites",
         "originalLabel": "Install and update extensions",
         "href": "/docs/users/sources/#installing-and-updating",
         "aliases": [
@@ -445,7 +445,7 @@ export const featureGroups = [
       },
       {
         "id": "library-jump-to-a-chapter",
-        "label": "Select several chapters at once",
+        "label": "Jump to a chapter",
         "originalLabel": "Jump to a chapter",
         "href": "/docs/users/chapter-list/#jumping-to-a-chapter",
         "aliases": [

@@ -30,7 +30,7 @@ Real app screenshots in webapp/src/assets/screenshots. Existing docs in docs/con
 
 - Use direct, factual interface copy. No taglines, slogans, or decorative one-liners.
 
-- Explain the app to first-time readers. On the homepage, call sources connected novel websites and extensions website add-ons. Explain the setup before using internal terms; keep the app's technical labels and old feature names searchable.
+- Explain the app to first-time readers. On the homepage, call sources connected novel websites and extensions app add-ons that connect to novel websites. Explain the setup before using internal terms; keep the app's technical labels and old feature names searchable.
 
 - Lead with broad book coverage and a short overview of reading, listening, offline access, and library organization. Put the complete feature matrix deeper on the page.
 - Help readers reach their first book.

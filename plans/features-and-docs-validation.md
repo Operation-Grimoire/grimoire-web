@@ -8,6 +8,12 @@ Final local checks passed: Astro production build, docs ESLint, docs `types:chec
 
 A fresh browser context checked the homepage, `/app-preview/`, and `/ghost3d-lab/` at 390px: each rendered 119 feature links, no object placeholders or horizontal overflow, and no page errors. The Reading guide also loaded. Earlier responsive, keyboard, search, reduced-motion and no-JavaScript checks are recorded below and in `tasks/todo.md`. These are website checks; Android device acceptance and production deployment remain unexecuted.
 
+### Review follow-up
+
+PR review corrected the chapter-jump label, added the three published heading aliases from `master` in addition to the prior-worktree snapshot, restored mobile drawer navigation, made every homepage-app skip target focusable, and supplied repository-link parameters. The isolated 3D study now refreshes its breakpoint on resize and uses ascending GLSL smoothstep edges. Historical plans, the raster prompt, and current design descriptions are labeled or corrected without changing the chosen mobile screenshot crop.
+
+Both production builds, docs lint and type checks passed again. The assembled-site checker now includes absolute links to the configured canonical host and passes 1,704 internal links. A temporary broken canonical link was rejected, then removed. Published-fragment assertions failed before the aliases were built and pass afterward. Browser checks confirmed keyboard focus on `main-content`, visible Home/Features/GitHub links in the mobile drawer, all three aliases, and the parameterized repository page. Resizing the loaded 3D study from 1440px to 390px and back changed its final target size in both directions, with no page errors. The initial deployed PR preview also passed a mobile homepage-to-guide smoke check; final-commit deployment is tracked by GitHub CI.
+
 ## Readability follow-up
 
 The owner's follow-up removes displayed entry/category counters and the introductory instruction. Feature names are shorter, such as Multiple themes, Font choices, Text spacing, and Batch downloads. Earlier labels remain searchable. Category headings and the jump index use matching SVG line icons, and search has a magnifying-glass icon. Feature links use 16px text, 48px minimum targets, two columns reading top to bottom, one column below 540px, and underlines on hover or focus. IDs, inventory and guide links are preserved. Long category names can wrap beside their icons at enlarged text sizes.

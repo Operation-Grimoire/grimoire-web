@@ -1,6 +1,6 @@
 # Reader docs audit
 
-Planning only. No production files changed. The canonical 119-entry mapping is `feature-docs-map.json`.
+Pre-implementation audit snapshot. The coverage and line references below describe the prior docs. See [implementation validation](features-and-docs-validation.md) for the current result. The original 119-entry mapping is `feature-docs-map.json`.
 
 - Inventory: `webapp/src/data/features.ts` contains 119 unique labels in 10 groups. The map preserves every label and group exactly.
 - Reader entry/navigation: `docs/content/docs/users/meta.json:2-3`, `users/index.mdx:8-20`, and `docs/content/docs/index.mdx:10-20` expose only five short reader pages and a comparison link.

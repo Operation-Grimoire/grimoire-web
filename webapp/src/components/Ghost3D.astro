@@ -56,7 +56,7 @@
     void main() {
       float rim = 1.0 - clamp(dot(normalize(vNormalView), vViewDir), 0.0, 1.0);
       vec3 color = mix(vec3(0.46, 0.78, 0.98), vec3(0.95, 0.98, 1.0), smoothstep(0.12, 0.72, rim));
-      color = mix(color, vec3(0.74, 0.90, 1.0), smoothstep(0.2, -0.62, vLocal.y) * 0.8);
+      color = mix(color, vec3(0.74, 0.90, 1.0), (1.0 - smoothstep(-0.62, 0.2, vLocal.y)) * 0.8);
       float alpha = mix(0.5, 0.96, smoothstep(0.0, 0.7, rim));
       float tailFade = smoothstep(-1.05, -0.3, vLocal.y);
       // When perched the tail melts away above the surface, while the side wisps stay.
@@ -78,7 +78,7 @@
       import('three/examples/jsm/loaders/GLTFLoader.js'),
     ]);
 
-    const narrow = window.innerWidth <= 800;
+    let narrow = window.innerWidth <= 800;
     let renderer: import('three').WebGLRenderer;
     try {
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
@@ -382,6 +382,7 @@
     }
 
     const remeasure = () => {
+      narrow = window.innerWidth <= 800;
       layout = measure();
     };
     window.addEventListener('resize', remeasure);
