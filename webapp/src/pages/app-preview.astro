@@ -1,0 +1,29 @@
+---
+// Isolated HTML/CSS app-screen study; the homepage keeps the original screenshots.
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Ghost3D from '../components/Ghost3D.astro';
+import AppScreenComparison from '../components/AppScreenComparison.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../site.config';
+import FeatureDirectory from '../components/FeatureDirectory.astro';
+---
+<Layout title="HTML app preview" noindex>
+  <main id="main-content" class="ghost3d-page">
+    <Hero ghost={false} screens="html" />
+    <FeatureDirectory />
+    <section class="closing page-width" aria-label="Download Grimoire">
+      <div class="hero-actions"><a class="button-primary" data-ghost-landing href={site.android.latestApkUrl}><Icon name="download" />Download for Android</a><a class="text-link" href="/docs/users/install/">Install guide <Icon name="arrow" size={18} /></a></div>
+    </section>
+    <AppScreenComparison />
+  </main>
+  <Ghost3D />
+</Layout>
+
+<style is:global>
+  /* TEST ONLY: swap the stagger so the right phone has room above it for the ghost. */
+  @media (min-width: 801px) {
+    .ghost3d-page .phone-library { margin-top: 0; margin-bottom: calc(var(--phone) * .5); }
+    .ghost3d-page .phone-reader { margin-top: calc(var(--phone) * .5); }
+  }
+</style>

@@ -1,0 +1,167 @@
+---
+import { featureGroups } from '../data/features';
+import Icon from './Icon.astro';
+
+const groupIcons = {
+  sources: 'globe', library: 'library', reader: 'book', listening: 'headphones',
+  downloads: 'download', novelupdates: 'compass', 'backups-and-storage': 'archive',
+  'hide-and-lock': 'lock', 'appearance-and-language': 'palette', 'app-updates-and-tasks': 'refresh',
+} as const;
+---
+
+<section id="features" class="features page-width" aria-labelledby="features-title" data-feature-directory>
+  <div class="directory-heading">
+    <h2 id="features-title">All features</h2>
+  </div>
+  <div class="directory-tools" data-feature-tools data-ghost-avoid hidden>
+    <label class="sr-only" for="feature-search">Find a feature</label>
+    <div class="directory-search">
+      <div class="directory-field">
+        <span class="search-icon"><Icon name="search" size={19} /></span>
+        <input id="feature-search" type="search" placeholder="Search features" autocomplete="off" aria-controls="feature-list" />
+      </div>
+      <button type="button" data-clear-search hidden>Clear search</button>
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-feature-status></p>
+  </div>
+  <nav class="directory-index" aria-label="Feature categories" data-ghost-avoid>
+    {featureGroups.map((group) => (
+      <a href={`#features-${group.id}`} data-category-link><Icon name={groupIcons[group.id]} size={17} /><span>{group.name}</span></a>
+    ))}
+  </nav>
+  <div id="feature-list">
+    {featureGroups.map((group) => (
+      <section id={`features-${group.id}`} class="directory-group" aria-labelledby={`category-${group.id}`} data-feature-group>
+        <div class="directory-category">
+          <h3 id={`category-${group.id}`}><a href={group.href}><Icon name={groupIcons[group.id]} size={23} /><span>{group.name}</span></a></h3>
+          <p class="directory-description">{group.description}</p>
+        </div>
+        <ul>
+          {group.features.map((feature) => (
+            <li data-feature-entry data-search={[feature.label, feature.originalLabel, group.name, ...feature.aliases].join(' ').toLocaleLowerCase('en')}>
+              <a href={feature.href} data-feature-id={feature.id}>
+                <span>{feature.label}</span>
+                {feature.condition && <small>{feature.condition}</small>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+  <div class="directory-empty" data-feature-empty hidden>
+    <p>No features match your search.</p>
+    <button type="button" data-reset-search>Clear search</button>
+  </div>
+  <p class="directory-note">What each connected website can do depends on its add-on. Grimoire is not affiliated with NovelUpdates or ElevenLabs.</p>
+</section>
+
+<script>
+  const directory = document.querySelector<HTMLElement>('[data-feature-directory]');
+  if (directory) {
+    const search = directory.querySelector<HTMLInputElement>('#feature-search')!;
+    const clear = directory.querySelector<HTMLButtonElement>('[data-clear-search]')!;
+    const status = directory.querySelector<HTMLElement>('[data-feature-status]')!;
+    const empty = directory.querySelector<HTMLElement>('[data-feature-empty]')!;
+    const groups = Array.from(directory.querySelectorAll<HTMLElement>('[data-feature-group]')).map((element) => ({
+      element,
+      entries: Array.from(element.querySelectorAll<HTMLElement>('[data-feature-entry]')),
+    }));
+
+    function filter() {
+      const words = search.value.trim().toLocaleLowerCase('en').split(/\s+/).filter(Boolean);
+      let total = 0;
+      for (const group of groups) {
+        let matches = 0;
+        for (const entry of group.entries) {
+          entry.hidden = !words.every((word) => entry.dataset.search!.includes(word));
+          if (!entry.hidden) matches++;
+        }
+        group.element.hidden = matches === 0;
+        total += matches;
+      }
+      status.textContent = words.length ? (total ? `Matching features shown for ${search.value.trim()}.` : 'No matching features.') : 'All features shown.';
+      clear.hidden = search.value.length === 0;
+      empty.hidden = total !== 0;
+      const url = new URL(window.location.href);
+      if ((url.searchParams.get('feature') ?? '') !== search.value) {
+        if (search.value) url.searchParams.set('feature', search.value);
+        else url.searchParams.delete('feature');
+        window.history.replaceState(window.history.state, '', url);
+      }
+      // Filtering changes the page height; the ghost needs fresh landing positions.
+      window.dispatchEvent(new Event('resize'));
+    }
+
+    function reset(focus: boolean) {
+      search.value = '';
+      filter();
+      if (focus) search.focus();
+    }
+
+    search.addEventListener('input', filter);
+    search.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') reset(true);
+    });
+    clear.addEventListener('click', () => reset(true));
+    directory.querySelector('[data-reset-search]')!.addEventListener('click', () => reset(true));
+    directory.querySelectorAll<HTMLAnchorElement>('[data-category-link]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        reset(false);
+      });
+    });
+    function restore() {
+      search.value = new URL(window.location.href).searchParams.get('feature') ?? '';
+      filter();
+    }
+    window.addEventListener('pageshow', restore);
+    window.addEventListener('popstate', restore);
+    directory.querySelector<HTMLElement>('[data-feature-tools]')!.hidden = false;
+    restore();
+  }
+</script>
+
+<style>
+  [hidden] { display: none !important; }
+  .directory-heading { margin-bottom: 24px; }
+  h2 { font: 400 clamp(2rem, 3.5vw, 3rem)/1.2 var(--font-display); letter-spacing: -0.02em; margin: 0; }
+  .directory-note { color: var(--color-vellum-dim); font-size: 14px; line-height: 1.7; margin: 0; }
+  .directory-tools { max-width: 440px; margin-bottom: 20px; }
+  .directory-search { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; }
+  .directory-field { position: relative; flex: 1; min-width: 140px; }
+  .search-icon { position: absolute; left: 14px; top: 14px; color: var(--color-vellum-dim); pointer-events: none; }
+  input { width: 100%; min-height: 46px; padding: 10px 14px 10px 42px; border: 1px solid var(--color-rune); border-radius: 8px; background: var(--color-ink-soft); color: var(--color-vellum); font: 16px var(--font-body); caret-color: var(--color-ember); }
+  input::placeholder { color: var(--color-vellum-dim); }
+  button { min-height: 44px; color: var(--color-ember); font: 14px var(--font-body); text-decoration: underline; text-underline-offset: 5px; cursor: pointer; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .directory-index { display: flex; flex-wrap: wrap; gap: 0 24px; padding-bottom: 24px; }
+  .directory-index a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--color-vellum-dim); font-size: 14px; text-decoration: none; }
+  a :global(svg) { flex-shrink: 0; color: var(--color-ember); }
+  a > span { min-width: 0; text-decoration-line: underline; text-decoration-style: dotted; text-decoration-color: #7393ad; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  .directory-group { display: grid; grid-template-columns: 216px minmax(0, 1fr); gap: 32px; padding-block: 32px; border-top: 1px solid var(--color-rune); scroll-margin-top: 24px; }
+  .directory-category h3 { font: 400 26px/1.3 var(--font-display); margin: 7px 0 0; }
+  .directory-category h3 a { display: flex; align-items: center; gap: 12px; color: var(--color-vellum); text-decoration: none; overflow-wrap: anywhere; }
+  .directory-description { max-width: 44ch; margin: 12px 0 0; color: var(--color-vellum-dim); font-size: 14px; line-height: 1.6; }
+  ul { columns: 2; column-gap: 32px; margin: 0; padding: 0; list-style: none; }
+  li { break-inside: avoid; }
+  li a { display: flex; flex-direction: column; justify-content: center; gap: 3px; min-height: 48px; padding: 11px 8px; color: #dce7f6; font-size: 16px; line-height: 1.5; text-decoration: none; transition: color 180ms; }
+  small { color: var(--color-vellum-dim); font-size: 12px; }
+  a:hover, a:focus-visible { color: var(--color-ember-bright); }
+  a:hover > span, a:focus-visible > span { text-decoration-style: solid; text-decoration-color: var(--color-ember-bright); }
+  .directory-note { padding-top: 24px; border-top: 1px solid var(--color-rune); font-size: 13px; }
+  .directory-empty { padding: 32px 0; border-top: 1px solid var(--color-rune); }
+  .directory-empty p { margin-bottom: 8px; }
+  @media (max-width: 1100px) {
+    .directory-group { grid-template-columns: 170px minmax(0, 1fr); gap: 24px; }
+  }
+  @media (max-width: 800px) {
+    .directory-group { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .directory-category h3 { margin: 0; }
+  }
+  @media (max-width: 540px) {
+    ul { columns: 1; }
+    .directory-index { gap: 0 20px; }
+    li a { padding-inline: 0; }
+  }
+</style>

@@ -1,26 +1,50 @@
 ---
-title: Overview
-description: Build Grimoire from source and contribute.
+title: Development
+description: Set up, build, and contribute to the Android app.
 ---
 
-Grimoire is a native Android app written in Kotlin. This section covers building
-it from source, the project architecture, and how to contribute.
+Grimoire is a native Android app written in Kotlin and Jetpack Compose. The app, extension API, and source extensions live in separate repositories and ship independently.
 
-## Toolchain
+## Set up the app
 
-- Android Studio with Android Gradle Plugin 9.2.1
-- Kotlin 2.2 (KSP 2.2.10-2.0.2)
-- Java 11
+Start with the app's [contribution guide](https://github.com/Operation-Grimoire/grimoire/blob/master/CONTRIBUTING.md), which owns the current toolchain and build requirements.
 
-## Build
+You need JDK 17, the Android SDK, and access to the `io.grimoire:extensions-api` dependency. Java 11 is the source and bytecode target; it is not the JDK used by CI.
+
+The API resolves from your local Maven cache or GitHub Packages. For local API development, run `./gradlew :api:publishToMavenLocal` in the API checkout. For GitHub Packages, configure `GITHUB_ACTOR` and `GITHUB_TOKEN` with package read access. Keep tokens out of source control.
+
+## Build and check
+
+From the Android app repository:
 
 ```sh
-./gradlew :app:installDebug      # build + install a debug build
-./gradlew assembleRelease        # build a release APK
+./gradlew :app:compileDebugKotlin
+./gradlew :app:testDebugUnitTest
+./gradlew :app:lintDebug
+./gradlew :app:installDebug
 ```
 
-## What's here
+The last command needs a connected device or emulator. On Windows, use `gradlew.bat` in place of `./gradlew`.
 
-- **Project structure** — module layout (coming soon).
-- **Coding conventions** — style and patterns (coming soon).
-- **Contributing** — workflow and PR process (coming soon).
+Run the Kotlin compilation and unit tests before opening a pull request. See the contribution guide for release builds and optional configuration.
+
+## Project structure
+
+| Area | Responsibility |
+| --- | --- |
+| `ui/` | Navigation, screens, ViewModels, and shared Compose components |
+| `data/` | Database, preferences, downloads, backups, EPUBs, and background work |
+| `domain/` | Repository boundaries and application behavior |
+| `extension/` | Extension discovery, management, and repository browsing |
+| `auth/github/` | GitHub OAuth device flow |
+
+Screens expose state from ViewModels. Keep filtering, sorting, and search projections in the ViewModel, and use the app's theme tokens in Compose UI.
+
+## Choose a repository
+
+- [Android app](https://github.com/Operation-Grimoire/grimoire): reader, library, and application behavior.
+- [Extension API](https://github.com/Operation-Grimoire/grimoire-extensions-api): shared models and capability interfaces.
+- [Extensions](https://github.com/Operation-Grimoire/grimoire-extensions): content-source implementations.
+- [Website](https://github.com/Operation-Grimoire/grimoire-web): this homepage and documentation.
+
+For source-specific changes, follow the [extension development guide](/docs/extensions/build/). For app changes, read the contribution guide and repository instructions before editing.

@@ -1,0 +1,464 @@
+---
+import { iconGhostBody } from '../data/ghost-artwork';
+// The spirit from the Grimoire app icon, traced from the launcher artwork. Without JavaScript,
+// or with reduced motion on, it stays above the library phone. Otherwise the script below lets
+// it drift down the page as the visitor scrolls, and dissolve when the page moves too fast.
+interface Props {
+  class?: string;
+  refined?: boolean;
+}
+const { class: className, refined = false } = Astro.props;
+const body = 'M378 112C440 112 492 160 497 235C500 290 530 325 556 360C568 376 560 398 535 395C520 392 508 380 497 382C490 395 498 415 490 435C478 465 420 490 385 535C378 550 410 575 420 605C428 635 395 640 378 680C370 650 385 625 372 605C350 580 300 565 295 510C292 480 290 462 275 458C250 458 225 475 207 462C198 440 225 415 240 385C255 350 265 300 265 235C268 160 318 112 378 112Z';
+const outline = refined ? iconGhostBody : body;
+const star = (x: number, y: number, r: number) =>
+  `M${x} ${y - r}Q${x + r * 0.18} ${y - r * 0.18} ${x + r} ${y}Q${x + r * 0.18} ${y + r * 0.18} ${x} ${y + r}Q${x - r * 0.18} ${y + r * 0.18} ${x - r} ${y}Q${x - r * 0.18} ${y - r * 0.18} ${x} ${y - r}Z`;
+---
+<svg class:list={['ghost', className, { 'ghost-refined': refined }]} viewBox="130 60 500 680" aria-hidden="true" focusable="false" data-ghost data-ghost-style={refined ? 'refined' : 'original'}>
+  <defs>
+    <radialGradient id="ghost-body" gradientUnits="userSpaceOnUse" cx="378" cy="325" r="240">
+      <stop offset="0" stop-color={refined ? '#8dd5ff' : '#7cc9f9'} />
+      <stop offset=".5" stop-color={refined ? '#c2eaff' : '#b6e1fb'} />
+      <stop offset="1" stop-color={refined ? '#ffffff' : '#f1f9ff'} />
+    </radialGradient>
+    <linearGradient id="ghost-fade" gradientUnits="userSpaceOnUse" x1="0" y1="400" x2="0" y2="680">
+      <stop offset="0" stop-color="#fff" />
+      <stop offset=".55" stop-color="#fff" stop-opacity={refined ? '1' : '.62'} />
+      <stop offset="1" stop-color="#fff" stop-opacity={refined ? '1' : '0'} />
+    </linearGradient>
+    <mask id="ghost-dissolve" maskUnits="userSpaceOnUse" x="130" y="60" width="500" height="680">
+      <rect x="130" y="60" width="500" height="680" fill="url(#ghost-fade)" />
+    </mask>
+    <filter id="ghost-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation={refined ? '18' : '26'} />
+    </filter>
+  </defs>
+
+  <g class="ghost-float">
+    <g class="ghost-sway">
+      <g mask="url(#ghost-dissolve)">
+        <path class="ghost-halo" d={outline} fill="#9fdcff" filter="url(#ghost-glow)" />
+        <path data-ghost-shape d={outline} fill="url(#ghost-body)" fill-opacity={refined ? '1' : '.86'} stroke="#ffffff" stroke-opacity={refined ? '.9' : '.7'} stroke-width={refined ? '3' : '5'} />
+      </g>
+      <g data-ghost-face>
+        <ellipse class="ghost-eye" cx={refined ? '332.7' : '334'} cy={refined ? '228.8' : '232'} rx={refined ? '29.5' : '26'} ry={refined ? '43.6' : '41'} fill="#080b18" />
+        <ellipse class="ghost-eye" cx={refined ? '422.3' : '424'} cy={refined ? '228.8' : '232'} rx={refined ? '29.4' : '26'} ry={refined ? '43.2' : '41'} fill="#080b18" />
+      </g>
+    </g>
+  </g>
+
+  <g fill="#c7ebff">
+    <path class="ghost-spark" d={star(552, 245, 26)} />
+    <path class="ghost-spark ghost-spark-late" d={star(167, 386, 19)} />
+    <circle class="ghost-spark ghost-spark-late" cx="191" cy="272" r="6" />
+    <circle class="ghost-spark" cx="596" cy="447" r="10" />
+  </g>
+</svg>
+
+<style is:global>
+  .ghost { display: block; overflow: visible; pointer-events: none; }
+  .ghost-float { animation: ghost-float 4.6s ease-in-out infinite; }
+  .ghost-sway { transform-box: view-box; transform-origin: 49.6% 34%; animation: ghost-sway 6.2s ease-in-out infinite; }
+  .ghost-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: ghost-blink 7.4s linear infinite; }
+  .ghost-halo { opacity: .35; }
+  .ghost-spark { transform-box: fill-box; transform-origin: center; animation: ghost-twinkle 3.8s ease-in-out infinite; }
+  .ghost-spark-late { animation-delay: -2.6s; }
+  .ghost-stage { position: fixed; inset: 0; z-index: 20; overflow: hidden; pointer-events: none; }
+  .ghost-flyer { position: absolute; top: 0; left: 0; width: 200px; height: 272px; transform-origin: 0 0; will-change: transform, opacity; }
+  /* These are SVG units: 60 units becomes an 11?14px rise at the hero sizes. */
+  @keyframes ghost-float {
+    0%, 100% { transform: translate(0, 10px); }
+    50% { transform: translate(12px, -50px); }
+  }
+  @keyframes ghost-sway {
+    0%, 100% { transform: rotate(-6deg) skewX(-2deg); }
+    50% { transform: rotate(6deg) skewX(2deg); }
+  }
+  @keyframes ghost-blink {
+    0%, 92%, 95%, 100% { transform: scaleY(1); }
+    93.5% { transform: scaleY(.08); }
+  }
+  @keyframes ghost-twinkle {
+    0%, 100% { opacity: .12; transform: translate(0, 12px) scale(.65); }
+    50% { opacity: .95; transform: translate(-12px, -28px) scale(1.1); }
+  }
+  .ghost-articulated .ghost-float, .ghost-articulated .ghost-sway { animation: none; }
+  /* The changing outline has no filter: only this small path is repainted. */
+  .ghost-articulated .ghost-halo { display: none; }
+  .ghost-refined.ghost-articulated .ghost-halo { display: initial; opacity: .24; }
+  .ghost-refined.ghost-articulated .ghost-sway { animation: ghost-idle-tilt 5.2s ease-in-out infinite; }
+  @keyframes ghost-idle-tilt {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+  }
+  .ghost-sleeping * { animation-play-state: paused !important; }
+  @media (prefers-reduced-motion: reduce) {
+    .ghost, .ghost * { animation: none !important; }
+  }
+</style>
+
+<script>
+  type Perch = { x: number; y: number; w: number };
+
+  const BASE_W = 200;
+  const BASE_H = 272;
+  // The tail tip on the artwork, which is the point that hovers over a surface.
+  const ANCHOR_X = BASE_W * 0.496;
+  const ANCHOR_Y = BASE_H * 0.912;
+  const FOLLOW_MS = 180;
+  const FADE_MS = 170;
+  const REST_OPACITY = 0.94;
+
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+  const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+  const smooth = (t: number) => {
+    const c = clamp(t, 0, 1);
+    return c * c * (3 - 2 * c);
+  };
+
+  function start() {
+    const ghost = document.querySelector<SVGSVGElement>('[data-ghost]');
+    const phone = document.querySelector<HTMLElement>('.phone-library');
+    const heading = document.querySelector<HTMLElement>('[data-ghost-heading]') ?? document.querySelector<HTMLElement>('#features-title');
+    const button = document.querySelector<HTMLElement>('[data-ghost-landing]');
+    if (!ghost || !phone || !heading || !button) return;
+    const refined = ghost.dataset.ghostStyle === 'refined';
+
+    const home = ghost.parentElement!;
+    const next = ghost.nextSibling;
+    const stage = document.createElement('div');
+    stage.className = 'ghost-stage';
+    ghost.classList.remove('hero-ghost');
+    ghost.classList.add('ghost-flyer');
+    stage.append(ghost);
+    document.body.append(stage);
+
+    const shape = ghost.querySelector<SVGPathElement>('[data-ghost-shape]')!;
+    const halo = ghost.querySelector<SVGPathElement>('.ghost-halo')!;
+    const face = ghost.querySelector<SVGGElement>('[data-ghost-face]')!;
+    const original = shape.getAttribute('d')!;
+    const curves = original.match(/[MCZ][^MCZ]*/g)!.map(command => ({
+      type: command[0],
+      points: (command.slice(1).match(/-?\d+(?:\.\d+)?/g) || []).map(Number),
+    }));
+    ghost.classList.add('ghost-articulated');
+    let onScreen = true;
+    let phase = 0;
+    let shapeTime = 0;
+    let grip = 1;
+    let active = true;
+    let layout = measure();
+    let frame = 0;
+    let idleTimer = 0;
+    let lastTime = 0;
+    const first = locate(window.scrollY);
+    let x = first.x;
+    let y = first.y;
+    let w = first.w;
+    let opacity = REST_OPACITY;
+    let lean = 0;
+    let speed = 0;
+    let lastScroll = window.scrollY;
+
+    function measure() {
+      const scroll = window.scrollY;
+      const vh = window.innerHeight;
+      const margin = heading!.getBoundingClientRect().left;
+      const narrow = window.innerWidth <= 800;
+
+      // The phone is rotated, so find the middle of its rim from its center and angle.
+      const box = phone!.getBoundingClientRect();
+      const matrix = new DOMMatrix(getComputedStyle(phone!).transform);
+      const angle = Math.atan2(matrix.b, matrix.a);
+      const half = phone!.offsetHeight / 2;
+      const onPhone: Perch = {
+        x: box.left + box.width / 2 + half * Math.sin(angle),
+        y: box.top + box.height / 2 - half * Math.cos(angle) + scroll + (refined ? -2 : 6),
+        w: phone!.offsetWidth * 0.46,
+      };
+
+      const range = document.createRange();
+      range.selectNodeContents(heading!);
+      const text = range.getBoundingClientRect();
+      const fontSize = parseFloat(getComputedStyle(heading!).fontSize);
+      const onHeading: Perch = {
+        x: text.left + text.width * 0.5,
+        y: text.top + (heading!.hasAttribute('data-ghost-heading') ? -12 : fontSize * 0.1) + scroll,
+        w: clamp(fontSize * 1.5, 56, 76),
+      };
+
+      const target = button!.getBoundingClientRect();
+      const onButton: Perch = {
+        x: target.left + target.width / 2,
+        y: target.top + (button!.tagName === 'H2' ? -40 : 4) + scroll,
+        w: narrow ? 50 : 64,
+      };
+
+      const maxScroll = document.documentElement.scrollHeight - vh;
+      const reachHeading = onHeading.y - vh * 0.4;
+      const leaveHeading = heading!.hasAttribute('data-ghost-heading')
+        ? onHeading.y - 64
+        : reachHeading + vh * 0.2;
+      const reachButton = Math.max(leaveHeading + 1, Math.min(onButton.y - vh * 0.6, maxScroll - 2));
+      const avoid = Array.from(document.querySelectorAll<HTMLElement>('[data-ghost-avoid]'))
+        .filter(element => element.getClientRects().length > 0)
+        .map(element => {
+          const box = element.getBoundingClientRect();
+          return { left: box.left, right: box.right, top: box.top + scroll, bottom: box.bottom + scroll };
+        });
+
+      return {
+        avoid,
+        vh,
+        flyW: narrow ? 32 : clamp(margin * 0.72, 42, 72),
+        lane: margin >= 72 ? margin / 2 : 6,
+        onPhone,
+        onHeading,
+        onButton,
+        takeOff: 40,
+        reachHeading,
+        leaveHeading,
+        reachButton,
+      };
+    }
+
+    // Where the ghost should be for a scroll position, in screen coordinates.
+    function locate(scroll: number) {
+      const l = layout;
+      const cruiseY = l.vh * 0.62;
+      const held = (p: Perch) => ({ x: p.x, y: p.y - scroll, w: p.w });
+
+      if (scroll <= l.takeOff) return held(l.onPhone);
+      if (scroll < l.reachHeading) {
+        const t = smooth((scroll - l.takeOff) / (l.reachHeading - l.takeOff));
+        const here = held(l.onPhone);
+        const there = held(l.onHeading);
+        return { x: lerp(here.x, there.x, t), y: lerp(Math.max(here.y, cruiseY * 0.4), there.y, t), w: lerp(l.onPhone.w, l.onHeading.w, t) };
+      }
+      if (scroll <= l.leaveHeading) return held(l.onHeading);
+      if (scroll < l.reachButton) {
+        const span = l.reachButton - l.leaveHeading;
+        const out = smooth((scroll - l.leaveHeading) / Math.min(l.vh * 0.25, span));
+        const back = smooth((scroll - (l.reachButton - Math.min(l.vh * 0.45, span))) / Math.min(l.vh * 0.45, span));
+        const heading = held(l.onHeading);
+        const landing = held(l.onButton);
+        const cruiseX = lerp(heading.x, l.lane, out);
+        const cruise = lerp(heading.y, cruiseY, out);
+        return {
+          x: lerp(cruiseX, landing.x, back),
+          y: lerp(cruise, landing.y, back),
+          w: lerp(lerp(l.onHeading.w, l.flyW, out), l.onButton.w, back),
+        };
+      }
+      return held(l.onButton);
+    }
+
+    // A continuous outline keeps the translucent body seamless. The side curves are
+    // independent arms; phase delay along the lower curves makes the tip trail the waist.
+    function articulate(time: number) {
+      const breath = Math.sin(time * 1.65);
+      const drift = Math.sin(time * 1.1) * 8;
+      const restingArms: Record<number, number[]> = {
+        2: [500, 290, 580, 400, 568, 500],
+        3: [570, 535, 566, 566, 544, 560],
+        4: [524, 554, 540, 465, 497, 430],
+        11: [292, 480, 290, 470, 275, 475],
+        12: [250, 480, 225, 566, 207, 560],
+        13: [184, 550, 180, 465, 240, 420],
+      };
+      const d = curves.map(({ type, points }, segment) => {
+        const moved: string[] = [];
+        for (let i = 0; i < points.length; i += 2) {
+          const px = points[i];
+          const py = points[i + 1];
+          if (refined) {
+            // Hover visibly even at the small hero size. Keep the crown and
+            // face together; motion is concentrated in the free wisps and tail.
+            const lift = 18 + breath * 16;
+            const sway = Math.sin(time * .85) * 12;
+            const along = clamp((py - 420) / 260, 0, 1);
+            let ax = px + sway;
+            let ay = py - lift;
+            if (py > 450 && px > 275 && px < 450) {
+              ax += Math.sin(time * 1.8 - along * 3.5) * along * 34 * (1 - grip * .35);
+            }
+            if (py > 300 && py < 480 && (px < 275 || px > 497)) {
+              const right = px > 497;
+              const reach = clamp(right ? (px - 497) / 59 : (275 - px) / 68, 0, 1);
+              const wave = Math.sin(time * 1.7 + (right ? 0 : 1.6));
+              ax += reach * wave * 12 * (1 - grip * .35);
+              ay += reach * wave * 24 * (1 - grip * .35);
+            }
+            moved.push(ax.toFixed(1), ay.toFixed(1));
+            continue;
+          }
+          let ax = 378 + (px - 378) * (1 + breath * .045) + drift;
+          let ay = py - breath * 12;
+          if (segment >= 5 && segment <= 10) {
+            const along = clamp((py - 435) / 245, 0, 1);
+            ax += Math.sin(time * 2.5 - along * 4.2) * along * (22 + along * 42) * (1 - grip * .65);
+            ay = lerp(ay, 435 + (py - 435) * .48 - breath * 8 * (1 - along), grip);
+          }
+          if ((segment >= 2 && segment <= 4) || (segment >= 11 && segment <= 13)) {
+            const right = segment <= 4;
+            const reach = clamp(right ? (px - 497) / 59 : (275 - px) / 68, 0, 1);
+            const flap = Math.sin(time * (right ? 2.1 : 2.4) + (right ? 0 : 1.9));
+            ax += reach * (flap * 20 * (1 - grip) - drift * grip);
+            ay += reach * flap * 48 * (1 - grip);
+            const rest = restingArms[segment];
+            ax = lerp(ax, rest[i] + (drift + flap * 8) * (1 - reach), grip);
+            ay = lerp(ay, rest[i + 1] + (-breath * 12 + flap * 10) * (1 - reach), grip);
+          }
+          moved.push(ax.toFixed(1), ay.toFixed(1));
+        }
+        return type + moved.join(' ');
+      }).join('');
+      shape.setAttribute('d', d);
+      if (refined) halo.setAttribute('d', d);
+      face.setAttribute('transform', refined
+        ? `translate(${(Math.sin(time * .85) * 12).toFixed(1)} ${(-18 - breath * 16).toFixed(1)})`
+        : `translate(${drift.toFixed(1)} ${(-breath * 12).toFixed(1)})`);
+    }
+
+    function perchAt(scroll: number) {
+      const l = layout;
+      if (scroll <= l.takeOff) return 1;
+      if (scroll < l.reachHeading) return Math.max(
+        1 - smooth((scroll - l.takeOff) / 90),
+        smooth((scroll - l.reachHeading + 90) / 90),
+      );
+      if (scroll <= l.leaveHeading) return 1;
+      return Math.max(1 - smooth((scroll - l.leaveHeading) / 90),
+        smooth((scroll - l.reachButton + 100) / 100));
+    }
+
+    function render(now: number) {
+      frame = 0;
+      const dt = lastTime ? Math.min(now - lastTime, 50) : 16;
+      lastTime = now;
+      phase += dt / 1000;
+      grip = lerp(grip, perchAt(window.scrollY), 1 - Math.exp(-dt / 260));
+      if (onScreen && now - shapeTime >= 32) {
+        articulate(phase);
+        shapeTime = now;
+      }
+
+      const goal = locate(window.scrollY);
+      const follow = 1 - Math.exp(-dt / FOLLOW_MS);
+      const fade = 1 - Math.exp(-dt / FADE_MS);
+      const distance = Math.hypot(goal.x - x, goal.y - y);
+
+      // The further behind it falls, the fainter it gets. Past a limit it dissolves completely
+      // and re-forms at its destination, so a fast scroll never sends it racing across the page.
+      const scroll = window.scrollY;
+      const step = Math.abs(scroll - lastScroll);
+      const rawSpeed = step / dt;
+      // A jump cuts through the mist instead of dragging the spirit over the copy.
+      if (step > layout.vh * 0.3) {
+        opacity = 0;
+        x = goal.x;
+        y = goal.y;
+        w = goal.w;
+        lean = 0;
+      }
+      lastScroll = scroll;
+      speed = lerp(speed, rawSpeed, 1 - Math.exp(-dt / 90));
+      const limit = layout.vh * 0.3;
+      // Fade before the artwork crosses controls. Measure only on layout changes.
+      const overlapsControls = layout.avoid.some(box =>
+        x + w / 2 > box.left - 24 && x - w / 2 < box.right + 24 &&
+        y + scroll + (BASE_H - ANCHOR_Y) * w / BASE_W > box.top - 24 &&
+        y + scroll - ANCHOR_Y * w / BASE_W < box.bottom + 24);
+      const goalOpacity = overlapsControls ? 0 : (refined ? 1 : REST_OPACITY) * (1 - smooth((distance - 30) / limit)) * (1 - smooth((speed - 1) / 2.5));
+      opacity = lerp(opacity, goalOpacity, fade);
+      if (opacity < 0.03 && distance > 30) {
+        x = goal.x;
+        y = goal.y;
+        w = goal.w;
+      } else {
+        const beforeX = x;
+        x = lerp(x, goal.x, follow);
+        y = lerp(y, goal.y, follow);
+        w = lerp(w, goal.w, follow);
+        lean = lerp(lean, clamp((x - beforeX) * 0.5, -5, 5), fade);
+      }
+
+      ghost!.style.opacity = opacity.toFixed(3);
+      ghost!.style.transform = `translate(${x}px, ${y}px) rotate(${lean}deg) scale(${w / BASE_W}) translate(${-ANCHOR_X}px, ${-ANCHOR_Y + grip * (refined ? 0 : 48)}px)`;
+
+      const settled = distance < 0.3 && speed < 0.01 && Math.abs(opacity - goalOpacity) < 0.005 && Math.abs(lean) < 0.05;
+      if (settled && !onScreen) lastTime = 0;
+      else if (settled) {
+        // Do not run the idle path generator at a high-refresh display's full rate.
+        idleTimer = window.setTimeout(() => { idleTimer = 0; request(); }, 32);
+      } else request();
+    }
+
+    function request() {
+      clearTimeout(idleTimer);
+      idleTimer = 0;
+      if (active && !frame && !document.hidden) frame = requestAnimationFrame(render);
+    }
+    function remeasure() {
+      if (!active) return;
+      layout = measure();
+      request();
+    }
+
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('load', remeasure);
+    document.fonts?.ready.then(remeasure);
+    const observer = new ResizeObserver(remeasure);
+    observer.observe(document.body);
+    // Font loading can resize the heading without changing the page's total height.
+    observer.observe(heading);
+    const intersection = new IntersectionObserver(entries => {
+      onScreen = entries[0].isIntersecting;
+      stage.classList.toggle('ghost-sleeping', document.hidden || !onScreen);
+      if (onScreen) request();
+    });
+    intersection.observe(ghost);
+    function visibility() {
+      stage.classList.toggle('ghost-sleeping', document.hidden || !onScreen);
+      if (document.hidden) {
+        cancelAnimationFrame(frame);
+        clearTimeout(idleTimer);
+        idleTimer = 0;
+        frame = 0;
+        lastTime = 0;
+      } else remeasure();
+    }
+    document.addEventListener('visibilitychange', visibility);
+    ghost.style.height = `${BASE_H}px`;
+    request();
+    return () => {
+      active = false;
+      cancelAnimationFrame(frame);
+      clearTimeout(idleTimer);
+      observer.disconnect();
+      intersection.disconnect();
+      shape.setAttribute('d', original);
+      halo.setAttribute('d', original);
+      face.removeAttribute('transform');
+      ghost.classList.remove('ghost-articulated');
+      window.removeEventListener('scroll', request);
+      window.removeEventListener('resize', remeasure);
+      window.removeEventListener('load', remeasure);
+      document.removeEventListener('visibilitychange', visibility);
+      ghost.classList.remove('ghost-flyer');
+      ghost.classList.add('hero-ghost');
+      ghost.removeAttribute('style');
+      home.insertBefore(ghost, next);
+      stage.remove();
+    };
+  }
+
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let stop: (() => void) | undefined;
+  function preference() {
+    stop?.();
+    stop = motion.matches ? undefined : start();
+  }
+  motion.addEventListener('change', preference);
+  preference();
+</script>

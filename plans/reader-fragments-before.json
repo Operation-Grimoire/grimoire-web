@@ -1,0 +1,29 @@
+{
+  "/docs/users/": [
+    "first-steps"
+  ],
+  "/docs/users/install/": [
+    "if-installation-fails",
+    "install-on-android",
+    "keep-grimoire-up-to-date",
+    "next-find-a-source"
+  ],
+  "/docs/users/sources/": [
+    "add-another-repository",
+    "install-your-first-source",
+    "updates-and-missing-sources"
+  ],
+  "/docs/users/library/": [
+    "add-and-organize-novels",
+    "back-up-your-library",
+    "import-an-epub",
+    "reading-progress"
+  ],
+  "/docs/users/reading/": [
+    "listen-to-a-chapter",
+    "mask-images",
+    "read-offline",
+    "reader-settings",
+    "when-a-chapter-does-not-load"
+  ]
+}

@@ -9,7 +9,7 @@ import type { ReactNode } from 'react';
 /**
  * Wrap any cell content in a click-to-open popover note. Registered in mdx.tsx.
  *
- *   <Note text="Why this is partial…">🟡</Note>
+ *   <Note text="Why this is partial…"><Mark v="partial" /></Note>
  */
 export function Note({ text, children }: { text: string; children: ReactNode }) {
   return (

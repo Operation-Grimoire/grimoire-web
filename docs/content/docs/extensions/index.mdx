@@ -1,43 +1,28 @@
 ---
-title: Overview
-description: How Grimoire extensions and repositories work, and why they're separate APKs.
+title: Extensions
+description: Develop and publish content-source extensions.
 ---
 
-A Grimoire **extension** is a content source — it knows how to fetch novels from
-one website or service. Extensions ship as **separate Android APKs** and are
-discovered at runtime via package manifest metadata, so adding sources never
-requires updating Grimoire itself.
+Grimoire discovers content sources as separately installed Android APKs. An extension implements the shared source API; a repository publishes the index that readers use to find it.
 
-Extensions consume a shared contract library, `grimoire-extensions-api`, and are
-distributed through **repositories**: a JSON index Grimoire reads to list the
-sources a repo offers.
+If you want to install an extension, start with the [reader's source guide](/docs/users/sources/).
 
-## The APK extension model
+## How extensions work
 
-Each Grimoire source is packaged as its own **Android APK**. Grimoire discovers
-installed extensions via `PackageManager` and a manifest flag, so the catalogue
-isn't bundled into the reader. What this means in practice:
+The app uses Android's package manager and manifest metadata to discover sources. Source implementations use the shared `io.grimoire:extensions-api` contract, so the catalog can grow independently of app releases.
 
-- **Sources install like apps.** An extension is a real Android package — you
-  install, update, and remove it through the OS, and it's visible in your app
-  list. Authors sign their own APKs.
-- **No app release needed for new sources.** Adding or updating a source doesn't
-  require a new version of the reader.
-- **Native tooling for authors.** Sources are written in Kotlin against the
-  shared `grimoire-extensions-api` (model types, `Source` interfaces, HTTP/Jsoup
-  helpers).
-- **Bring your own repositories.** Add any repository, including private GitHub
-  repos via OAuth.
+The API is capability-based. A source implements the features its site supports: for example, search, popular novels, chapter lists, EPUBs, or a login flow. The app detects those capabilities instead of expecting every site to behave the same way.
 
-The trade-off versus a script-based plugin model is a per-source install step —
-in exchange for sources being first-class, OS-managed Android packages.
+## Develop a source
 
-## What's here
+<div className="guide-list">
+<GuideLink href="/docs/extensions/build/" title="Build an extension">Start with an existing module, implement the source, and verify it in the app.</GuideLink>
+<GuideLink href="https://github.com/Operation-Grimoire/grimoire-extensions-api" title="Source API">Read the shared contract and its versioning rules.</GuideLink>
+<GuideLink href="https://github.com/Operation-Grimoire/grimoire-extensions" title="Official extensions">Study working source implementations and repository publishing workflows.</GuideLink>
+</div>
 
-- **Repository format** — the `index.json` schema (coming soon).
-- **Build an extension** — implement a source against the API (coming soon).
-- **Publish a repository** — host and submit your repo (coming soon).
+## Publish a repository
 
-<Callout type="warn" title="Under construction">
-This section is being filled in page by page.
-</Callout>
+A repository exposes an `index.json` that points readers to extension APKs. The official repository publishes its index and packages through GitHub Releases. Use its build and release workflow as the current publishing reference rather than maintaining an independent copy of the format.
+
+Readers can add a repository by index URL. An [add-repository link](/add-repo/) can prefill that URL and its display name in Grimoire.

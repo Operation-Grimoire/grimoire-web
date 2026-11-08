@@ -1,0 +1,108 @@
+---
+title: Reading
+description: Adjust chapter layout, navigate, save progress, and work with text and images.
+---
+
+Open a chapter from a novel's details or continue a book from your library.
+
+## Reader settings
+
+Use the reader settings to adjust the font, spacing, line height, color theme, and orientation.
+
+Open a chapter, tap the reading area to show controls, then choose **Settings**. The **Display** tab contains page settings. Global defaults are also available in **More → Settings → Reader**.
+
+## Page themes [#page-themes]
+
+In reader settings, choose **Light**, **Sepia**, **Dark**, or **Black** under **Color theme**. The chapter changes to that palette. This controls the reading page independently of the app's [appearance theme](/docs/users/appearance/#app-theme).
+
+## Font family [#font-family]
+
+Choose **Sans**, **Serif**, or **Mono** in reader settings. These are the supplied font families, not a custom-font import tool. If characters are missing, check whether the selected font supports the book's script.
+
+## Font size [#font-size]
+
+Adjust **Font size** in reader settings while watching the preview. Return to the chapter to check real text. Changing size changes how much text fits on screen; your stored reading position is not a fixed page number.
+
+## Text spacing [#text-spacing]
+
+Use **Line height** for space between lines and **Paragraph spacing** for space between paragraphs. Adjust them independently. Check a full paragraph after closing settings, especially with large fonts or short lines.
+
+## Text alignment [#text-alignment]
+
+In reader settings, choose **Auto**, **Left**, **Right**, **Center**, or **Justify** under **Text alignment**. This choice is remembered for the current novel. **Auto** follows its language. Reset to Auto if a manual choice makes another script difficult to read.
+
+## Right-to-left layout [#right-to-left]
+
+Auto alignment follows right-to-left scripts using the novel's language metadata. Use the text-alignment control when that metadata gives an unsuitable result. Paragraph direction concerns book content; changing the app's interface language does not translate or rewrite the book.
+
+## Rotation lock [#rotation-lock]
+
+Set **Screen rotation** to **Free**, **Vertical**, or **Horizontal** in reader settings. Free allows normal rotation; the other choices constrain the reading screen. Return to Free when you want the reader to follow device rotation again.
+
+## Status bar [#status-bar]
+
+Use **Settings → Reader → Hide notification bar** to hide Android's status bar while reading. Reader controls are separate: tap the reading area to show them. Turn the setting off to keep the system bar visible in the reader.
+
+## Scrolling [#scrolling]
+
+Scroll vertically through a chapter. Show the reader controls for previous and next chapter actions, or use **Next chapter** at the end. Opening an uncached chapter needs the source and a connection. The final chapter shows the end-of-book state rather than creating more content.
+
+## Resuming progress [#resuming-progress]
+
+Grimoire saves the chapter and reading position as you read. Open the novel and choose its continue action to resume. Font or layout changes can move text on screen, so this is a saved text position rather than a guaranteed identical viewport. [Incognito](/docs/users/privacy/#incognito) still saves progress. Source migration can only transfer matched chapter progress.
+
+## Progress indicators [#progress-indicators]
+
+In reader settings, enable **Show chapter %** or **Show book %**. The progress strip appears with the reader controls. Chapter progress describes the current chapter's saved position. Book progress is the fraction of chapters marked read and follows **Include locked chapters in totals** in Library settings. These are not estimates of listening duration or fixed printed page counts.
+
+## Marking as read [#marking-as-read]
+
+Set **Auto-mark as read** in reader settings. **Percent** uses the chosen progress threshold, **Near end** uses the selected remaining-paragraph threshold, and **At end** waits for the end. Choose the strategy that fits books with author notes or long trailing sections. Use chapter actions to mark read or unread manually when needed.
+
+## Chapter formatting [#chapter-formatting]
+
+The reader displays supported bold, italic, and link formatting supplied by the chapter. Follow a link only when you want to open its destination. Missing formatting may reflect the source's extracted content; a browser rendering of the original site can differ from its extension output.
+
+## Chapter images [#chapter-images]
+
+Open an inline image's viewer to zoom and use its save or share actions. Android may request storage access when saving. Masked images first need to be revealed or peeked at. For offline images, let [chapter downloads](/docs/users/downloads/#chapters-and-images) finish before disconnecting.
+
+## Selecting text [#selecting-text]
+
+Long-press chapter text and adjust the selection handles. Use the selection actions Android offers, such as Copy. Other actions depend on the device and installed apps. Image-only content does not become selectable text through this control.
+
+## Original page [#original-page]
+
+Show the reader toolbar and use the browser action to open the chapter's original page in the in-app browser. Return with Back. A local EPUB does not have the same source-page workflow. Opening the original page is useful when reporting a difference between website content and the reader.
+
+## Settings preview [#settings-preview]
+
+The reader's settings sheet previews the selected font, size, spacing, and theme. Changes apply as you adjust them; closing the sheet is not a cancel action. Return a control to its earlier value to undo that adjustment. Use a real chapter to check long text and images after the sample preview.
+
+## Read offline
+
+Download chapters from the novel's chapter list while you have a connection. Grimoire's download service stores chapter content and its images for offline reading.
+
+Let the downloads finish before going offline. Adding a novel to your library on its own does not download its chapters.
+
+See [Downloading chapters](/docs/users/downloads/) for batch actions and queue controls.
+
+## Listen to a chapter
+
+Grimoire supports text-to-speech with on-device voices and optional ElevenLabs voices, which use your own ElevenLabs API key and account. Voice availability depends on the engine and languages configured on your device.
+
+On-device and online voices have different connectivity requirements. Check the selected engine before relying on listening without a connection.
+
+See [Listening](/docs/users/listening/) for setup, playback controls, and cloud usage.
+
+## Mask images
+
+Image privacy mode masks images. Tap an image to reveal it, or hold to peek.
+
+See [Image masking](/docs/users/privacy/#image-masking) for the setting and its limits.
+
+## When a chapter does not load
+
+Check your connection, try opening the source website, and look for an extension update. Some sites require you to sign in before reading protected chapters. Grimoire does not replace a source site's access requirements.
+
+If the issue affects one source, include its name and a novel or chapter link when reporting the problem in the [extension issue tracker](https://github.com/Operation-Grimoire/grimoire-extensions/issues).

@@ -1,0 +1,48 @@
+---
+title: Add-on catalogs
+description: Find more website add-ons through public or private catalogs.
+---
+
+Website add-ons are offered through catalogs called **repositories** in Grimoire. Adding a catalog lets you browse its add-ons; you still choose which ones to install. See [Add novel websites](/docs/users/sources/) if you are connecting your first website.
+
+## Official repository [#official-repository]
+
+Grimoire adds the official repository on first launch. If you remove it, that choice is respected. Restore it with this link, then confirm the details in the app:
+
+<GuideButton href="/add-repo?name=Grimoire%20Extensions&url=https%3A%2F%2Fgithub.com%2FOperation-Grimoire%2Fgrimoire-extensions%2Freleases%2Fdownload%2Flatest%2Findex.json">Add official repository</GuideButton>
+
+## Adding repositories [#adding-repositories]
+
+1. Open **Browse → Extensions → Repositories**.
+2. Choose the add action.
+3. Enter a name and the publisher's index URL.
+4. Save, return to Extensions, and refresh the available list.
+5. Install the extensions you want to use.
+
+The official index URL is:
+
+```text
+https://github.com/Operation-Grimoire/grimoire-extensions/releases/download/latest/index.json
+```
+
+Use an index URL, rather than a repository's general web page or an individual APK URL. Check who publishes an index before installing its packages. A checksum supplied by that same publisher does not replace this decision.
+
+## Repository links [#repository-links]
+
+An **Add repository** link opens Grimoire with the name and index URL filled in. Review those fields and confirm the addition. If the link opens the website instead, use its app-opening action or copy the index URL into the manual add form. Installing individual extensions remains a separate step.
+
+## Private GitHub repositories [#private-github-repositories]
+
+Private GitHub indexes require an account that can access the repository.
+
+1. Open **More → Settings → Connections → GitHub**.
+2. Choose **Connect GitHub**.
+3. Open the displayed GitHub device-login page and enter the code shown in Grimoire.
+4. Review GitHub's authorization request and complete it with the account that has repository access.
+5. Return to Grimoire, wait for **Connected**, then add or refresh the private index.
+
+The access token stays on this device and is used for GitHub requests. Choose **Disconnect** to remove the local connection. Revoke the authorization through GitHub's application settings to revoke the grant itself. Backup restore does not establish a new authenticated session for you.
+
+If the code expires, start a new connection attempt. If GitHub connects but the index fails, check account access, the index URL, and organization restrictions. A custom build without an OAuth client ID cannot use this login flow until its builder configures one. Never paste a token into a public issue or repository URL.
+
+Next: [Install a source extension](/docs/users/sources/#installing-and-updating).

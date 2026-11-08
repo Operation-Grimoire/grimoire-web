@@ -2,16 +2,16 @@
 import '../styles/global.css';
 import { site } from '../site.config';
 import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 
 // Above-the-fold woff2, preloaded so the heading + body paint in the right
 // face immediately (same hashed asset the @font-face uses — one fetch, no FOIT).
 // Pages pick the faces they actually render above the fold via the `fontPreloads`
 // prop, so we never preload an unused weight.
-import interBody from '@fontsource/inter/files/inter-latin-400-normal.woff2?url';
-import cormorant400 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-400-normal.woff2?url';
-import cormorant600 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2?url';
+import interBody from '@fontsource/figtree/files/figtree-latin-400-normal.woff2?url';
+import display from '@fontsource/fraunces/files/fraunces-latin-400-normal.woff2?url';
 
-export const fonts = { interBody, cormorant400, cormorant600 };
+export const fonts = { interBody, display };
 
 interface Props {
   title?: string;
@@ -25,9 +25,9 @@ const {
   title,
   description = site.description,
   noindex = false,
-  fontPreloads = [cormorant600, interBody],
+  fontPreloads = [display, interBody],
 } = Astro.props;
-const fullTitle = title ? `${title} — ${site.brand}` : `${site.brand} — ${site.tagline}`;
+const fullTitle = title ? `${title} — ${site.brand}` : site.brand;
 const canonical = new URL(Astro.url.pathname, site.url).toString();
 const ogImage = new URL('/icon-512.png', site.url).toString();
 
@@ -111,6 +111,7 @@ const jsonLd = {
     ))}
   </head>
   <body class="font-body antialiased">
+    <Header />
     <slot />
     <Footer />
   </body>

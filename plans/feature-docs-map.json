@@ -1,0 +1,1502 @@
+{
+  "schema_version": 1,
+  "scope": "Original documentation audit and destination plan. Coverage fields record the pre-implementation snapshot; current implementation and validation are documented in features-and-docs-validation.md.",
+  "feature_source": "webapp/src/data/features.ts",
+  "counts": {
+    "groups": 10,
+    "entries": 119,
+    "unique_labels": 119,
+    "feature_destination_pages": 20,
+    "user_pages_including_landing": 21,
+    "by_group": {
+      "Sources": 20,
+      "Library": 26,
+      "Reader": 17,
+      "Listening": 14,
+      "Downloads": 11,
+      "NovelUpdates": 7,
+      "Backups and storage": 6,
+      "Hide and lock": 5,
+      "Appearance and language": 7,
+      "App updates and tasks": 6
+    },
+    "by_coverage": {
+      "partial": 49,
+      "missing": 61,
+      "documented": 9
+    }
+  },
+  "coverage_definition": {
+    "documented": "Current reader docs give usable guidance for the feature; target may still require expansion.",
+    "partial": "Current MDX mentions all or part of the feature, but lacks usage steps, exact advertised breadth, or conditions. Comparison-only evidence is a claim, not a guide.",
+    "missing": "No relevant capability-specific coverage found in the inspected current MDX; generic category mentions do not count."
+  },
+  "proposed_navigation": {
+    "depth": "For readers -> task group -> article; headings provide feature-level depth. No feature-per-page tree.",
+    "pages": [
+      {
+        "title": "Getting started",
+        "path": "/docs/users/",
+        "task_group": "Start here",
+        "purpose": "Install, choose a source or local EPUB, then open a chapter.",
+        "existing": true
+      },
+      {
+        "title": "Install & updates",
+        "path": "/docs/users/install/",
+        "task_group": "Start here",
+        "purpose": "Install, update, choose a release channel, troubleshoot update failures.",
+        "existing": true
+      },
+      {
+        "title": "Sources & extensions",
+        "path": "/docs/users/sources/",
+        "task_group": "Find books",
+        "purpose": "Install and maintain extensions, sign in, adjust source settings, handle site checks.",
+        "existing": true
+      },
+      {
+        "title": "Managing repositories",
+        "path": "/docs/users/repositories/",
+        "task_group": "Find books",
+        "purpose": "Add trusted public or private repositories and repository links.",
+        "existing": false
+      },
+      {
+        "title": "Finding novels",
+        "path": "/docs/users/finding-novels/",
+        "task_group": "Find books",
+        "purpose": "Search installed sources, use catalogs, filters, and result previews.",
+        "existing": false
+      },
+      {
+        "title": "Your library",
+        "path": "/docs/users/library/",
+        "task_group": "Manage books",
+        "purpose": "Organize, search, filter, sort, display, and bulk-manage library entries.",
+        "existing": true
+      },
+      {
+        "title": "Novel details",
+        "path": "/docs/users/novel-details/",
+        "task_group": "Manage books",
+        "purpose": "Edit personal metadata, ratings, covers, and share novel cards.",
+        "existing": false
+      },
+      {
+        "title": "Working with chapters",
+        "path": "/docs/users/chapter-list/",
+        "task_group": "Manage books",
+        "purpose": "Find chapters, change sort order, jump, and select ranges.",
+        "existing": false
+      },
+      {
+        "title": "Keeping the library updated",
+        "path": "/docs/users/library-updates/",
+        "task_group": "Manage books",
+        "purpose": "Configure refreshes, automatic downloads, notifications, update feed and failure review.",
+        "existing": false
+      },
+      {
+        "title": "History & statistics",
+        "path": "/docs/users/history/",
+        "task_group": "Manage books",
+        "purpose": "Resume through history, inspect reading metrics, and delete history.",
+        "existing": false
+      },
+      {
+        "title": "Moving between sources",
+        "path": "/docs/users/migration/",
+        "task_group": "Manage books",
+        "purpose": "Choose a replacement source and preserve only matched chapter progress.",
+        "existing": false
+      },
+      {
+        "title": "Reading",
+        "path": "/docs/users/reading/",
+        "task_group": "Read & listen",
+        "purpose": "Configure page presentation and navigation, understand progress, text and image actions.",
+        "existing": true
+      },
+      {
+        "title": "Listening",
+        "path": "/docs/users/listening/",
+        "task_group": "Read & listen",
+        "purpose": "Choose engines and language voices, control playback, and manage cloud usage and replay.",
+        "existing": false
+      },
+      {
+        "title": "Downloading chapters",
+        "path": "/docs/users/downloads/",
+        "task_group": "Read & listen",
+        "purpose": "Select offline content, inspect and control the queue, handle download failures.",
+        "existing": false
+      },
+      {
+        "title": "EPUB books",
+        "path": "/docs/users/epub/",
+        "task_group": "Read & listen",
+        "purpose": "Import/open local EPUBs, use whole-book sources, and export chapters to EPUB.",
+        "existing": false
+      },
+      {
+        "title": "Using NovelUpdates",
+        "path": "/docs/users/novelupdates/",
+        "task_group": "Find books",
+        "purpose": "Discover series, save a list, and find matches in installed sources.",
+        "existing": false
+      },
+      {
+        "title": "Backing up & restoring",
+        "path": "/docs/users/backups/",
+        "task_group": "Settings & maintenance",
+        "purpose": "Create, schedule, verify and restore local backups; explain merge and included data.",
+        "existing": false
+      },
+      {
+        "title": "Managing storage",
+        "path": "/docs/users/storage/",
+        "task_group": "Settings & maintenance",
+        "purpose": "Inspect usage and clear caches with exact consequences.",
+        "existing": false
+      },
+      {
+        "title": "Hiding & locking",
+        "path": "/docs/users/privacy/",
+        "task_group": "Settings & maintenance",
+        "purpose": "Configure incognito, hidden categories, biometric unlock and image masking.",
+        "existing": false
+      },
+      {
+        "title": "Appearance & language",
+        "path": "/docs/users/appearance/",
+        "task_group": "Settings & maintenance",
+        "purpose": "Set app theme, palette, Browse layout, interface language and replay tours.",
+        "existing": false
+      },
+      {
+        "title": "Background tasks",
+        "path": "/docs/users/tasks/",
+        "task_group": "Settings & maintenance",
+        "purpose": "Inspect scheduled/running/failed background work and available actions.",
+        "existing": false
+      }
+    ],
+    "section_style": "Use visual sidebar separators for task groups, not new nested category landing pages; keep flat file paths and no extra click to reach an article."
+  },
+  "anchor_policy": {
+    "syntax": "Use explicit MDX heading IDs: ## Human-readable task title [#stable-anchor]. All mapped targets are proposed until content and headings exist.",
+    "reason": "Installed Fumadocs remarkHeading supports custom [#id] and otherwise generates GitHub-style slugs; explicit IDs prevent copy edits breaking homepage links.",
+    "implementation_evidence": [
+      "docs/source.config.ts:19-23",
+      "docs/node_modules/fumadocs-mdx/dist/preset-NZprPlqc.js:10-23",
+      "docs/node_modules/fumadocs-core/dist/mdx-plugins/remark-heading.js:5-38",
+      "docs/src/app/docs/[[...slug]]/page.tsx:16-26",
+      "docs/next.config.mjs:10-14"
+    ],
+    "validation": "Require every feature target page and fragment to exist in built output; validate exact 119-label equality, uniqueness, /docs/users/ prefix, nonempty anchor, and keyboard-accessible links.",
+    "verification": "Verified locally against installed Fumadocs implementation: running remarkHeading on synthetic MDX heading AST preserves explicit stable-feature-anchor, strips [#id] from heading text, emits matching TOC fragment, and generates reader-settings for an ordinary heading. This is plugin-level proof, not a built-page/browser check.",
+    "existing_links": "Retain existing sources, library, reading, install and getting-started paths. Preserve every current heading fragment on its original page, including library/#import-an-epub and reading/#mask-images, through retained headings or explicit legacy anchors with a useful summary and a link to the expanded guide. Do not redirect a whole page to replace a fragment: URL fragments are not sent to the server. Keep /docs/users/reading/#reader-settings, #read-offline, #listen-to-a-chapter and #when-a-chapter-does-not-load usable even when new guide pages take the detailed procedures."
+  },
+  "navigation_changes": [
+    "Keep /docs/users/ as the first-read landing page with two paths: install a source or import an EPUB.",
+    "Expand users/meta.json into task-group sections using existing source/library/reading/install URLs. List the 20 substantive articles above; do not list 119 feature headings in the sidebar.",
+    "Update docs index User guides and users index guide list for the new task-oriented tree.",
+    "Remove the homepage comparison CTA and comparison-led entry from primary reader navigation; keep /docs/comparison/ as an unpromoted legacy reference. Deleting or rewriting it is not required for this feature/docs implementation.",
+    "Existing comparison-only claims must not become procedural assertions until app behavior is verified.",
+    "Cross-link shared tasks: source EPUBs -> EPUB books; auto-download -> library updates + downloads; hidden categories -> privacy; history deletion -> history; app themes -> appearance, page themes -> reading."
+  ],
+  "assumptions_and_open_questions": [
+    "Current feature labels are the source inventory, not independent runtime proof. The documentation audit itself did not inspect Android source; the later targeted source review is recorded separately in app-feature-evidence.md and does not verify all119 entries.",
+    "Proposed paths retain current readers URLs; new pages use flat user slugs grouped by sidebar task sections to avoid routing churn and excessive nesting.",
+    "21 reader pages including Getting started, of which 20 receive feature links, is the proposed depth tradeoff. Article grouping can be adjusted without changing exact source labels.",
+    "Exact menu labels, defaults, value ranges, supported engine options, permissions and persistence rules must be verified before drafting; caveats are research requirements where current MDX provides no answer.",
+    "Do not infer encryption, universal offline speech, cloud sync, entitlement bypass, unlimited cloud usage, or faithful rendering from broad feature names.",
+    "Keep /docs/comparison/ as an unpromoted legacy reference; do not use it as a feature destination. Rewriting or deleting its content is outside the required implementation scope.",
+    "Coverage classifications concern existing documentation, not app completeness. A partial item may already work fully in the app."
+  ],
+  "features": [
+    {
+      "group": "Sources",
+      "label": "Global search",
+      "target": "/docs/users/finding-novels/#global-search",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "27"
+        }
+      ],
+      "caveat_to_explain": "Explain installed-source scope and differences in source availability; verify entry point before writing steps."
+    },
+    {
+      "group": "Sources",
+      "label": "Per-source search filters",
+      "target": "/docs/users/finding-novels/#source-search-filters",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "18"
+        }
+      ],
+      "caveat_to_explain": "Filters depend on the selected source; verify supported controls and reset behavior."
+    },
+    {
+      "group": "Sources",
+      "label": "Popular and latest lists",
+      "target": "/docs/users/finding-novels/#popular-and-latest",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Catalog lists depend on the source; verify availability rather than promise both everywhere."
+    },
+    {
+      "group": "Sources",
+      "label": "Pinned sources",
+      "target": "/docs/users/sources/#pinned-sources",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify pin entry point, ordering, and whether pinning affects searches."
+    },
+    {
+      "group": "Sources",
+      "label": "Search result quick view",
+      "target": "/docs/users/finding-novels/#search-result-preview",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify which actions quick view exposes and how to open full novel details."
+    },
+    {
+      "group": "Sources",
+      "label": "Official repository included",
+      "target": "/docs/users/repositories/#official-repository",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "8-16"
+        }
+      ],
+      "caveat_to_explain": "Repository is enabled by default; distinguish restoring it from installing an extension."
+    },
+    {
+      "group": "Sources",
+      "label": "Custom repositories",
+      "target": "/docs/users/repositories/#adding-repositories",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "20-36"
+        }
+      ],
+      "caveat_to_explain": "Repository name and index URL are required; explain publisher trust and APK installation."
+    },
+    {
+      "group": "Sources",
+      "label": "One-tap repository links",
+      "target": "/docs/users/repositories/#repository-links",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "20-28"
+        }
+      ],
+      "caveat_to_explain": "Links prefill repository details; clarify that user confirmation and extension installation remain separate."
+    },
+    {
+      "group": "Sources",
+      "label": "Private GitHub repositories",
+      "target": "/docs/users/repositories/#private-github-repositories",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "26"
+        }
+      ],
+      "caveat_to_explain": "Verify GitHub sign-in, access scope, revocation, and token handling before documenting."
+    },
+    {
+      "group": "Sources",
+      "label": "Install and update extensions",
+      "target": "/docs/users/sources/#installing-and-updating",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "8-16,38-44"
+        }
+      ],
+      "caveat_to_explain": "Extensions are separate APKs and update separately from the app; Android may require installation permission."
+    },
+    {
+      "group": "Sources",
+      "label": "Extension filters",
+      "target": "/docs/users/sources/#extension-filters",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "12-14,42"
+        }
+      ],
+      "caveat_to_explain": "Current guide verifies search and language filtering only; verify any additional filters."
+    },
+    {
+      "group": "Sources",
+      "label": "SHA-256 extension checks",
+      "target": "/docs/users/sources/#extension-integrity",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain checksum verification scope and failure recovery; do not equate hashes with publisher trust."
+    },
+    {
+      "group": "Sources",
+      "label": "Source sign-in",
+      "target": "/docs/users/sources/#source-sign-in",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "18,42"
+        },
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "28-32"
+        }
+      ],
+      "caveat_to_explain": "Accounts and login availability depend on source; verify login entry point and session handling."
+    },
+    {
+      "group": "Sources",
+      "label": "Reads chapters you have unlocked",
+      "target": "/docs/users/sources/#unlocked-chapters",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "30"
+        },
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "28-32"
+        }
+      ],
+      "caveat_to_explain": "The app does not replace site access requirements; distinguish locked indicators from chapters already unlocked by the account."
+    },
+    {
+      "group": "Sources",
+      "label": "Per-source settings",
+      "target": "/docs/users/sources/#source-settings",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Source-specific settings vary; verify where settings appear and which changes require reload."
+    },
+    {
+      "group": "Sources",
+      "label": "Source mirrors",
+      "target": "/docs/users/sources/#source-mirrors",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify mirror selection and effect on novel links, sign-in, and existing library entries."
+    },
+    {
+      "group": "Sources",
+      "label": "Content language filters",
+      "target": "/docs/users/finding-novels/#content-languages",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/sources.mdx",
+          "lines": "13,42"
+        }
+      ],
+      "caveat_to_explain": "Distinguish source/content language filtering from interface translation."
+    },
+    {
+      "group": "Sources",
+      "label": "Whole-book EPUB sources",
+      "target": "/docs/users/epub/#epub-sources",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "28"
+        }
+      ],
+      "caveat_to_explain": "Distinguish source-delivered whole-book EPUBs from imported local EPUBs and chapter downloads."
+    },
+    {
+      "group": "Sources",
+      "label": "In-app browser",
+      "target": "/docs/users/sources/#in-app-browser",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "31"
+        },
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "30"
+        }
+      ],
+      "caveat_to_explain": "Verify opening and returning from browser, session scope, and externally opened links."
+    },
+    {
+      "group": "Sources",
+      "label": "Browser fallback for site checks",
+      "target": "/docs/users/sources/#site-checks",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "31"
+        }
+      ],
+      "caveat_to_explain": "Explain when fallback appears and what to do when a site check cannot finish; verify actual UI flow."
+    },
+    {
+      "group": "Library",
+      "label": "Categories",
+      "target": "/docs/users/library/#categories",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "8-12"
+        }
+      ],
+      "caveat_to_explain": "Verify creating, assigning, reordering, and category-specific refresh controls; hidden categories link to privacy."
+    },
+    {
+      "group": "Library",
+      "label": "Library search",
+      "target": "/docs/users/library/#library-search",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "12"
+        }
+      ],
+      "caveat_to_explain": "Explain search scope and clearing the query; verify searchable fields."
+    },
+    {
+      "group": "Library",
+      "label": "Filter by status, source and type",
+      "target": "/docs/users/library/#library-filters",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "12"
+        }
+      ],
+      "caveat_to_explain": "Document exact status, source, and type options and how filters combine."
+    },
+    {
+      "group": "Library",
+      "label": "Six sort fields",
+      "target": "/docs/users/library/#library-sorting",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "12"
+        }
+      ],
+      "caveat_to_explain": "Verify all six field names, ordering direction, and per-category persistence."
+    },
+    {
+      "group": "Library",
+      "label": "Grid or list view",
+      "target": "/docs/users/library/#library-layout",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain grid/list control and which display settings apply to each."
+    },
+    {
+      "group": "Library",
+      "label": "Two to five columns",
+      "target": "/docs/users/library/#library-columns",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify two-to-five column options and responsive/orientation behavior."
+    },
+    {
+      "group": "Library",
+      "label": "Cover badges",
+      "target": "/docs/users/library/#cover-badges",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify badge meanings, visibility options, and relationship to chapter counts."
+    },
+    {
+      "group": "Library",
+      "label": "Bulk novel actions",
+      "target": "/docs/users/library/#bulk-actions",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify selection, available bulk actions, cancellation, and destructive action confirmations."
+    },
+    {
+      "group": "Library",
+      "label": "Personal ratings",
+      "target": "/docs/users/novel-details/#personal-rating",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "22"
+        }
+      ],
+      "caveat_to_explain": "Verify rating range and editing/resetting; distinguish personal rating from source ratings."
+    },
+    {
+      "group": "Library",
+      "label": "Edit novel details",
+      "target": "/docs/users/novel-details/#editing-details",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "22"
+        }
+      ],
+      "caveat_to_explain": "Verify editable fields and whether refresh replaces manual metadata."
+    },
+    {
+      "group": "Library",
+      "label": "Custom covers",
+      "target": "/docs/users/novel-details/#custom-covers",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "22"
+        }
+      ],
+      "caveat_to_explain": "Verify image picking, resetting, and whether custom covers are backed up."
+    },
+    {
+      "group": "Library",
+      "label": "EPUB import",
+      "target": "/docs/users/epub/#importing-epubs",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "14-18"
+        }
+      ],
+      "caveat_to_explain": "Keep the original EPUB recoverable; source extensions are unnecessary for local imports."
+    },
+    {
+      "group": "Library",
+      "label": "Open EPUBs from other apps",
+      "target": "/docs/users/epub/#opening-from-other-apps",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify supported Android Open with/share entry points and whether opening imports a persistent copy."
+    },
+    {
+      "group": "Library",
+      "label": "Scheduled library updates",
+      "target": "/docs/users/library-updates/#scheduled-updates",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "12,22"
+        },
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "35"
+        }
+      ],
+      "caveat_to_explain": "Verify global and category schedules, exclusions, connectivity requirements, and Android background limits."
+    },
+    {
+      "group": "Library",
+      "label": "New-chapter notifications",
+      "target": "/docs/users/library-updates/#new-chapter-notifications",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify notification settings and Android permission prerequisites; avoid guaranteed delivery claims."
+    },
+    {
+      "group": "Library",
+      "label": "Updates feed",
+      "target": "/docs/users/library-updates/#updates-feed",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain feed contents, read state, opening chapters, and whether history can be cleared."
+    },
+    {
+      "group": "Library",
+      "label": "Failed update review",
+      "target": "/docs/users/library-updates/#failed-updates",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify where failed updates appear and whether retry is per novel or all failures."
+    },
+    {
+      "group": "Library",
+      "label": "Chapter search and sort",
+      "target": "/docs/users/chapter-list/#searching-and-sorting",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify chapter search fields, sort direction, and effects on displayed selection."
+    },
+    {
+      "group": "Library",
+      "label": "Jump to a chapter",
+      "target": "/docs/users/chapter-list/#jumping-to-a-chapter",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify whether navigation uses chapter number, list position, or another identifier."
+    },
+    {
+      "group": "Library",
+      "label": "Chapter range selection",
+      "target": "/docs/users/chapter-list/#selecting-chapter-ranges",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify range endpoints, selection scope, and actions available on a range."
+    },
+    {
+      "group": "Library",
+      "label": "Reading history",
+      "target": "/docs/users/history/#reading-history",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "38"
+        }
+      ],
+      "caveat_to_explain": "Verify what creates an entry and resuming/removing entries; explain incognito separately."
+    },
+    {
+      "group": "Library",
+      "label": "Browsing history",
+      "target": "/docs/users/history/#browsing-history",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Distinguish browsing history from reading history and verify entry creation and deletion."
+    },
+    {
+      "group": "Library",
+      "label": "Reading statistics",
+      "target": "/docs/users/history/#reading-statistics",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "39"
+        }
+      ],
+      "caveat_to_explain": "Verify metric definitions and time ranges; do not infer accuracy or sync behavior."
+    },
+    {
+      "group": "Library",
+      "label": "Source migration",
+      "target": "/docs/users/migration/#moving-between-sources",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "24"
+        },
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "59"
+        }
+      ],
+      "caveat_to_explain": "Matched chapters carry progress; unmatched chapters lose progress. Verify matching review and migration steps."
+    },
+    {
+      "group": "Library",
+      "label": "Share cards",
+      "target": "/docs/users/novel-details/#sharing-novels",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify share-card content and sharing flow; note what personal metadata is included only after checking."
+    },
+    {
+      "group": "Library",
+      "label": "Keep novels after removing a source",
+      "target": "/docs/users/sources/#removing-sources",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Clarify retained novel metadata versus ability to fetch chapters after removal; verify reinstall/recovery flow."
+    },
+    {
+      "group": "Reader",
+      "label": "Light, sepia, dark and black themes",
+      "target": "/docs/users/reading/#page-themes",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "8-10"
+        }
+      ],
+      "caveat_to_explain": "Distinguish reader page themes from app theme; verify all four choices and persistence."
+    },
+    {
+      "group": "Reader",
+      "label": "Sans, serif or monospace",
+      "target": "/docs/users/reading/#font-family",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "10"
+        }
+      ],
+      "caveat_to_explain": "Verify sans, serif, and monospace options; do not imply arbitrary custom font import."
+    },
+    {
+      "group": "Reader",
+      "label": "Font size control",
+      "target": "/docs/users/reading/#font-size",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "10"
+        }
+      ],
+      "caveat_to_explain": "Verify units, range, increment, and reset behavior before publishing values."
+    },
+    {
+      "group": "Reader",
+      "label": "Line and paragraph spacing",
+      "target": "/docs/users/reading/#text-spacing",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "10"
+        }
+      ],
+      "caveat_to_explain": "Distinguish line spacing from paragraph spacing and document actual controls."
+    },
+    {
+      "group": "Reader",
+      "label": "Per-novel text alignment",
+      "target": "/docs/users/reading/#text-alignment",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain per-novel scope and available alignments after verifying controls."
+    },
+    {
+      "group": "Reader",
+      "label": "Right-to-left layout",
+      "target": "/docs/users/reading/#right-to-left",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Distinguish paragraph direction from interface language and verify where the setting applies."
+    },
+    {
+      "group": "Reader",
+      "label": "Rotation lock",
+      "target": "/docs/users/reading/#rotation-lock",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "10"
+        }
+      ],
+      "caveat_to_explain": "Orientation is mentioned but lock workflow and scope need verification."
+    },
+    {
+      "group": "Reader",
+      "label": "Hide the status bar",
+      "target": "/docs/users/reading/#status-bar",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify status-bar visibility and how readers restore controls."
+    },
+    {
+      "group": "Reader",
+      "label": "Scrolling chapter view",
+      "target": "/docs/users/reading/#scrolling",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain navigation within and between chapters and any applicable reading-mode choices."
+    },
+    {
+      "group": "Reader",
+      "label": "Resume where you stopped",
+      "target": "/docs/users/reading/#resuming-progress",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "6,20-24"
+        }
+      ],
+      "caveat_to_explain": "Explain how progress is saved and reopened; verify restore precision and migration exceptions."
+    },
+    {
+      "group": "Reader",
+      "label": "Chapter and book percentages",
+      "target": "/docs/users/reading/#progress-indicators",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "22"
+        }
+      ],
+      "caveat_to_explain": "Define chapter and whole-book percentage calculations and display locations after verification."
+    },
+    {
+      "group": "Reader",
+      "label": "Auto-mark as read",
+      "target": "/docs/users/reading/#marking-as-read",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify auto-mark threshold and interaction with manually marking chapters."
+    },
+    {
+      "group": "Reader",
+      "label": "Bold, italic and link formatting",
+      "target": "/docs/users/reading/#chapter-formatting",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain supported formatting depends on supplied chapter content; avoid promising faithful rendering of every site."
+    },
+    {
+      "group": "Reader",
+      "label": "Zoom, save or share images",
+      "target": "/docs/users/reading/#chapter-images",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify gesture/menu actions, storage permissions, and interaction with image masking."
+    },
+    {
+      "group": "Reader",
+      "label": "Selectable text",
+      "target": "/docs/users/reading/#selecting-text",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify selection entry point and available actions without promising unsupported copy/translation workflows."
+    },
+    {
+      "group": "Reader",
+      "label": "Open the original page",
+      "target": "/docs/users/reading/#original-page",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "30"
+        }
+      ],
+      "caveat_to_explain": "Verify original chapter URL action and whether it uses in-app or external browsing."
+    },
+    {
+      "group": "Reader",
+      "label": "Live settings preview",
+      "target": "/docs/users/reading/#settings-preview",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify which controls preview immediately and whether closing commits or cancels changes."
+    },
+    {
+      "group": "Listening",
+      "label": "Read aloud",
+      "target": "/docs/users/listening/#starting-playback",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "18-22"
+        }
+      ],
+      "caveat_to_explain": "Verify how to start/stop reading aloud and playback start position."
+    },
+    {
+      "group": "Listening",
+      "label": "On-device voices",
+      "target": "/docs/users/listening/#device-voices",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "20-22"
+        }
+      ],
+      "caveat_to_explain": "Voice availability depends on installed engine/languages; offline availability must be checked per voice."
+    },
+    {
+      "group": "Listening",
+      "label": "ElevenLabs voices",
+      "target": "/docs/users/listening/#elevenlabs",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "20-22"
+        }
+      ],
+      "caveat_to_explain": "Requires the reader's own ElevenLabs key/account and network access; verify configuration and credential removal."
+    },
+    {
+      "group": "Listening",
+      "label": "A voice for each language",
+      "target": "/docs/users/listening/#language-voices",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "20"
+        }
+      ],
+      "caveat_to_explain": "Verify language detection, assignment, fallback, and whether selection is per engine."
+    },
+    {
+      "group": "Listening",
+      "label": "Voice preview",
+      "target": "/docs/users/listening/#previewing-voices",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify preview controls and whether a cloud preview consumes account usage."
+    },
+    {
+      "group": "Listening",
+      "label": "Install device voices",
+      "target": "/docs/users/listening/#installing-device-voices",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "20"
+        }
+      ],
+      "caveat_to_explain": "Verify Android engine handoff and device-dependent installation UI."
+    },
+    {
+      "group": "Listening",
+      "label": "Speech rate and pitch",
+      "target": "/docs/users/listening/#rate-and-pitch",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify ranges and engine-specific support; do not assume all cloud voices support pitch."
+    },
+    {
+      "group": "Listening",
+      "label": "Auto-advance chapters",
+      "target": "/docs/users/listening/#chapter-advance",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify auto-advance setting and behavior at locked, unavailable, or undownloaded chapters."
+    },
+    {
+      "group": "Listening",
+      "label": "Paragraph highlight and follow",
+      "target": "/docs/users/listening/#paragraph-following",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify highlight and auto-scroll controls independently and behavior when scrolling manually."
+    },
+    {
+      "group": "Listening",
+      "label": "Background playback",
+      "target": "/docs/users/listening/#background-playback",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain verified background requirements and Android interruption/battery behavior without guarantees."
+    },
+    {
+      "group": "Listening",
+      "label": "Notification controls",
+      "target": "/docs/users/listening/#notification-controls",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify notification permission needs and exact playback actions."
+    },
+    {
+      "group": "Listening",
+      "label": "Media button support",
+      "target": "/docs/users/listening/#media-buttons",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify supported headset/media button actions; device support may vary."
+    },
+    {
+      "group": "Listening",
+      "label": "ElevenLabs usage meter",
+      "target": "/docs/users/listening/#cloud-usage",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify meter units, refresh timing, and account scope; avoid asserting it is an authoritative billing total."
+    },
+    {
+      "group": "Listening",
+      "label": "Replay cache for cloud audio",
+      "target": "/docs/users/listening/#cloud-replay-cache",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify cache storage, eviction, reuse conditions, and offline replay limits."
+    },
+    {
+      "group": "Downloads",
+      "label": "Chapter and image downloads",
+      "target": "/docs/users/downloads/#chapters-and-images",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "12-16"
+        }
+      ],
+      "caveat_to_explain": "Wait for downloads to finish; adding a library entry does not download content."
+    },
+    {
+      "group": "Downloads",
+      "label": "Download all, unread or next ten",
+      "target": "/docs/users/downloads/#batch-downloads",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "30"
+        },
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "14"
+        }
+      ],
+      "caveat_to_explain": "Verify all/unread/next-ten scopes and how chapter ordering affects selection."
+    },
+    {
+      "group": "Downloads",
+      "label": "Auto-download new chapters",
+      "target": "/docs/users/library-updates/#auto-downloads",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify enabling and exclusions, scheduling dependencies, and storage/network considerations."
+    },
+    {
+      "group": "Downloads",
+      "label": "Downloads screen",
+      "target": "/docs/users/downloads/#download-queue",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify Downloads navigation, status labels, and distinction from completed local files."
+    },
+    {
+      "group": "Downloads",
+      "label": "Pause and resume",
+      "target": "/docs/users/downloads/#pausing-and-resuming",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify whether pause affects current transfer, queued work, or entire service."
+    },
+    {
+      "group": "Downloads",
+      "label": "Move to the top of the queue",
+      "target": "/docs/users/downloads/#queue-priority",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify move-to-top action and whether an active download is interrupted."
+    },
+    {
+      "group": "Downloads",
+      "label": "Parallel downloads",
+      "target": "/docs/users/downloads/#parallel-downloads",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify concurrency setting/range and source-specific limitations."
+    },
+    {
+      "group": "Downloads",
+      "label": "Retry, cancel or redownload",
+      "target": "/docs/users/downloads/#retrying-and-removing",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Distinguish retry, cancel, redownload, and deleting stored files; verify each action's scope."
+    },
+    {
+      "group": "Downloads",
+      "label": "Background downloads",
+      "target": "/docs/users/downloads/#background-downloads",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "14"
+        }
+      ],
+      "caveat_to_explain": "Download service is mentioned; document verified Android background/notification requirements."
+    },
+    {
+      "group": "Downloads",
+      "label": "Whole-book EPUB downloads",
+      "target": "/docs/users/epub/#whole-book-downloads",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "28"
+        }
+      ],
+      "caveat_to_explain": "Explain source-dependent whole-book download flow versus per-chapter downloads and local import."
+    },
+    {
+      "group": "Downloads",
+      "label": "EPUB export",
+      "target": "/docs/users/epub/#exporting-epubs",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify export scope, file destination, metadata, and whether chapter content must already be downloaded."
+    },
+    {
+      "group": "NovelUpdates",
+      "label": "Popular and activity rankings",
+      "target": "/docs/users/novelupdates/#rankings",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "54"
+        }
+      ],
+      "caveat_to_explain": "Verify available ranking lists and refresh behavior; integration is not affiliation."
+    },
+    {
+      "group": "NovelUpdates",
+      "label": "Latest releases",
+      "target": "/docs/users/novelupdates/#latest-releases",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "54"
+        }
+      ],
+      "caveat_to_explain": "Distinguish release listings from readable chapter availability in installed sources."
+    },
+    {
+      "group": "NovelUpdates",
+      "label": "Advanced search",
+      "target": "/docs/users/novelupdates/#advanced-search",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify filters and result behavior before documenting; avoid reusing source-search instructions."
+    },
+    {
+      "group": "NovelUpdates",
+      "label": "Series pages and reviews",
+      "target": "/docs/users/novelupdates/#series-and-reviews",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "54"
+        }
+      ],
+      "caveat_to_explain": "Verify metadata/review scope and distinguish external community data from personal novel details."
+    },
+    {
+      "group": "NovelUpdates",
+      "label": "Saved series list",
+      "target": "/docs/users/novelupdates/#saved-series",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify persistence and adding/removing entries; distinguish saved series from library novels."
+    },
+    {
+      "group": "NovelUpdates",
+      "label": "Find a series in your sources",
+      "target": "/docs/users/novelupdates/#finding-source-matches",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "54"
+        }
+      ],
+      "caveat_to_explain": "Matching depends on installed sources; verify manual search and match-selection workflow."
+    },
+    {
+      "group": "NovelUpdates",
+      "label": "Novel panel with auto-match",
+      "target": "/docs/users/novelupdates/#novel-panel",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "54"
+        }
+      ],
+      "caveat_to_explain": "Explain auto-match uncertainty and correction/retry options only after checking actual controls."
+    },
+    {
+      "group": "Backups and storage",
+      "label": "Manual backups",
+      "target": "/docs/users/backups/#manual-backups",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "26-30"
+        }
+      ],
+      "caveat_to_explain": "Verify creation, destination, included data, and restoring a backup; keep copy outside device."
+    },
+    {
+      "group": "Backups and storage",
+      "label": "Scheduled backups",
+      "target": "/docs/users/backups/#scheduled-backups",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "28"
+        },
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "58"
+        }
+      ],
+      "caveat_to_explain": "Verify schedule, retention, destination access, and failure visibility."
+    },
+    {
+      "group": "Backups and storage",
+      "label": "Restore by merging",
+      "target": "/docs/users/backups/#restoring-by-merge",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "56"
+        }
+      ],
+      "caveat_to_explain": "Verify merge conflict rules, duplicates, settings handling, and prerequisites; do not promise exact device cloning."
+    },
+    {
+      "group": "Backups and storage",
+      "label": "Categories and settings in backups",
+      "target": "/docs/users/backups/#included-data",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "28"
+        }
+      ],
+      "caveat_to_explain": "Enumerate verified included categories/settings and exclusions; backups and offline chapters are separate."
+    },
+    {
+      "group": "Backups and storage",
+      "label": "Storage usage breakdown",
+      "target": "/docs/users/storage/#usage-breakdown",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify storage categories and calculation scope; distinguish app data from original external EPUBs."
+    },
+    {
+      "group": "Backups and storage",
+      "label": "Cache cleanup",
+      "target": "/docs/users/storage/#clearing-cache",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify which caches can be cleared and consequences for offline chapter/audio availability."
+    },
+    {
+      "group": "Hide and lock",
+      "label": "Incognito mode",
+      "target": "/docs/users/privacy/#incognito",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "46"
+        }
+      ],
+      "caveat_to_explain": "Define exactly which history/progress records are suppressed after checking; avoid broad privacy claims."
+    },
+    {
+      "group": "Hide and lock",
+      "label": "PIN-locked hidden categories",
+      "target": "/docs/users/privacy/#hidden-categories",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/library.mdx",
+          "lines": "12"
+        },
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "34"
+        }
+      ],
+      "caveat_to_explain": "PIN-locked categories are hidden from ordinary library view; verify PIN setup/recovery and do not imply file encryption."
+    },
+    {
+      "group": "Hide and lock",
+      "label": "Fingerprint or face unlock",
+      "target": "/docs/users/privacy/#biometric-unlock",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify device enrollment prerequisites, fallback PIN, and which lock biometric unlock opens."
+    },
+    {
+      "group": "Hide and lock",
+      "label": "Image masking",
+      "target": "/docs/users/privacy/#image-masking",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/reading.mdx",
+          "lines": "24-26"
+        }
+      ],
+      "caveat_to_explain": "Tap reveals an image and hold peeks; verify scope/defaults and avoid implying source traffic is hidden."
+    },
+    {
+      "group": "Hide and lock",
+      "label": "Delete or clear history",
+      "target": "/docs/users/history/#clearing-history",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify per-entry deletion versus clearing entire reading/browsing history, confirmation, and recoverability."
+    },
+    {
+      "group": "Appearance and language",
+      "label": "System, light or dark theme",
+      "target": "/docs/users/appearance/#app-theme",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Distinguish system/light/dark app theme from reader page themes and verify setting location."
+    },
+    {
+      "group": "Appearance and language",
+      "label": "Dynamic color on Android 12+",
+      "target": "/docs/users/appearance/#dynamic-color",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Android 12+ prerequisite; verify interaction with selected palettes and system colors."
+    },
+    {
+      "group": "Appearance and language",
+      "label": "Seven color palettes",
+      "target": "/docs/users/appearance/#color-palettes",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify seven palette names and how palette choice interacts with dynamic color."
+    },
+    {
+      "group": "Appearance and language",
+      "label": "Browse grid or list",
+      "target": "/docs/users/appearance/#browse-layout",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Distinguish Browse layout preferences from Library layout preferences."
+    },
+    {
+      "group": "Appearance and language",
+      "label": "19 interface languages",
+      "target": "/docs/users/appearance/#interface-language",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/comparison.mdx",
+          "lines": "64"
+        }
+      ],
+      "caveat_to_explain": "Verify current 19-language list and selection behavior; separate interface language from source content and speech voices."
+    },
+    {
+      "group": "Appearance and language",
+      "label": "Language setup on first launch",
+      "target": "/docs/users/appearance/#first-launch-language",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify first-launch selection, defaults, and later language changes."
+    },
+    {
+      "group": "Appearance and language",
+      "label": "Replayable guided tours",
+      "target": "/docs/users/appearance/#guided-tours",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify replay entry point and tour scope; explain skipping/replaying without implying settings reset."
+    },
+    {
+      "group": "App updates and tasks",
+      "label": "In-app updates",
+      "target": "/docs/users/install/#in-app-updates",
+      "coverage": "documented",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/install.mdx",
+          "lines": "21-25"
+        }
+      ],
+      "caveat_to_explain": "Updater downloads signed GitHub releases; Android update signing/channel constraints still apply."
+    },
+    {
+      "group": "App updates and tasks",
+      "label": "Stable and beta channels",
+      "target": "/docs/users/install/#release-channels",
+      "coverage": "partial",
+      "evidence": [
+        {
+          "file": "docs/content/docs/users/install.mdx",
+          "lines": "25"
+        }
+      ],
+      "caveat_to_explain": "Verify stable/beta switching controls and compatibility; do not assume switching channel always allows installation."
+    },
+    {
+      "group": "App updates and tasks",
+      "label": "SHA-256 update checks",
+      "target": "/docs/users/install/#update-integrity",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Explain checksum failure recovery and distinguish file integrity from signing identity."
+    },
+    {
+      "group": "App updates and tasks",
+      "label": "Changelog viewer",
+      "target": "/docs/users/install/#changelog",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify changelog entry point, versions shown, and whether network access is required."
+    },
+    {
+      "group": "App updates and tasks",
+      "label": "Skip a version",
+      "target": "/docs/users/install/#skipping-versions",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify skip persistence and how to check/install a skipped release later."
+    },
+    {
+      "group": "App updates and tasks",
+      "label": "Tasks screen",
+      "target": "/docs/users/tasks/#background-tasks",
+      "coverage": "missing",
+      "evidence": [],
+      "caveat_to_explain": "Verify task types, statuses, navigation, and available retry/cancel actions; avoid conflating with download queue."
+    }
+  ],
+  "validation_results": {
+    "exact_feature_inventory": true,
+    "all_targets_have_specific_fragment": true,
+    "all_target_prefixes": "/docs/users/",
+    "all_target_anchor_ids_unique_per_page": true,
+    "current_mdx_read": "All users/*.mdx and users/meta.json; docs/index.mdx, docs/comparison.mdx and docs/meta.json.",
+    "proof_boundary": "Original planning validation only. Current built pages, fragments, inventory preservation and browser behavior are checked separately; see features-and-docs-validation.md."
+  }
+}

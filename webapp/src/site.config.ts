@@ -2,8 +2,7 @@ export const site = {
   brand: 'Grimoire',
   domain: 'grimoireapp.org',
   url: 'https://grimoireapp.org',
-  tagline: 'An Android novel reader. Browse, fetch, and read from community-maintained sources.',
-  description: 'Grimoire is an open-source Android novel reader with pluggable content extensions.',
+  description: 'Grimoire is an open-source Android reader for novels of all kinds, from light novels and web novels to your own EPUB collection. Read, listen, organize your library, and download chapters for offline reading.',
   android: {
     repo: 'Operation-Grimoire/grimoire',
     repoUrl: 'https://github.com/Operation-Grimoire/grimoire',

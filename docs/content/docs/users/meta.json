@@ -1,4 +1,10 @@
 {
-  "title": "Users",
-  "pages": ["index", "install"]
+  "title": "For readers",
+  "pages": [
+    "---Start here---", "index", "install",
+    "---Find books---", "sources", "repositories", "finding-novels", "novelupdates",
+    "---Manage books---", "library", "novel-details", "chapter-list", "library-updates", "history", "migration",
+    "---Read & listen---", "reading", "listening", "downloads", "epub",
+    "---Settings & maintenance---", "backups", "storage", "privacy", "appearance", "tasks"
+  ]
 }

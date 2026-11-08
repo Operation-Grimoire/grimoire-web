@@ -1,22 +1,59 @@
 ---
 title: Install & updates
-description: Install Grimoire on your Android device and keep it up to date.
+description: Install Grimoire on Android and keep it up to date.
 ---
 
-## Download the APK
+Grimoire is distributed as an Android APK through GitHub Releases. It requires Android 8.0 or later.
 
-Grimoire is distributed as an Android APK from GitHub Releases.
+<GuideButton href="https://github.com/Operation-Grimoire/grimoire/releases/latest/download/grimoire.apk">Download the APK</GuideButton>
 
-1. On your device, open the [latest release](https://github.com/Operation-Grimoire/grimoire/releases/latest).
-2. Download `grimoire.apk`.
-3. Open the file and allow installation from your browser if prompted.
+## Install on Android
 
-<Callout title="Not on the Play Store">
-Grimoire installs directly, which is why Android asks you to confirm the source
-the first time.
+1. On your Android device, download `grimoire.apk` using the button above. You can also find it on the [latest release page](https://github.com/Operation-Grimoire/grimoire/releases/latest).
+2. Open the downloaded file from your browser or file manager.
+3. If Android asks, allow that browser or file manager to install apps, then return to the installer.
+4. Tap **Install**, then open Grimoire.
+
+<Callout title="Installing outside the Play Store">
+Grimoire installs directly from its APK. Android asks you to allow the app that opens the installer the first time. The wording varies by device.
 </Callout>
 
-## In-app updates
+## Keep Grimoire up to date
 
-Grimoire updates itself: when a new release is available it can download and
-install the new APK from within the app, so you don't have to revisit GitHub.
+Grimoire has an in-app updater that downloads signed releases from GitHub. Follow the update prompt when a new version is available.
+
+You can also download the latest APK and install it over your existing copy. Use the same release channel and signing key; Android will refuse an update signed with a different key.
+
+## In-app updates [#in-app-updates]
+
+Open **More → About** to inspect the installed version and check for updates. When an update is offered, download it and wait for **Download complete**, then choose **Install** and confirm Android's installer. Downloading an APK is not the same as installing it. Return to About afterward to check the installed version.
+
+If Android blocks installation, allow Grimoire to install packages in system settings. Keep a [library backup](/docs/users/backups/) before replacing an installation.
+
+## Release channels [#release-channels]
+
+Use the update-channel control in **About** to choose stable or beta updates. Beta can offer prereleases and can also select a newer stable release. The website's main APK link uses GitHub's latest stable release.
+
+Changing the channel changes update selection, not the installed app immediately. Android can refuse a downgrade or a package signed by another key. Do not uninstall to force a channel switch without backing up and separately preserving EPUB files.
+
+## Update checksum verification [#update-integrity]
+
+When a release supplies a SHA-256 checksum asset, Grimoire verifies the downloaded APK against it. If verification fails, do not install that download; retry from the official release and report a persistent mismatch. Not every release supplies checksum metadata. Android's signing checks remain separate from file checksum verification.
+
+## Changelog [#changelog]
+
+Use the changelog or **What's new** view in the update flow to read the available release notes. If notes are absent, open the linked GitHub release page. Loading new release information requires connectivity; a missing changelog does not mean installation completed or failed.
+
+## Skipping a version [#skipping-versions]
+
+Choose **Skip this version** on an offered update to dismiss that version's prompt. This does not uninstall your current app or block later releases. To install it later, open the official release page and download its APK, subject to Android's version and signature requirements.
+
+## If installation fails
+
+- Check that your device runs Android 8.0 or later.
+- If the download was interrupted, download the APK again from the release page.
+- If Android reports a conflicting package or signature, check which build is already installed. Back up your library before removing an existing installation.
+
+## Next: find a source
+
+The official extension repository is already enabled. [Install a source extension](/docs/users/sources/) to browse novels, or [import an EPUB](/docs/users/library/#import-an-epub) from your own collection.

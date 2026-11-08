@@ -2,8 +2,8 @@
  * A feature-table cell: a short title with an optional muted subtitle.
  * Pass `href` to link the title to a doc page. Registered in mdx.tsx.
  *
- *   <Feature title="EPUB sources" sub="Browse & fetch from Z-Library, Libgen" />
- *   <Feature title="APK extensions" sub="..." href="/docs/extensions" />
+ *   <Feature title="EPUB sources" sub="Sources can deliver entire books as EPUB files" />
+ *   <Feature title="APK extensions" sub="..." href="/docs/extensions/" />
  */
 export function Feature({
   title,

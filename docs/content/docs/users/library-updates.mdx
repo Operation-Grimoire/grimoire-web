@@ -1,0 +1,34 @@
+---
+title: Keeping the library updated
+description: Refresh books, schedule updates, receive notifications, and review failures.
+---
+
+A library update asks each source for new chapter information. It is separate from updating the Grimoire APK or an extension.
+
+## Scheduled updates [#scheduled-updates]
+
+Open **Settings → Library updates** and enable **Update automatically**. Choose the interval and approximate time, then review **Only on Wi-Fi**, **Only while charging**, and the sync scope. Category settings can narrow which books are refreshed. EPUB refresh is off by default because EPUB books do not have a changing source chapter list.
+
+Use **Update library now** to request a manual background refresh. You can also update from Library. Scheduled work depends on Android's background scheduler and may run later than the selected time. Check constraints and [Tasks](/docs/users/tasks/) if it has not run.
+
+## New-chapter notifications [#new-chapter-notifications]
+
+Open a saved novel's menu and configure notifications for new chapters. Locked-chapter notifications are a separate choice where available. Allow Android notifications when requested and check the app's system notification settings if alerts are missing.
+
+Notifications require an update to discover chapters. Enabling them does not bypass source login or make Android run a schedule immediately.
+
+## Updates feed [#updates-feed]
+
+Open **More → Updates** to see discovered chapters. Open a chapter from the feed to read it. The feed depends on successful library refreshes; it is not the same as the source's latest-book catalog. If a known release is absent, refresh its novel and check for warnings.
+
+## Failed updates [#failed-updates]
+
+Open **More → Update warnings** after a failed or partial refresh. Entries distinguish missing extensions, empty chapter responses, unexpectedly changed lists, and incomplete metadata. Grimoire can keep the previous list or details rather than replacing them with a suspicious response.
+
+Install a missing source, update a broken extension, or resolve login requirements, then use **Retry all**. Dismissing a warning removes it from the review list; it does not repair the source. Check the affected novel afterward.
+
+## Auto-downloads [#auto-downloads]
+
+Enable auto-download for new chapters in a saved novel's new-chapter options. A successful library update can then add newly discovered chapters to the download queue. This does not fetch the entire existing backlog. Use the novel's download menu for that.
+
+Check **More → Downloads** for completion or errors before going offline. Source access, storage, network availability, and Android background limits still apply.

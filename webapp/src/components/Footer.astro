@@ -1,17 +1,4 @@
 ---
 import { site } from '../site.config';
-const year = new Date().getFullYear();
 ---
-
-<footer class="border-t border-rune/60 mt-24">
-  <div class="max-w-4xl mx-auto px-6 py-8 flex flex-col sm:flex-row gap-4 items-center justify-between text-sm text-vellum-dim">
-    <div>
-      © {year} <span class="text-vellum">{site.brand}</span>
-    </div>
-    <nav class="flex gap-6">
-      <a href="/" class="hover:text-ember transition-colors">Home</a>
-      <a href={site.android.repoUrl} class="hover:text-ember transition-colors" rel="noopener">Source</a>
-      <a href={site.android.latestReleaseUrl} class="hover:text-ember transition-colors" rel="noopener">Releases</a>
-    </nav>
-  </div>
-</footer>
+<footer class="site-footer page-width"><a href="/" class="footer-name">Grimoire</a><nav aria-label="Footer navigation"><a href="/docs/">Docs</a><a href={site.android.repoUrl}>GitHub</a><a href={site.android.latestReleaseUrl}>Releases</a></nav><span class="footer-copyright">© {new Date().getFullYear()} Grimoire</span></footer>
