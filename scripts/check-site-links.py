@@ -95,7 +95,7 @@ def main():
     }
     for url, fragments in published_aliases.items():
         for fragment in fragments:
-            if fragment not in pages[url].ids:
+            if url not in pages or fragment not in pages[url].ids:
                 errors.add(f"Published fragment removed: {url}#{fragment}")
 
     if errors:
