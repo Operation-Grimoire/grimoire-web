@@ -138,3 +138,7 @@ dist
 .idea/
 # Combined deploy output (assemble-site.sh)
 /dist-site/
+/.playwright-mcp/
+/.impeccable/review/
+/.impeccable/critique/
+/.impeccable/mocks/

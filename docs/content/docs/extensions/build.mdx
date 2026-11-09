@@ -1,0 +1,51 @@
+---
+title: Build an extension
+description: Create a source extension for Grimoire.
+---
+
+Start in the [official extension repository](https://github.com/Operation-Grimoire/grimoire-extensions). Use an existing source with similar behavior as your reference. The [shared API repository](https://github.com/Operation-Grimoire/grimoire-extensions-api) defines the models and source capabilities.
+
+## Set up a module
+
+Extensions live under `src/{language}/{name}/`. The settings script discovers directories containing `build.gradle.kts` and assigns module names such as `:en-yoursource`.
+
+1. Copy a small, comparable extension into a new directory.
+2. Give it a unique Android namespace and application ID.
+3. Update its label, source implementation class, and manifest metadata.
+4. Keep the extension's version code and release version explicit in its Gradle configuration.
+
+The manifest marks the package as an extension with `grimoire.extension` and identifies its implementation with `grimoire.extension.class`. Refer to a working module's manifest for the complete declaration.
+
+## Implement the source
+
+Every source implements the base `Source` contract. Add only the capabilities the site supports. For example:
+
+- `PopularSource`, `LatestSource`, and `SearchSource` expose discovery features.
+- `ChapterListSource` or `PaginatedSource` supplies chapter listings.
+- `PageListSource` supplies chapter content.
+- `EpubSource` supports whole-book sources.
+- `WebViewLoginSource` supports sources that need an interactive login.
+
+`HttpSource` provides shared HTTP helpers. `ParsedHttpSource` adds Jsoup parsing helpers. Existing shared site themes may already cover the site you are adding.
+
+Declare the source's metadata with `@SourceInfo`. Source identity is derived from its package name; do not invent an independent source ID.
+
+## Build and verify
+
+From the extension repository, build your module. Replace `en-yoursource` with your module name:
+
+```sh
+./gradlew :en-yoursource:assembleDebug
+```
+
+On Windows, use `gradlew.bat`. Install the resulting extension APK alongside Grimoire on a device or emulator.
+
+Verify the complete path: discovery, novel details, chapter ordering, chapter text, and images. Test pagination and login when the source supports them. A successful HTTP response alone does not prove that the extracted chapter matches the site.
+
+Use captured site fixtures for parser regressions. Before contributing, follow the extension repository's current build and review instructions.
+
+## Publish
+
+Extensions are signed Android packages. Use the repository's release workflow as the reference for producing APKs and publishing the repository index. Preserve the signing key across updates to an existing extension.
+
+Readers install extensions from a [repository](/docs/users/sources/#add-another-repository), independently of updates to Grimoire itself.

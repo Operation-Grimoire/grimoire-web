@@ -7,7 +7,7 @@ import { site } from '../site.config';
 <Layout
   title="Add Repository"
   description="Add an extension repository to the Grimoire reader app."
-  fontPreloads={[fonts.cormorant400, fonts.interBody]}
+  fontPreloads={[fonts.display, fonts.interBody]}
 >
   <script is:inline>
     // Resolve the no-params vs has-params UI before first paint (synchronous,
@@ -20,9 +20,8 @@ import { site } from '../site.config';
       );
     })();
   </script>
-  <main class="max-w-2xl mx-auto px-6 py-16 sm:py-24">
+  <main id="main-content" tabindex="-1" class="max-w-2xl mx-auto px-6 py-16 sm:py-24">
     <header>
-      <p class="font-mono text-xs uppercase tracking-widest text-ember">Extensions</p>
       <h1 class="mt-3 font-display text-5xl sm:text-6xl text-vellum">
         Add a repository to <span class="text-ember">{site.brand}</span>
       </h1>

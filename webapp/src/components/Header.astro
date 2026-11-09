@@ -1,0 +1,9 @@
+---
+import { site } from '../site.config';
+import Icon from './Icon.astro';
+---
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header"><div class="header-inner">
+  <a class="brand" href="/" aria-label="Grimoire home"><img src="/icon-192.png" alt="" width="52" height="52" /><span>{site.brand}</span></a>
+  <nav aria-label="Main navigation"><a href="/#overview">Features</a><a href="/docs/">Docs</a><a href={site.android.repoUrl} class="github-nav">GitHub <Icon name="external" size={14} /></a></nav>
+</div></header>

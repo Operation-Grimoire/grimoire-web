@@ -3,12 +3,12 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="404" noindex={true}>
-  <main class="min-h-screen flex items-center justify-center px-6 py-20">
+  <main id="main-content" tabindex="-1" class="min-h-[70vh] flex items-center justify-center px-6 py-20">
     <section class="max-w-md text-center">
       <p class="font-display text-9xl text-ember leading-none">404</p>
-      <h1 class="mt-6 font-display text-3xl text-vellum">This page is lost to the archive.</h1>
+      <h1 class="mt-6 font-display text-3xl text-vellum">Page not found</h1>
       <p class="mt-4 text-vellum-dim">
-        The page you sought has crumbled to dust, or was never inscribed at all.
+        Check the address or return to the homepage.
       </p>
       <a
         href="/"

@@ -1,0 +1,40 @@
+---
+title: Downloading chapters
+description: Save chapter text and images, manage the queue, and prepare for offline reading.
+---
+
+Download chapters while the source works and you have a connection. Saving a novel to Library alone does not store its chapter content.
+
+## Chapters and images [#chapters-and-images]
+
+Open a novel's chapter list and use a chapter's download action. Grimoire stores chapter text and its images. Wait for completion in **More → Downloads**, then open a downloaded chapter without a connection to check the content you need. A failed image request can leave content incomplete; inspect errors before relying on the download.
+
+## Batch downloads [#batch-downloads]
+
+Open the novel's download menu and choose **Download all**, **Download unread**, or **Download next 10**. For a custom range, [select chapters](/docs/users/chapter-list/#selecting-chapter-ranges) and use the selection download action. Review read flags and chapter order before a large request. Unread is based on stored chapter state, not whether you remember reading a chapter elsewhere.
+
+## Download queue [#download-queue]
+
+Open **More → Downloads** to inspect queued, downloaded, and error entries. Use its filters to find the relevant state. A filtered empty view does not necessarily mean nothing is queued. The [Tasks screen](/docs/users/tasks/) provides a broader background-work log.
+
+## Pausing and resuming [#pausing-and-resuming]
+
+Use the queue's pause control to stop processing and resume when ready. Pausing does not turn pending entries into completed downloads. Check the queue after resuming; expired login, storage limits, or source errors still need attention.
+
+## Queue priority [#queue-priority]
+
+Choose **Move to top** for a queued chapter you want sooner. It changes queue priority, rather than making content immediately available. Already running work may still need to finish.
+
+## Parallel downloads [#parallel-downloads]
+
+Open **Download settings** from Downloads and adjust **Parallel downloads**. This controls how many chapters run at once. Lower it if the source rate-limits requests or downloads become unreliable. More parallel work does not guarantee faster downloads.
+
+## Retry, cancel, and delete [#retrying-and-removing]
+
+Retry failed requests after fixing the source, login, connection, or storage problem. Cancel queued work you no longer need. Use **Redownload** to replace stored content, or **Delete download** to remove its local copy. Deleting a download makes that content unavailable offline until downloaded again; it is different from removing the novel from Library.
+
+## Background downloads [#background-downloads]
+
+Downloads can continue outside the foreground app. Android may restrict or interrupt work, so check completion before disconnecting. If work stalls, reopen the queue, check battery restrictions and storage, and resolve visible errors. Do not assume a notification means the entire book has finished.
+
+Whole-book EPUB sources use a [separate download workflow](/docs/users/epub/#whole-book-downloads). To download newly discovered chapters after a library refresh, enable [auto-downloads](/docs/users/library-updates/#auto-downloads).

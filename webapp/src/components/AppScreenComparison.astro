@@ -1,0 +1,70 @@
+---
+import { Image } from 'astro:assets';
+import AppScreen from './AppScreen.astro';
+import library from '../assets/screenshots/library.webp';
+import reader from '../assets/screenshots/reader.webp';
+---
+<section class="screen-comparison page-width" aria-labelledby="comparison-title">
+  <h2 id="comparison-title">HTML screens and originals</h2>
+  <p>Overlay each original screenshot on the HTML screen to compare spacing, type and alignment. At 0% you see the HTML; at 100% you see the screenshot.</p>
+  <div class="comparison-grid">
+    {(['library', 'reader'] as const).map((screen) => (
+      <div class="comparison-pair" data-overlay="true">
+        <h3>{screen === 'library' ? 'Library' : 'Reader'}</h3>
+        <div class="comparison-controls">
+          <label class="overlay-toggle"><input type="checkbox" checked data-overlay-toggle /> Overlay screenshot<span class="sr-only"> for {screen}</span></label>
+          <label class="opacity-control" for={`${screen}-opacity`}>Screenshot opacity <output for={`${screen}-opacity`}>50%</output></label>
+          <input id={`${screen}-opacity`} aria-label={`${screen === 'library' ? 'Library' : 'Reader'} screenshot opacity`} type="range" min="0" max="100" value="50" step="1" data-opacity />
+        </div>
+        <div class="comparison-screens">
+          <figure><figcaption>HTML / CSS</figcaption><AppScreen screen={screen} /></figure>
+          <figure class="reference-screen"><figcaption>Original screenshot</figcaption><Image src={screen === 'library' ? library : reader} alt={`Original Grimoire ${screen} screen`} width={640} loading="lazy" /></figure>
+        </div>
+      </div>
+    ))}
+  </div>
+  <a class="text-link" href="/ghost3d-lab/">View the screenshot version of the hero</a>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('.comparison-pair').forEach((pair) => {
+    const toggle = pair.querySelector<HTMLInputElement>('[data-overlay-toggle]')!;
+    const slider = pair.querySelector<HTMLInputElement>('[data-opacity]')!;
+    const output = pair.querySelector<HTMLOutputElement>('output')!;
+    const update = () => {
+      pair.dataset.overlay = String(toggle.checked);
+      pair.style.setProperty('--reference-opacity', String(Number(slider.value) / 100));
+      slider.disabled = !toggle.checked;
+      output.value = `${slider.value}%`;
+    };
+    toggle.addEventListener('change', update);
+    slider.addEventListener('input', update);
+    update();
+  });
+</script>
+<style>
+  .screen-comparison { padding-block: 64px 96px; border-top: 1px solid #2d3852; }
+  h2 { font: 400 clamp(2rem, 3.5vw, 3rem)/1.2 var(--font-display); margin: 0 0 16px; }
+  p { max-width: 65ch; color: #afbed4; font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+  .comparison-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+  .comparison-pair { min-width: 0; }
+  h3 { font: 400 24px/1.3 var(--font-display); margin: 0 0 16px; }
+  .comparison-controls { margin-bottom: 16px; color: #afbed4; font-size: 14px; }
+  .overlay-toggle { display: flex; align-items: center; gap: 10px; min-height: 44px; color: #edf5ff; cursor: pointer; }
+  input { accent-color: #95d9fa; }
+  input[type="checkbox"] { width: 18px; height: 18px; }
+  .opacity-control { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  output { font-variant-numeric: tabular-nums; }
+  input[type="range"] { display: block; width: 100%; min-height: 44px; cursor: pointer; }
+  input:disabled { cursor: default; opacity: .4; }
+  .comparison-screens { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start; }
+  .comparison-pair[data-overlay="true"] .comparison-screens { grid-template-columns: minmax(0, 1fr); max-width: 360px; margin-inline: auto; gap: 0; }
+  .comparison-pair[data-overlay="true"] figure { grid-area: 1 / 1; }
+  .comparison-pair[data-overlay="true"] .reference-screen { opacity: var(--reference-opacity, .5); pointer-events: none; }
+  .comparison-pair[data-overlay="true"] .reference-screen figcaption { visibility: hidden; }
+  figure { margin: 0; min-width: 0; }
+  figcaption { color: #afbed4; font-size: 13px; margin-bottom: 12px; }
+  figure > img { width: 100%; height: auto; border-radius: 24px; }
+  .text-link { margin-top: 32px; }
+  @media (max-width: 800px) { .comparison-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
+  @media (max-width: 450px) { .comparison-screens { gap: 12px; } figcaption { font-size: 12px; } }
+</style>

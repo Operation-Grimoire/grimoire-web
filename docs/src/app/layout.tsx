@@ -1,30 +1,14 @@
-import { Inter, Cormorant_Garamond } from 'next/font/google';
 import { Provider } from '@/components/provider';
+import type { Metadata } from 'next';
 import './global.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
-
-// Display serif for headings + brand, matching the Astro landing page.
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--font-display',
-});
+export const metadata: Metadata = {
+  metadataBase: new URL('https://grimoireapp.org'),
+  title: { default: 'Grimoire documentation', template: '%s — Grimoire' },
+  description: 'Installation, source extensions, reader settings, and development guides for Grimoire.',
+  icons: { icon: '/icon-192.png' },
+};
 
 export default function Layout({ children }: LayoutProps<'/'>) {
-  return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${cormorant.variable} dark`}
-      style={{ colorScheme: 'dark' }}
-      suppressHydrationWarning
-    >
-      <body className="flex flex-col min-h-screen">
-        <Provider>{children}</Provider>
-      </body>
-    </html>
-  );
+  return <html lang="en" className="dark" style={{ colorScheme: 'dark' }} suppressHydrationWarning><body className="flex flex-col min-h-screen"><Provider>{children}</Provider></body></html>;
 }

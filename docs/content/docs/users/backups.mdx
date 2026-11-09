@@ -1,0 +1,38 @@
+---
+title: Backing up & restoring
+description: Create portable library backups and understand what restore can merge.
+---
+
+Backups are compressed JSON files saved to a folder you choose. Keep a copy outside the device being backed up, especially before migration, deletion, or reinstalling.
+
+## Manual backups [#manual-backups]
+
+1. Open **More → Settings → Backup & restore**.
+2. Choose **Backup folder** and grant access to a folder through Android's picker.
+3. Choose **Backup now**.
+4. Check the task result and confirm the file exists in that folder.
+5. Copy it to a separate device or storage location.
+
+If no folder is selected, choose one first. If the folder moved or permission was lost, select it again. A queued backup is not proof of a completed, recoverable file.
+
+## Scheduled backups [#scheduled-backups]
+
+Enable **Back up automatically** in Backup & restore. Choose the interval, approximate time, and Wi-Fi or charging constraints. **Run scheduled backup now** uses the selected folder and schedule constraints. Inspect **Last automatic backup** for its result.
+
+Android schedules background work and can delay it. Keep the destination writable and periodically check the actual files. A schedule on the same phone does not protect against losing that phone.
+
+## Included data [#included-data]
+
+Backups contain library novels and metadata, categories, chapter state and progress, repository definitions, portable preferences, and saved NovelUpdates series.
+
+They do not carry downloaded chapter text or images, local EPUB files, or local cover files. Transfer original EPUBs and custom images separately. Sensitive or device-specific settings are excluded, including the ElevenLabs API key, hidden-category PIN data, biometric choice, and source-specific settings. Source sessions and credentials need setup on the receiving device.
+
+The backup is compressed data, not an encrypted vault. Store it somewhere suitable for your library information.
+
+## Restoring by merge [#restoring-by-merge]
+
+Make a fresh backup of the receiving device before restoring another file. Import any local EPUBs you want to match first. Then choose **Restore…** in Backup & restore, select the backup file, review the merge confirmation, and confirm.
+
+Restore keeps existing entries, adds new ones, and merges chapter state. Read flags combine and saved progress takes the greater value; restoring an older backup is not a reliable way to undo reading progress. New local EPUB entries are skipped if their book file is absent on the receiving device.
+
+After restoring, inspect representative books, categories, and progress. Reinstall required source extensions and reconfigure credentials, locks, and excluded settings. Restore is a merge, not an exact clone of another device. If a file cannot be read, retain the original, check that it is a Grimoire backup, and avoid deleting either device's data while investigating.

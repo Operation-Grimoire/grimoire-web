@@ -1,0 +1,96 @@
+---
+title: Add novel websites
+description: Connect to novel websites with add-ons, then browse and read their books.
+---
+
+Grimoire can read books from novel websites. Each website connection is called a **source** in the app.
+
+To connect a website, install its **extension**: a small Android add-on that lets Grimoire browse and read that website. A **repository** is a catalog of these add-ons. Adding a catalog does not install its add-ons automatically; you choose the websites you want.
+
+## Install your first source
+
+The official repository is added on first launch. Extensions and books are installed separately.
+
+1. Open **Browse**, then open **Extensions** using the extensions icon.
+2. Find a source in the available extensions. Use search or the language filter to narrow the list.
+3. Install the extension. If Android asks, allow Grimoire to install apps and confirm the installation.
+4. Return to **Browse** and open the installed source.
+5. Find a novel, open its details, and add it to your library or start reading.
+
+Each source has its own catalog and capabilities. Search, filters, login requirements, and available content depend on the source.
+
+## Installing and updating extensions [#installing-and-updating]
+
+Use **Browse → Extensions** to install extensions and apply available updates. Extensions update separately from the app. After installing, return to Browse to use the source. Updating Grimoire alone does not update a broken source extension.
+
+If installation is refused, check Android's installation permission for Grimoire, available storage, and whether an older extension has a conflicting signature. Use extensions from publishers you trust.
+
+## Filtering extensions [#extension-filters]
+
+In **Extensions**, use search to find an extension by name and the language filter to narrow the list. Clear the query or broaden the language selection if an expected extension is missing. These controls filter the extension inventory; they do not search for books.
+
+## Pinning sources [#pinned-sources]
+
+Long-press a source in **Browse** and choose **Pin**. Pinned sources appear together and can be searched through the **Pinned** tab in global search. Unpin a source from its long-press menu. **Settings → Browse** controls whether pinned sources also appear in their language groups.
+
+## Extension checksum verification [#extension-integrity]
+
+During an extension download, Grimoire checks its SHA-256 checksum when the repository supplies one. A mismatch stops installation. Refresh the repository and retry; report a persistent mismatch to its publisher. A matching checksum checks the file against the supplied metadata. It does not establish that a publisher is trustworthy, and not every repository supplies a hash.
+
+## Source sign-in [#source-sign-in]
+
+For an extension that supports login, open the source's settings or the sign-in prompt on a novel's detail screen. Choose **Log in** and complete the website's login in the browser. Return to Grimoire and check the sign-in status. Source settings also provide login again and logout actions when supported.
+
+Website accounts are separate from Grimoire's [GitHub connection](/docs/users/repositories/#private-github-repositories). If access expires, sign in again. A source without login support cannot gain that support through an app setting.
+
+## Chapters unlocked on your account [#unlocked-chapters]
+
+Sign in on a supported source to read chapters that your account has purchased or unlocked. A locked chapter can offer an action to open the source website. Complete the source's access requirements there, return, and retry. Grimoire does not unlock paid chapters or grant access beyond your account.
+
+## Source settings [#source-settings]
+
+Open **Source settings** from the source or novel's menu. Available controls come from the extension: some sources expose preferences, mirrors, language overrides, or login; others expose none. Change the relevant preference and reload the affected page. Consult the source's own requirements if a setting does not produce the expected result.
+
+## Source mirrors [#source-mirrors]
+
+When an extension supplies multiple hosts, its source settings show the mirror choice. Select a host and retry the source. Mirror availability and account access depend on that service. Changing a mirror is distinct from [moving a novel to another source](/docs/users/migration/); do not delete your library entry to troubleshoot a mirror.
+
+## In-app browser [#in-app-browser]
+
+Use the browser action on a source, novel, or chapter to open the original website inside Grimoire. Use Android Back to return. This is useful for checking whether a page loads outside the extension's parser. A page working in the browser does not establish that the extension can extract it.
+
+## Site checks [#site-checks]
+
+If Grimoire offers a browser action after a site challenge, open it, complete the site's check, return, and retry. Some checks cannot complete in an embedded browser. Check the website in your normal browser and look for an extension update.
+
+## Removing sources [#removing-sources]
+
+Removing an extension leaves saved novels in the library. Their saved information remains, but fetching new details or chapters requires the source again. Reinstall the extension to restore access, or use [source migration](/docs/users/migration/). Saved metadata is not an offline copy of every chapter.
+
+## Add another repository
+
+See [Managing repositories](/docs/users/repositories/) for manual setup, repository links, and private GitHub access.
+
+Repository links can open Grimoire with the name and index URL filled in. For the official repository:
+
+<GuideButton href="/add-repo?name=Grimoire%20Extensions&url=https%3A%2F%2Fgithub.com%2FOperation-Grimoire%2Fgrimoire-extensions%2Freleases%2Fdownload%2Flatest%2Findex.json">Add official repository</GuideButton>
+
+Use this if you removed the default repository, or want to restore it.
+
+To add a repository manually, open **Extensions**, use **Repositories**, and choose the add action. Enter the repository's name and index URL, then save it. The official index URL is:
+
+```text
+https://github.com/Operation-Grimoire/grimoire-extensions/releases/download/latest/index.json
+```
+
+<Callout title="Choose repositories you trust">
+Extensions are Android packages. Check who publishes a repository before installing its extensions.
+</Callout>
+
+## Updates and missing sources
+
+Extensions update separately from Grimoire. Check the **Extensions** screen for available updates, especially when a site's layout changes.
+
+If a source does not appear, check the language filter, confirm that its repository is enabled, and refresh the extension list. If novels load but chapters do not, check whether the site requires a login or whether the extension needs an update.
+
+For a reproducible source problem, report it in the [extension issue tracker](https://github.com/Operation-Grimoire/grimoire-extensions/issues). Include the source name, extension version, and a link to the affected novel.

@@ -1,0 +1,100 @@
+---
+import library from '../assets/screenshots/library.webp';
+
+interface Props { screen: 'library' | 'reader'; }
+const { screen } = Astro.props;
+// Artwork comes from the existing screenshot, used as a sprite sheet. Only the
+// cover rectangles are visible; titles, progress, navigation and chrome are HTML.
+const books = [
+  { title: 'Headless Over Heels [A Dark Fantasy Romance]', chapters: 20, x: 2.7, y: 15.88 },
+  { title: 'Mother of Learning', chapters: 109, x: 50, y: 15.88 },
+  { title: 'Sky Pride', chapters: 346, x: 97.3, y: 15.88 },
+  { title: 'Super Minion', chapters: 63, x: 2.7, y: 47.83 },
+  { title: 'The Perfect Run', chapters: 131, x: 50, y: 47.83 },
+  { title: 'The Unexpected Engagement of the Marvelous Mr. Penn', chapters: 50, x: 97.3, y: 47.83 },
+];
+const icons = {
+  search: 'M21 21l-6-6M10 3a7 7 0 1 0 0 14 7 7 0 0 0 0-14',
+  filter: 'M3 6h18M6 12h12M10 18h4',
+  refresh: 'M20 5v6h-6M20 11a8 8 0 1 0-1 7',
+  more: 'M5 12h.01M12 12h.01M19 12h.01',
+  menu: 'M12 5h.01M12 12h.01M12 19h.01',
+  library: 'M3 5h5l4 3 4-3h5v14h-5l-4 3-4-3H3ZM12 8v14M12 2v.01',
+  browse: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20M16 8l-2 6-6 2 2-6Z',
+};
+---
+<div class:list={['app-screen', `app-${screen}`]} role="img" aria-label={screen === 'library' ? 'HTML recreation of the Grimoire library with six novel covers' : 'HTML recreation of the Grimoire chapter reader'}>
+  <div class="app-content" aria-hidden="true">
+    <div class="status-bar">
+      <span>12:22 <svg viewBox="0 0 16 18" class="shield"><path d="M8 1l6 3v5c0 4-6 8-6 8S2 13 2 9V4ZM5 4l6 10" /></svg></span>
+      <span class="status-icons">
+        <svg viewBox="0 0 25 18" class="signal"><path d="M3 15v-3M9 15V9M15 15V5M21 15V2" /></svg>
+        <svg viewBox="0 0 24 18" class="wifi"><path d="M2 5q10-8 20 0M6 9q6-5 12 0M10 13q2-2 4 0M12 16h.01" /></svg>
+        <svg viewBox="0 0 30 18" class="battery"><rect x="1" y="2" width="25" height="14" rx="4" /><path d="M29 6v6" /></svg>
+      </span>
+    </div>
+    {screen === 'library' ? (
+      <>
+        <div class="app-toolbar"><span>Library</span><div class="toolbar-icons">{(['search', 'filter', 'refresh', 'menu'] as const).map((name) => <svg viewBox="0 0 24 24"><path d={icons[name]} /></svg>)}</div></div>
+        <div class="book-grid">
+          {books.map((book) => (
+            <div class="book">
+              <div class="book-cover" style={`--cover: url('${library.src}'); --cover-x: ${book.x}%; --cover-y: ${book.y}%`}>
+                <span class="book-progress">0/{book.chapters} · 0%</span>
+              </div>
+              <div class="book-title">{book.title}</div>
+            </div>
+          ))}
+        </div>
+        <div class="app-bottom-nav">{(['library', 'browse', 'more'] as const).map((name) => <div class:list={['nav-item', { selected: name === 'library' }]}><span><svg viewBox="0 0 24 24"><path d={icons[name]} /></svg></span><span>{name === 'library' ? 'Library' : name === 'browse' ? 'Browse' : 'More'}</span></div>)}</div>
+      </>
+    ) : (
+      <div class="reader-page">
+        <div class="reader-title">3. The Bitter Truth</div>
+        <div class="chapter-title">Chapter 003<br />The Bitter Truth</div>
+        <p>If someone had asked Zorian at the end of the first week what classes he thought he would have the most trouble with, he would have answered Spell Formulas and Advanced Mathematics. Combat magic maybe. Two weeks later, he could safely say the answer was ‘Warding’.</p>
+        <p>Warding, the art of protecting things with magic, was a surprisingly complex field. You had to take into account what the thing you’re trying to protect is made of, what its dimensions and geometry were, how the ward is going to react with the already existing magic... or you could just slap a general-purpose warding invocation on your target and hope for the best. But the professor would fail you for that answer, so that wasn’t an option in the classroom.</p>
+        <p>But these complexities aside, the class should have been a breeze, or at least not this confusing – Zorian was a patient, methodical person when it came to magecraft, and had slogged through worse offenders than warding with decent results. The problem was that their teacher, a stern woman with hair cut so short she might as well have gone all the way and shaved her head completely, didn’t know how to teach. At all. Oh, she clearly knew the subject matter very well, but she simply didn’t know how to translate that knowledge into a proper lecture. She was leaving a lot of things out of her lectures, apparently not realizing that just because they were obvious to her, they were not obvious to her students. The textbook she assigned for the class wasn’t much better, and read more like a manual for a professional warder than a student’s textbook.</p>
+      </div>
+    )}
+    <div class="gesture-bar"></div>
+  </div>
+</div>
+
+<style>
+  /* Screenshot coordinate system: 640 × 1425. Container units scale the UI,
+     including typography, as one screen at any phone or comparison width. */
+  .app-screen { container-type: inline-size; width: 100%; aspect-ratio: 640 / 1425; border-radius: 24px; overflow: hidden; background: #faf8ff; color: #303034; color-scheme: light; font-family: Arial, sans-serif; }
+  .app-content { position: relative; width: 100%; height: 100%; overflow: hidden; font-size: 3.75cqw; line-height: 1.5; }
+  .status-bar { height: 12.5cqw; padding: 3.6cqw 6.25cqw 0; display: flex; align-items: flex-start; justify-content: space-between; box-sizing: border-box; font-size: 3.125cqw; color: #090909; }
+  .status-bar > span { display: flex; align-items: center; gap: 2.2cqw; }
+  svg { display: block; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .shield { width: 2.5cqw; height: 3cqw; }
+  .status-icons { gap: 1.3cqw !important; padding-top: .5cqw; }
+  .signal { width: 4.2cqw; height: 3cqw; stroke-width: 3; }
+  .wifi { width: 3.75cqw; height: 3cqw; stroke-width: 2.6; }
+  .battery { width: 6cqw; height: 3.2cqw; fill: currentColor; }
+  .app-toolbar { height: 15.3cqw; display: flex; align-items: center; justify-content: space-between; padding: 0 3.6cqw; font-size: 5cqw; }
+  .toolbar-icons { display: flex; gap: 6.4cqw; color: #606065; align-items: center; }
+  .toolbar-icons svg { width: 4.4cqw; height: 4.4cqw; }
+  .toolbar-icons svg:last-child { stroke-width: 4; }
+  .book-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.3cqw 1.9cqw; padding: 0 1.8cqw; }
+  .book-cover { position: relative; aspect-ratio: 198 / 298; border-radius: 1.7cqw; overflow: hidden; background-image: var(--cover); background-size: 323.23% 478.19%; background-position: var(--cover-x) var(--cover-y); }
+  /* Opaque, stable bounds cover the screenshot's baked-in badge even when the
+     editable label becomes shorter. Never let stale raster values show through. */
+  .book-progress { position: absolute; bottom: 1%; left: 1%; min-width: 70%; min-height: 10%; display: flex; align-items: center; background: #101410; color: #fff; font-size: 2.5cqw; font-weight: 600; padding: 0 .9cqw; border-radius: .5cqw; line-height: 1.5; }
+  .book-title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 2.8cqw; letter-spacing: .07cqw; line-height: 1.3; padding: .6cqw .8cqw 0; min-height: 8cqw; }
+  .app-bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; height: 23.2cqw; background: #eeedf7; display: flex; justify-content: space-around; padding-top: 2.7cqw; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: .5cqw; color: #565963; font-size: 2.8cqw; letter-spacing: .1cqw; }
+  .nav-item > span:first-child { display: grid; place-items: center; width: 12.5cqw; height: 7cqw; border-radius: 5cqw; }
+  .nav-item.selected > span:first-child { background: #e0e2fa; color: #424b62; }
+  .nav-item svg { width: 4.3cqw; height: 4.3cqw; }
+  .nav-item:last-child svg { stroke-width: 4; }
+  .gesture-bar { position: absolute; z-index: 1; bottom: 2.3cqw; left: 38%; width: 24%; height: 1cqw; border-radius: 1cqw; background: #626262; }
+  .app-reader { background: #fff; color: #151615; }
+  .reader-page { padding: .5cqw 4.45cqw 5cqw; }
+  .reader-title { font-size: 5cqw; line-height: 1.4; margin-bottom: 3.1cqw; }
+  .chapter-title { font-weight: 700; font-size: 3.75cqw; line-height: 1.55; margin-bottom: 2.5cqw; }
+  .reader-page p { font-size: 3.75cqw; line-height: 1.535; margin: 0 0 2.5cqw; }
+  .app-reader .gesture-bar { box-shadow: 0 0 0 2.3cqw white; }
+</style>

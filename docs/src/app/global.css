@@ -1,65 +1,84 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
+@import '@fontsource/fraunces/latin-400.css';
+@import '@fontsource/figtree/latin-400.css';
+@import '@fontsource/figtree/latin-500.css';
+@import '@fontsource/figtree/latin-600.css';
 
-/* Grimoire theme — vellum/ink palette, dark only. Overrides Fumadocs' fd tokens. */
-:root,
-.dark {
-  --color-fd-background: #0b0a14;
-  --color-fd-foreground: #f3ead3;
-  --color-fd-muted: #15132a;
-  --color-fd-muted-foreground: #b9b094;
-  --color-fd-popover: #12101f;
-  --color-fd-popover-foreground: #f3ead3;
-  --color-fd-card: #12101f;
-  --color-fd-card-foreground: #f3ead3;
-  --color-fd-border: #2a2545;
-  --color-fd-primary: #e6bf6a;
-  --color-fd-primary-foreground: #0b0a14;
-  --color-fd-secondary: #15132a;
-  --color-fd-secondary-foreground: #f3ead3;
-  --color-fd-accent: #1b1836;
-  --color-fd-accent-foreground: #f3ead3;
-  --color-fd-ring: #c9a14a;
+:root, .dark {
+  --font-sans: 'Figtree', system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+  --color-fd-background: #0b0d1c;
+  --color-fd-foreground: #edf5ff;
+  --color-fd-muted: #141a2f;
+  --color-fd-muted-foreground: #afbed4;
+  --color-fd-popover: #111728;
+  --color-fd-popover-foreground: #edf5ff;
+  --color-fd-card: #111728;
+  --color-fd-card-foreground: #edf5ff;
+  --color-fd-border: #2d3852;
+  --color-fd-primary: #95d9fa;
+  --color-fd-primary-foreground: #0b0d1c;
+  --color-fd-secondary: #141a2f;
+  --color-fd-secondary-foreground: #edf5ff;
+  --color-fd-accent: #223852;
+  --color-fd-accent-foreground: #d5eeff;
+  --color-fd-ring: #95d9fa;
 }
-
-/* Callout accent colors. Fumadocs declares these via `@theme static`, which
-   Tailwind emits to :root *after* our rules — so override with a higher-
-   specificity selector (html.dark beats :root) to win the cascade. */
-html.dark {
-  --color-fd-info: #9c7bd8;
-  --color-fd-warning: #e6bf6a;
-  --color-fd-error: #d98b8b;
-  --color-fd-success: #8fbf8f;
-}
-
-html {
-  scrollbar-gutter: stable;
-  font-family: var(--font-sans), system-ui, sans-serif;
-}
-
-/* Display serif for content headings, matching the landing page. */
-:is(h1, h2, h3, h4) {
-  font-family: var(--font-display), ui-serif, Georgia, serif;
-}
-
-html > body[data-scroll-locked] {
-  margin-right: 0px !important;
-  --removed-body-scroll-bar-size: 0px !important;
-}
-
-/* Comparison tables: a row whose first cell is bold (e.g. `**Reader**`) becomes
-   a full-width section-header bar. Markdown can't colspan, so the whole row is
-   tinted with its inner borders removed to read as one cell. */
-table tbody tr:has(td:first-child strong) td {
-  background: var(--color-fd-muted);
-  border-color: transparent;
-  font-weight: 600;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-fd-muted-foreground);
-}
-table tbody tr:has(td:first-child strong) td:first-child strong {
-  font-weight: 600;
-}
+html.dark { --color-fd-info: #95d9fa; --color-fd-warning: #e7c78b; --color-fd-error: #efa6b0; --color-fd-success: #9ed7c4; }
+html { scrollbar-gutter: stable; font-family: var(--font-sans); scrollbar-color: #43536f #0b0d1c; }
+body { background: #0b0d1c; }
+::selection { background: #95d9fa; color: #0b0d1c; }
+:focus-visible { outline-color: #95d9fa; outline-offset: 4px; }
+a { text-underline-offset: 4px; }
+:is(h1,h2,h3,h4) { font-family: var(--font-display); font-weight: 400; text-wrap: balance; letter-spacing: -.015em; }
+#nd-page h1 { font-size: clamp(2.2rem, 4vw, 3rem); line-height: 1.16; }
+#nd-page h2 { font-size: 1.85rem; line-height: 1.3; }
+#nd-page h3 { font-size: 1.4rem; }
+#nd-page { padding-top: 48px; padding-bottom: 64px; }
+#nd-sidebar { background: #0e1324; }
+#nd-docs-layout { --fd-header-height: 80px; }
+[data-sidebar-placeholder] { top: var(--fd-docs-row-2); height: calc(100dvh - var(--fd-docs-row-2)); }
+#nd-sidebar a:has(.docs-brand) { display: none; }
+.docs-topbar { grid-area: header; position: sticky; top: 0; z-index: 40; background: #0b0d1c; border-bottom: 1px solid #253047; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-inline: max(16px, calc((100vw - 1400px) / 2)); }
+.docs-home-link { display: inline-flex; align-items: center; }
+.docs-topbar nav { display: flex; gap: 32px; align-items: center; font-size: 14px; }
+.docs-topbar nav a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; color: #dce7f6; }
+.docs-topbar nav a:hover, .docs-topbar nav [aria-current] { color: #95d9fa; }
+.docs-mobile-controls { display: none; }
+#nd-sidebar a { border-radius: 7px; }
+#nd-sidebar [data-active='true'] { background: #223852; color: #c6eaff; }
+.docs-brand { display: inline-flex; align-items: center; gap: 8px; font: 28px/1 var(--font-display); color: #edf5ff; }
+.docs-brand img { width: 44px; height: 44px; }
+.prose { font-size: 16px; line-height: 1.75; }
+.prose :is(p,li) { color: #c7d4e7; }
+.prose strong { color: #edf5ff; }
+/* One measure for title, rules and text. Pages with tables keep the full column. */
+#nd-page:not(:has(table)) > * { width: 100%; max-width: 608px; margin-inline: auto; }
+#nd-page:has(table) .prose > :is(p, ul, ol, blockquote) { max-width: 608px; }
+#nd-page [role='none'].w-0\.5 { display: none; }
+#nd-page :has(> [role='none'].w-0\.5) { padding-inline-start: .75rem; }
+@media (min-width: 768px) { #nd-sidebar a:is([href='/'], [href='/#features'], [href='https://github.com/Operation-Grimoire/grimoire']) { display: none; } }
+.docs-mark { display: inline-flex; vertical-align: -3px; }
+.docs-mark-yes { color: #9ed7c4; }
+.docs-mark-partial { color: #e7c78b; }
+.docs-mark-no { color: #efa6b0; }
+.prose h2 { margin-top: 48px; margin-bottom: 12px; }
+.prose a:not(.guide-button):not(.guide-row) { color: #95d9fa; }
+.prose :is(h2,h3,h4) a { color: inherit !important; }
+.guide-button { display: inline-flex; gap: 10px; align-items: center; background: #95d9fa; color: #0b0d1c !important; padding: 11px 20px; border-radius: 9px; font: 600 14px/1.6 var(--font-sans); text-decoration: none; margin-block: 12px; }
+.guide-button:hover { background: #c7edff; }
+.guide-list { margin-block: 28px; }
+.guide-row { display: grid; grid-template-columns: 1fr 20px; gap: 5px 18px; border-top: 1px solid #2d3852; padding: 20px 2px; text-decoration: none; }
+.guide-row:last-child { border-bottom: 1px solid #2d3852; }
+.guide-row strong { color: #95d9fa; font-weight: 500; }
+.guide-row span { grid-column: 1; font-size: 14px; color: #afbed4; line-height: 1.65; }
+.guide-row svg { grid-row: 1 / 3; grid-column: 2; align-self: center; color: #95d9fa; }
+.guide-row:hover { background: #141a2f88; }
+.guide-row p { margin: 0; }
+html > body[data-scroll-locked] { margin-right: 0px !important; --removed-body-scroll-bar-size: 0px !important; }
+table tbody tr:has(td:first-child strong) td { background: var(--color-fd-muted); border-color: transparent; font-weight: 600; font-size: .82rem; color: var(--color-fd-muted-foreground); }
+table tbody tr:has(td:first-child strong) td:first-child strong { font-weight: 600; }
+@media (max-width: 767px) { #nd-docs-layout { --fd-header-height: 72px; grid-template-columns: 0 0 minmax(0, 1fr) 0 0 !important; }#nd-page { padding-top: 28px; }.docs-topbar { padding-inline: 16px; gap: 8px; }.docs-topbar nav { display: none; }.docs-mobile-controls { display: flex; align-items: center; gap: 8px; }.docs-menu-button { padding: 10px; border-radius: 8px; }.docs-brand { font-size: 25px; }.docs-brand img { width: 38px; height: 38px; }}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }

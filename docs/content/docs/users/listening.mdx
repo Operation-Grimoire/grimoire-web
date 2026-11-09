@@ -1,0 +1,64 @@
+---
+title: Listening
+description: Set up text-to-speech, select voices, and control chapter playback.
+---
+
+Grimoire reads chapter text aloud using your Android speech engine or an optional ElevenLabs connection. Open **More → Settings → Text-to-speech** to configure it.
+
+## Starting playback [#starting-playback]
+
+Turn on the setting labeled **Enable text-to-speech**, open a chapter, show its reader controls, and choose **Read aloud**. Use Pause to pause or Stop to end playback. Start with a chapter that loads correctly as text; speech cannot repair missing source content.
+
+## Device voices [#device-voices]
+
+Choose **On-device** under **Speech engine**, then choose voices for your content languages. Availability depends on the installed Android speech engine and voice data. Use an installed offline voice and downloaded chapter text before relying on listening without a connection. Voices marked online can still need a network.
+
+## ElevenLabs [#elevenlabs]
+
+Choose **ElevenLabs** and enter your own API key in **Text-to-speech** settings. Select an available voice and preview it before starting a chapter. New synthesis sends text to ElevenLabs and requires a network connection, account access, and available provider quota. Voice access depends on your provider plan.
+
+If playback fails, check the key, quota, network, and voice access, or switch to On-device. Remove the key from the API-key field when you no longer want to use the connection. Library backups exclude this key; configure it again on another device. Do not include it in support reports.
+
+## Voices by language [#language-voices]
+
+In the **Voices** section, open a language and select a voice. Grimoire uses the novel's content language to select the corresponding voice. **System default** lets the device engine choose. If pronunciation is wrong, check both the novel's language and the selected voice rather than changing the interface language.
+
+## Voice previews [#previewing-voices]
+
+Use **Preview voice** in the voice picker and **Stop preview** when finished. A cloud preview can use provider quota and needs the same account access as playback. Previewing successfully does not guarantee enough quota for a long chapter.
+
+## Installing device voices [#installing-device-voices]
+
+In the device voice picker, choose **Install more voices** to open the Android engine's voice-data installer. Install the needed language, then return and select its voice. Installation controls vary by speech engine and device. If no suitable voice appears, check Android's speech-engine settings.
+
+## Rate and pitch [#rate-and-pitch]
+
+Adjust **Speech rate** in text-to-speech settings or the reader's **Read aloud** settings tab. **Pitch** applies to on-device speech only. Preview after changing either control; cloud voices do not gain device-engine pitch support.
+
+## Chapter advance [#chapter-advance]
+
+Enable **Auto-advance to next chapter** to continue when a chapter finishes. The next chapter must be available to read. Locked chapters, missing content, or a disconnected source can interrupt advancement. Download the required chapters first for offline use.
+
+## Paragraph following [#paragraph-following]
+
+During playback, the reader highlights the spoken paragraph and follows its position. Use this to keep your place while listening. If the visible text and speech diverge after navigating away, return to the playing chapter; changing chapters is different from pausing speech.
+
+## Background playback [#background-playback]
+
+Start playback before switching apps or turning off the screen. Grimoire uses a playback service, but calls, audio focus changes, and Android battery restrictions can interrupt it. If playback repeatedly stops, check the device's background and battery settings for Grimoire and confirm the selected engine has the needed connectivity.
+
+## Notification controls [#notification-controls]
+
+Use the playback notification to control listening outside the reader. Allow notifications when Android asks and check system notification settings if controls do not appear. Return to the chapter for full reader and voice settings.
+
+## Media buttons [#media-buttons]
+
+While the playback session is active, supported headset or media buttons can send playback commands. Device and accessory mappings vary. If a button controls another app, bring Grimoire's playback session to the foreground and try again; use the notification or reader controls if the accessory does not send a supported command.
+
+## Cloud usage [#cloud-usage]
+
+Open **Text-to-speech → Credit usage** and choose **Refresh usage** to retrieve the account's character usage and reset information. Enter a valid key first. The value comes from the provider account and can include use outside this reading session. Check ElevenLabs for current plan and billing details.
+
+## Cloud replay cache [#cloud-replay-cache]
+
+Previously synthesized audio can be reused when the text, voice, and synthesis settings match. The cache is bounded to 32 MiB and 128 entries; older entries can be evicted. Changed text or settings can require new synthesis. This cache is a replay optimization, not a permanent downloadable audiobook or a guarantee of offline cloud playback.

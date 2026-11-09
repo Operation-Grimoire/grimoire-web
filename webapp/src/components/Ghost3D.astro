@@ -1,0 +1,400 @@
+---
+// TEST ONLY: the 3D spirit. It loads Three.js and the model after the page is ready.
+---
+<style is:global>
+  .ghost3d-stage { position: fixed; inset: 0; z-index: 20; overflow: hidden; pointer-events: none; }
+  .ghost3d-stage canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform, opacity; }
+</style>
+
+<script>
+  type Perch = { x: number; y: number; w: number };
+
+  const CANVAS = 320;
+  const VIEW = 1.3;
+  // Height on the model that sits level with a surface when perched, in model units.
+  const ANCHOR = (400 - 465) / 284;
+  const ANCHOR_Y = (CANVAS * (VIEW - ANCHOR)) / (2 * VIEW);
+  // The model's arm span is about 1.25 units.
+  const PX_PER_W = (2 * VIEW) / 1.25;
+  const FOLLOW_MS = 320;
+  const FADE_MS = 170;
+  const POSE_MS = 380;
+  const REST_OPACITY = 1;
+
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+  const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+  const smooth = (t: number) => {
+    const c = clamp(t, 0, 1);
+    return c * c * (3 - 2 * c);
+  };
+
+  const vertexShader = /* glsl */ `
+    #include <common>
+    #include <morphtarget_pars_vertex>
+    varying vec3 vNormalView;
+    varying vec3 vViewDir;
+    varying vec3 vLocal;
+    void main() {
+      #include <beginnormal_vertex>
+      #include <morphinstance_vertex>
+      #include <morphnormal_vertex>
+      #include <begin_vertex>
+      #include <morphtarget_vertex>
+      vLocal = transformed;
+      vec4 mvPosition = modelViewMatrix * vec4(transformed, 1.0);
+      vNormalView = normalize(normalMatrix * objectNormal);
+      vViewDir = vec3(0.0, 0.0, 1.0);
+      gl_Position = projectionMatrix * mvPosition;
+    }
+  `;
+
+  const fragmentShader = /* glsl */ `
+    uniform float uPerch;
+    varying vec3 vNormalView;
+    varying vec3 vViewDir;
+    varying vec3 vLocal;
+    void main() {
+      float rim = 1.0 - clamp(dot(normalize(vNormalView), vViewDir), 0.0, 1.0);
+      vec3 color = mix(vec3(0.46, 0.78, 0.98), vec3(0.95, 0.98, 1.0), smoothstep(0.12, 0.72, rim));
+      color = mix(color, vec3(0.74, 0.90, 1.0), (1.0 - smoothstep(-0.62, 0.2, vLocal.y)) * 0.8);
+      float alpha = mix(0.5, 0.96, smoothstep(0.0, 0.7, rim));
+      float tailFade = smoothstep(-1.05, -0.3, vLocal.y);
+      // When perched the tail melts away above the surface, while the side wisps stay.
+      float core = 1.0 - smoothstep(0.34, 0.5, abs(vLocal.x));
+      float melt = mix(1.0, smoothstep(-0.34, -0.13, vLocal.y), core);
+      alpha *= tailFade * mix(1.0, melt, uPerch);
+      gl_FragColor = vec4(color, alpha);
+    }
+  `;
+
+  async function start() {
+    const phone = document.querySelector<HTMLElement>('.phone-reader');
+    const heading = document.querySelector<HTMLElement>('#features-title');
+    const button = document.querySelector<HTMLElement>('[data-ghost-landing]');
+    if (!phone || !heading || !button) return;
+
+    const [THREE, { GLTFLoader }] = await Promise.all([
+      import('three'),
+      import('three/examples/jsm/loaders/GLTFLoader.js'),
+    ]);
+
+    let narrow = window.innerWidth <= 800;
+    let renderer: import('three').WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+    } catch {
+      return;
+    }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setSize(CANVAS, CANVAS);
+    renderer.setClearColor(0x000000, 0);
+
+    const stage = document.createElement('div');
+    stage.className = 'ghost3d-stage';
+    stage.setAttribute('aria-hidden', 'true');
+    stage.append(renderer.domElement);
+    document.body.append(stage);
+    const canvas = renderer.domElement;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-VIEW, VIEW, VIEW, -VIEW, 0.1, 10);
+    camera.position.z = 4;
+
+    const gltf = await new GLTFLoader().loadAsync('/ghost/spirit.glb');
+    const rig = gltf.scene;
+    scene.add(rig);
+
+    const uniforms = { uPerch: { value: 1 } };
+    const bodyMaterial = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms, transparent: true });
+    const eyeMaterial = new THREE.MeshBasicMaterial({ color: 0x080b18, transparent: true, depthTest: false, depthWrite: false });
+    const body = rig.getObjectByName('Spirit') as import('three').Mesh;
+    const eyes = ['EyeL', 'EyeR'].map((name) => rig.getObjectByName(name) as import('three').Mesh);
+    body.material = bodyMaterial;
+    body.renderOrder = 1;
+    eyes.forEach((eye) => {
+      eye.material = eyeMaterial;
+      eye.renderOrder = 2;
+    });
+    const eyeBaseY = eyes[0].position.y;
+    const eyeBaseScale = eyes[0].scale.y;
+    const keys = body.morphTargetDictionary!;
+    const weights = body.morphTargetInfluences!;
+
+    const spriteTexture = (draw: (g: CanvasRenderingContext2D) => void) => {
+      const c = document.createElement('canvas');
+      c.width = c.height = 128;
+      draw(c.getContext('2d')!);
+      const texture = new THREE.CanvasTexture(c);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    };
+    const glow = spriteTexture((g) => {
+      const fill = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+      fill.addColorStop(0, 'rgba(143,212,251,.55)');
+      fill.addColorStop(0.5, 'rgba(143,212,251,.16)');
+      fill.addColorStop(1, 'rgba(143,212,251,0)');
+      g.fillStyle = fill;
+      g.fillRect(0, 0, 128, 128);
+    });
+    const starTexture = spriteTexture((g) => {
+      g.fillStyle = '#d6f0ff';
+      g.beginPath();
+      g.moveTo(64, 6);
+      g.quadraticCurveTo(70, 58, 122, 64);
+      g.quadraticCurveTo(70, 70, 64, 122);
+      g.quadraticCurveTo(58, 70, 6, 64);
+      g.quadraticCurveTo(58, 58, 64, 6);
+      g.fill();
+    });
+    const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glow, blending: THREE.AdditiveBlending, depthWrite: false, depthTest: false }));
+    // Keep the glow inside the canvas, or its edge shows as a faint square.
+    halo.scale.set(2.3, 2.3, 1);
+    halo.position.set(0, 0.1, -1);
+    halo.renderOrder = 0;
+    scene.add(halo);
+    const sparks = [
+      [0.62, 0.55, 0.15],
+      [-0.74, 0.05, 0.11],
+      [-0.66, 0.46, 0.05],
+      [0.8, -0.16, 0.07],
+    ].map(([x, y, size], i) => {
+      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: starTexture, transparent: true, depthWrite: false, depthTest: false }));
+      sprite.position.set(x, y, 0.5);
+      sprite.scale.set(size, size, 1);
+      sprite.renderOrder = 3;
+      scene.add(sprite);
+      return { sprite, x, y, phase: i * 1.9 };
+    });
+
+    function measure() {
+      const scroll = window.scrollY;
+      const vh = window.innerHeight;
+      const margin = heading!.getBoundingClientRect().left;
+
+      // The phone is rotated, so find the middle of its rim from its center and angle.
+      const box = phone!.getBoundingClientRect();
+      const matrix = new DOMMatrix(getComputedStyle(phone!).transform);
+      const angle = Math.atan2(matrix.b, matrix.a);
+      const half = phone!.offsetHeight / 2;
+      const onPhone: Perch = {
+        x: box.left + box.width / 2 + half * Math.sin(angle),
+        y: box.top + box.height / 2 - half * Math.cos(angle) + scroll + 2,
+        w: phone!.offsetWidth * 0.54,
+      };
+
+      const range = document.createRange();
+      range.selectNodeContents(heading!);
+      const text = range.getBoundingClientRect();
+      const fontSize = parseFloat(getComputedStyle(heading!).fontSize);
+      const onHeading: Perch = {
+        x: text.left + text.width * 0.5,
+        y: text.top + fontSize * 0.14 + scroll,
+        w: clamp(fontSize * 2.1, 72, 104),
+      };
+
+      const target = button!.getBoundingClientRect();
+      const onButton: Perch = {
+        x: target.left + Math.min(target.width / 2, 108),
+        y: target.top + 3 + scroll,
+        w: narrow ? 72 : 92,
+      };
+
+      // The clear band between the hero's Download button and the Features section.
+      const features = document.querySelector('.features')!.getBoundingClientRect();
+      const bandY = features.top + scroll - 26;
+
+      const maxScroll = document.documentElement.scrollHeight - vh;
+      const reachHeading = onHeading.y - vh * 0.42;
+      const leaveHeading = reachHeading + vh * 0.2;
+      const reachButton = Math.max(leaveHeading + 1, Math.min(onButton.y - vh * 0.6, maxScroll - 2));
+
+      return {
+        vh,
+        flyW: clamp(margin * 0.72, 44, 84),
+        lane: margin >= 72 ? margin / 2 : 8,
+        onPhone,
+        onHeading,
+        onButton,
+        bandY,
+        takeOff: 40,
+        reachHeading,
+        leaveHeading,
+        reachButton,
+      };
+    }
+
+    let layout = measure();
+
+    // Where the ghost should be for a scroll position, in screen coordinates.
+    function locate(scroll: number) {
+      const l = layout;
+      const cruiseY = l.vh * 0.5;
+      const held = (p: Perch) => ({ x: p.x, y: p.y - scroll, w: p.w, perch: 1 });
+
+      if (scroll <= l.takeOff) return held(l.onPhone);
+      if (scroll < l.reachHeading) {
+        const here = held(l.onPhone);
+        const there = held(l.onHeading);
+        if (!narrow) {
+          // Down the right phone, across the band below the hero text, then on to the heading.
+          const progress = (scroll - l.takeOff) / (l.reachHeading - l.takeOff);
+          const down = smooth(progress / 0.24);
+          const across = smooth((progress - 0.2) / 0.56);
+          const arrive = smooth((progress - 0.76) / 0.24);
+          const band = l.bandY - scroll;
+          return {
+            x: lerp(lerp(here.x, l.lane, across), there.x, arrive),
+            y: lerp(lerp(here.y, band, down), there.y, arrive),
+            w: lerp(lerp(l.onPhone.w, l.flyW, down), l.onHeading.w, arrive),
+            perch: 0,
+          };
+        }
+        const t = smooth((scroll - l.takeOff) / (l.reachHeading - l.takeOff));
+        const lane = Math.sin(Math.PI * t);
+        return {
+          x: lerp(lerp(here.x, there.x, t), l.lane, lane * 0.85),
+          y: lerp(Math.max(here.y, cruiseY * 0.5), there.y, t),
+          w: lerp(l.onPhone.w, l.onHeading.w, t),
+          perch: 0,
+        };
+      }
+      if (scroll <= l.leaveHeading) return held(l.onHeading);
+      if (scroll < l.reachButton) {
+        const span = l.reachButton - l.leaveHeading;
+        const out = smooth((scroll - l.leaveHeading) / Math.min(l.vh * 0.25, span));
+        const back = smooth((scroll - (l.reachButton - Math.min(l.vh * 0.45, span))) / Math.min(l.vh * 0.45, span));
+        const heading2 = held(l.onHeading);
+        const landing = held(l.onButton);
+        return {
+          x: lerp(lerp(heading2.x, l.lane, out), landing.x, back),
+          y: lerp(lerp(heading2.y, cruiseY, out), landing.y, back),
+          w: lerp(lerp(l.onHeading.w, l.flyW, out), l.onButton.w, back),
+          perch: 0,
+        };
+      }
+      return held(l.onButton);
+    }
+
+    const first = locate(window.scrollY);
+    let x = first.x;
+    let y = first.y;
+    let w = first.w;
+    let perch = first.perch;
+    let opacity = 0;
+    let speed = 0;
+    let lean = 0;
+    let lastScroll = window.scrollY;
+    let lastTime = 0;
+    let lastDraw = 0;
+    const stats = { frames: 0, drawn: 0, skipped: 0, ms: 0 };
+    (window as unknown as { __ghost3d: object }).__ghost3d = {
+      stats,
+      read: () => ({ perch, opacity, x, y, w, morphs: Object.fromEntries(Object.keys(keys).map((k) => [k, +weights[keys[k]].toFixed(3)])) }),
+    };
+
+    function pose(time: number) {
+      const fly = 1 - perch;
+      const set = (name: string, value: number) => {
+        if (keys[name] !== undefined) weights[keys[name]] = value;
+      };
+      const breath = 0.5 + 0.5 * Math.sin(time * 1.15);
+      const tailSpeed = lerp(1.6, 3.2, fly);
+      const tailSize = lerp(0.75, 1.15, fly);
+      set('perch', perch);
+      set('fly', fly);
+      set('breathe', breath);
+      set('tailA', Math.sin(time * tailSpeed) * tailSize);
+      set('tailB', Math.cos(time * tailSpeed) * tailSize);
+      // The arms breathe gently on a perch, and flap out of step in flight.
+      const armSpeed = lerp(1.2, 3.4, fly);
+      const armSize = lerp(0.16, 0.62, fly);
+      set('armL', Math.max(0, (0.5 + 0.5 * Math.sin(time * armSpeed)) * armSize));
+      set('armR', Math.max(0, (0.5 + 0.5 * Math.sin(time * armSpeed + 1.5)) * armSize));
+      uniforms.uPerch.value = perch;
+
+      const blinkClock = time % 5.6;
+      const blink = blinkClock < 0.14 ? 1 - Math.sin((blinkClock / 0.14) * Math.PI) * 0.92 : 1;
+      eyes.forEach((eye) => {
+        eye.position.y = eyeBaseY + breath * (9 / 284);
+        eye.scale.y = eyeBaseScale * blink;
+      });
+
+      // Limit turning to about 12 degrees, where the model still reads as the icon.
+      rig.rotation.y = Math.sin(time * 0.62) * 0.2;
+      rig.rotation.z = Math.sin(time * 0.83) * lerp(0.012, 0.05, fly) - lean;
+      rig.position.y = Math.sin(time * 1.25) * lerp(0.006, 0.05, fly);
+      halo.material.opacity = 0.62 + 0.16 * Math.sin(time * 1.15);
+      sparks.forEach((s) => {
+        s.sprite.material.opacity = 0.2 + 0.7 * (0.5 + 0.5 * Math.sin(time * 1.1 + s.phase));
+        s.sprite.position.y = s.y + Math.sin(time * 0.5 + s.phase) * 0.06;
+        s.sprite.position.x = s.x + Math.cos(time * 0.4 + s.phase) * 0.04;
+      });
+    }
+
+    function frame(now: number) {
+      requestAnimationFrame(frame);
+      const dt = lastTime ? Math.min(now - lastTime, 50) : 16;
+      lastTime = now;
+      const started = performance.now();
+
+      const goal = locate(window.scrollY);
+      const follow = 1 - Math.exp(-dt / FOLLOW_MS);
+      const fade = 1 - Math.exp(-dt / FADE_MS);
+      const distance = Math.hypot(goal.x - x, goal.y - y);
+      const scroll = window.scrollY;
+      speed = lerp(speed, Math.abs(scroll - lastScroll) / dt, 1 - Math.exp(-dt / 90));
+      lastScroll = scroll;
+
+      // It fades as it falls behind, and dissolves on a fast scroll rather than racing the page.
+      const goalOpacity = REST_OPACITY * (1 - smooth((distance - 280) / (Math.max(window.innerWidth, layout.vh) * 0.7))) * (1 - smooth((speed - 1) / 2.5));
+      opacity = lerp(opacity, goalOpacity, fade);
+      if (opacity < 0.03 && distance > 30) {
+        x = goal.x;
+        y = goal.y;
+        w = goal.w;
+      } else {
+        const beforeX = x;
+        x = lerp(x, goal.x, follow);
+        y = lerp(y, goal.y, follow);
+        w = lerp(w, goal.w, follow);
+        lean = lerp(lean, clamp((x - beforeX) * 0.02, -0.14, 0.14), fade);
+      }
+      perch = lerp(perch, goal.perch, 1 - Math.exp(-dt / POSE_MS));
+
+      const scale = (w * PX_PER_W) / CANVAS;
+      canvas.style.opacity = opacity.toFixed(3);
+      canvas.style.transform = `translate(${x}px, ${y}px) scale(${scale}) translate(${-CANVAS / 2}px, ${-ANCHOR_Y}px)`;
+
+      // Skip drawing off screen, and cap phones at 30 frames per second.
+      const size = CANVAS * scale;
+      const onScreen = y + size > 0 && y - size < window.innerHeight && opacity > 0.01;
+      const due = now - lastDraw >= (narrow ? 32 : 0);
+      if (onScreen && due) {
+        lastDraw = now;
+        pose(now / 1000);
+        renderer.render(scene, camera);
+        stats.drawn += 1;
+        stats.ms += performance.now() - started;
+      } else {
+        stats.skipped += 1;
+      }
+      stats.frames += 1;
+    }
+
+    const remeasure = () => {
+      narrow = window.innerWidth <= 800;
+      layout = measure();
+    };
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('load', remeasure);
+    document.fonts?.ready.then(remeasure);
+    new ResizeObserver(remeasure).observe(document.body);
+    requestAnimationFrame(frame);
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const begin = () => start();
+    if (document.readyState === 'complete') begin();
+    else window.addEventListener('load', begin, { once: true });
+  }
+</script>

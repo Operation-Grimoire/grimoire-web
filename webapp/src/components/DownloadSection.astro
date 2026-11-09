@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../site.config';
+---
+
+<section id="download" class="download-section page-width" aria-labelledby="download-title">
+  <h2 id="download-title" data-ghost-landing data-ghost-avoid>Download Grimoire</h2>
+  <p data-ghost-avoid>For Android 8.0 and later.</p>
+  <div class="download-actions">
+    <a class="button-primary" href={site.android.latestApkUrl}><Icon name="download" size={21} />Download for Android</a>
+    <a class="install-link" href="/docs/users/install/"><span>Install guide</span><Icon name="arrow" size={18} /></a>
+  </div>
+</section>
+
+<style>
+  .download-section { display: flex; flex-direction: column; align-items: center; padding-block: 128px 96px; border-top: 1px solid var(--color-rune); text-align: center; }
+  h2 { max-width: 100%; margin: 0; font: 400 clamp(2.2rem, 4.4vw, 3.4rem)/1.18 var(--font-display); letter-spacing: -0.02em; overflow-wrap: anywhere; }
+  p { margin: 16px 0 0; color: var(--color-vellum-dim); font-size: 17px; line-height: 1.75; }
+  .download-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; margin-top: 28px; }
+  .button-primary { max-width: 100%; min-height: 56px; padding: 16px 28px; font-size: 16px; }
+  .button-primary :global(svg) { flex-shrink: 0; }
+  .install-link { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; color: var(--color-ember); font-size: 15px; text-decoration: none; }
+  .install-link span { text-decoration: underline dotted #7393ad; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  .install-link:hover, .install-link:focus-visible { color: var(--color-ember-bright); }
+  .install-link:hover span, .install-link:focus-visible span { text-decoration-style: solid; text-decoration-color: var(--color-ember-bright); }
+  @media (max-width: 800px) { .download-section { padding-block: 104px 80px; }p { font-size: 16px; } }
+</style>

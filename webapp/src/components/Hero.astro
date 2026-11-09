@@ -1,0 +1,25 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { site } from '../site.config';
+import library from '../assets/screenshots/library.webp';
+import reader from '../assets/screenshots/reader.webp';
+import Ghost from './Ghost.astro';
+import launcher from '../assets/brand/launcher-foreground.png';
+import AppScreen from './AppScreen.astro';
+interface Props { ghost?: boolean; screens?: 'screenshots' | 'html'; ghostStyle?: 'original' | 'refined'; }
+const { ghost = true, screens = 'screenshots', ghostStyle = 'original' } = Astro.props;
+---
+<section class="hero page-width" aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <span class="hero-icon"><Image src={launcher} alt="" width={384} loading="eager" /></span>
+    <h1 id="hero-title">Grimoire</h1>
+    <p>An open-source Android reader for novels of all kinds, from light novels and web novels to your own EPUB collection.</p>
+    <div class="hero-actions"><a class="button-primary" href={site.android.latestApkUrl}><Icon name="download" />Download for Android</a></div>
+  </div>
+  <div class="hero-scene" role="group" aria-label="Grimoire library and reader screens">
+    <span class="scene-star star-one"><Icon name="star" size={18} /></span><span class="scene-star star-two"><Icon name="star" size={11} /></span><span class="scene-star star-three"><Icon name="star" size={14} /></span>
+    <div class="phone phone-library">{ghost && <Ghost class="hero-ghost" refined={ghostStyle === 'refined'} />}{screens === 'html' ? <AppScreen screen="library" /> : <Image src={library} alt="Grimoire library showing a grid of novel covers" width={640} loading="eager" fetchpriority="high" />}</div>
+    <div class="phone phone-reader">{screens === 'html' ? <AppScreen screen="reader" /> : <Image src={reader} alt="A chapter open in the Grimoire reader" width={560} loading="eager" />}</div>
+  </div>
+</section>
