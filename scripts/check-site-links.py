@@ -19,10 +19,14 @@ class Page(HTMLParser):
         self.links = []
         self.features = []
         self.headings = set()
+        self.noindex = False
         self.feed(source)
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
+        if tag == "meta" and attrs.get("name", "").lower() == "robots":
+            if "noindex" in attrs.get("content", "").lower():
+                self.noindex = True
         if attrs.get("id"):
             self.ids.add(attrs["id"])
             if tag in ("h2", "h3"):
@@ -115,9 +119,18 @@ def main():
         for el in ET.fromstring((SITE / "sitemap-0.xml").read_text(encoding="utf-8")).findall("sm:url/sm:loc", ns)
         if el.text
     }
-    for removed in ("/app-preview/", "/ghost3d-lab/"):
-        if f"{base_url}{removed}" in main_locs:
-            errors.add(f"sitemap-0.xml still contains {removed}")
+    expected_main_locs = {
+        f"{base_url}{url}"
+        for url, page in pages.items()
+        if not url.startswith("/docs/") and not page.noindex
+    }
+    if main_locs != expected_main_locs:
+        missing = sorted(expected_main_locs - main_locs)
+        extra = sorted(main_locs - expected_main_locs)
+        if missing:
+            errors.add(f"sitemap-0.xml missing URLs: {missing}")
+        if extra:
+            errors.add(f"sitemap-0.xml has unexpected URLs: {extra}")
 
     docs_sitemap_path = SITE / "docs/sitemap.xml"
     if not docs_sitemap_path.is_file():
