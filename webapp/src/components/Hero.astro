@@ -6,9 +6,8 @@ import library from '../assets/screenshots/library.webp';
 import reader from '../assets/screenshots/reader.webp';
 import Ghost from './Ghost.astro';
 import launcher from '../assets/brand/launcher-foreground.png';
-import AppScreen from './AppScreen.astro';
-interface Props { ghost?: boolean; screens?: 'screenshots' | 'html'; ghostStyle?: 'original' | 'refined'; }
-const { ghost = true, screens = 'screenshots', ghostStyle = 'original' } = Astro.props;
+interface Props { ghost?: boolean; ghostStyle?: 'original' | 'refined'; }
+const { ghost = true, ghostStyle = 'original' } = Astro.props;
 ---
 <section class="hero page-width" aria-labelledby="hero-title">
   <div class="hero-copy">
@@ -19,7 +18,7 @@ const { ghost = true, screens = 'screenshots', ghostStyle = 'original' } = Astro
   </div>
   <div class="hero-scene" role="group" aria-label="Grimoire library and reader screens">
     <span class="scene-star star-one"><Icon name="star" size={18} /></span><span class="scene-star star-two"><Icon name="star" size={11} /></span><span class="scene-star star-three"><Icon name="star" size={14} /></span>
-    <div class="phone phone-library">{ghost && <Ghost class="hero-ghost" refined={ghostStyle === 'refined'} />}{screens === 'html' ? <AppScreen screen="library" /> : <Image src={library} alt="Grimoire library showing a grid of novel covers" width={640} loading="eager" fetchpriority="high" />}</div>
-    <div class="phone phone-reader">{screens === 'html' ? <AppScreen screen="reader" /> : <Image src={reader} alt="A chapter open in the Grimoire reader" width={560} loading="eager" />}</div>
+    <div class="phone phone-library">{ghost && <Ghost class="hero-ghost" refined={ghostStyle === 'refined'} />}<Image src={library} alt="Grimoire library showing a grid of novel covers" width={640} loading="eager" fetchpriority="high" /></div>
+    <div class="phone phone-reader"><Image src={reader} alt="A chapter open in the Grimoire reader" width={560} loading="eager" /></div>
   </div>
 </section>

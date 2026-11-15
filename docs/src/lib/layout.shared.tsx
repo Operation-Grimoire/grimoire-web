@@ -1,11 +1,11 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { appName } from './shared';
+import { appName, siteUrl } from './shared';
 import Image from 'next/image';
 
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      url: 'https://grimoireapp.org/',
+      url: `${siteUrl}/`,
       title: <span className="docs-brand"><Image src="/icon-192.png" alt="" width={44} height={44} unoptimized /><span>{appName}</span></span>,
     },
     // Shown in the mobile drawer. global.css hides them in the desktop sidebar,

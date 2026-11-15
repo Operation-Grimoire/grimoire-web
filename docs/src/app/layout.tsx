@@ -1,9 +1,10 @@
 import { Provider } from '@/components/provider';
+import { siteUrl } from '@/lib/shared';
 import type { Metadata } from 'next';
 import './global.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://grimoireapp.org'),
+  metadataBase: new URL(siteUrl),
   title: { default: 'Grimoire documentation', template: '%s — Grimoire' },
   description: 'Installation, source extensions, reader settings, and development guides for Grimoire.',
   icons: { icon: '/icon-192.png' },

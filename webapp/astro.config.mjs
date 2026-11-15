@@ -7,7 +7,11 @@ import { site } from './src/site.config';
 // https://astro.build/config
 export default defineConfig({
   site: site.url,
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      customSitemaps: [`${site.url}/docs/sitemap.xml`],
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
