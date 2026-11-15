@@ -12,7 +12,6 @@ export function baseOptions(): BaseLayoutProps {
     // where the top bar already carries the same links.
     links: [
       { text: 'Home', url: '/', on: 'menu' },
-      { text: 'Features', url: '/#features', on: 'menu' },
       { text: 'GitHub', url: 'https://github.com/Operation-Grimoire/grimoire', external: true, on: 'menu' },
     ],
     themeSwitch: { enabled: false },
