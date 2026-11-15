@@ -21,7 +21,7 @@ Each source has its own catalog and capabilities. Search, filters, login require
 
 ## Installing and updating extensions [#installing-and-updating]
 
-Use **Browse → Extensions** to install extensions and apply available updates. Extensions update separately from the app. After installing, return to Browse to use the source. Updating Grimoire alone does not update a broken source extension.
+Use **Browse → Extensions** to install additional extensions or apply available updates. Extensions update separately from the app, so updating Grimoire alone does not update a broken source extension.
 
 If installation is refused, check Android's installation permission for Grimoire, available storage, and whether an older extension has a conflicting signature. Use extensions from publishers you trust.
 
@@ -31,7 +31,7 @@ In **Extensions**, use search to find an extension by name and the language filt
 
 ## Pinning sources [#pinned-sources]
 
-Long-press a source in **Browse** and choose **Pin**. Pinned sources appear together and can be searched through the **Pinned** tab in global search. Unpin a source from its long-press menu. **Settings → Browse** controls whether pinned sources also appear in their language groups.
+Long-press a source in **Browse** and choose **Pin**. Pinned sources appear together and can be searched through the **Pinned** tab in global search. Unpin a source from its long-press menu. **More → Settings → Browse** controls whether pinned sources also appear in their language groups.
 
 ## Extension checksum verification [#extension-integrity]
 
@@ -69,15 +69,15 @@ Removing an extension leaves saved novels in the library. Their saved informatio
 
 ## Add another repository
 
-See [Managing repositories](/docs/users/repositories/) for manual setup, repository links, and private GitHub access.
+See [Add-on catalogs](/docs/users/repositories/) for manual setup, repository links, and private GitHub access.
 
 Repository links can open Grimoire with the name and index URL filled in. For the official repository:
 
-<GuideButton href="/add-repo?name=Grimoire%20Extensions&url=https%3A%2F%2Fgithub.com%2FOperation-Grimoire%2Fgrimoire-extensions%2Freleases%2Fdownload%2Flatest%2Findex.json">Add official repository</GuideButton>
+<GuideButton href="/add-repo/?name=Grimoire%20Extensions&url=https%3A%2F%2Fgithub.com%2FOperation-Grimoire%2Fgrimoire-extensions%2Freleases%2Fdownload%2Flatest%2Findex.json">Add official repository</GuideButton>
 
 Use this if you removed the default repository, or want to restore it.
 
-To add a repository manually, open **Extensions**, use **Repositories**, and choose the add action. Enter the repository's name and index URL, then save it. The official index URL is:
+To add a repository manually, open **Browse → Extensions → Repositories** and choose the add action. Enter the repository's name and index URL, then save it. The official index URL is:
 
 ```text
 https://github.com/Operation-Grimoire/grimoire-extensions/releases/download/latest/index.json
@@ -89,8 +89,6 @@ Extensions are Android packages. Check who publishes a repository before install
 
 ## Updates and missing sources
 
-Extensions update separately from Grimoire. Check the **Extensions** screen for available updates, especially when a site's layout changes.
-
-If a source does not appear, check the language filter, confirm that its repository is enabled, and refresh the extension list. If novels load but chapters do not, check whether the site requires a login or whether the extension needs an update.
+If a source does not appear, check the language filter, confirm that its repository is enabled, and refresh the extension list. If novels load but chapters do not, check whether the site requires a login or whether an extension update is available in **Browse → Extensions**.
 
 For a reproducible source problem, report it in the [extension issue tracker](https://github.com/Operation-Grimoire/grimoire-extensions/issues). Include the source name, extension version, and a link to the affected novel.

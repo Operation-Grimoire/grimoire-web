@@ -15,6 +15,7 @@ function escapeXml(value: string): string {
 export function GET() {
   const urls = source
     .getPages()
+    .filter((page) => page.slugs[0] !== 'comparison')
     .map((page) => {
       const path = page.url.endsWith('/') ? page.url : `${page.url}/`;
       return `${siteUrl}${path}`;

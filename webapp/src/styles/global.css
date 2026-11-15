@@ -83,7 +83,7 @@ html.repo-empty #empty-state { display: block; }html.repo-empty #magic-link { op
   .features { padding-block: 64px; }.closing { padding-bottom: 64px; }
 }
 @media (max-width: 450px) {
-  .site-header nav { gap: 18px; }.site-header .github-nav { display: none; }.star-two { right: 5px; top: 40px; }.hero-actions { flex-direction: column; gap: 8px; }.site-footer nav { gap: 22px; }.closing .hero-actions { width: 100%; align-items: stretch; }.closing .text-link { justify-content: center; }
+  .site-header nav { gap: 18px; }.star-two { right: 5px; top: 40px; }.hero-actions { flex-direction: column; gap: 8px; }.site-footer nav { gap: 22px; }.closing .hero-actions { width: 100%; align-items: stretch; }.closing .text-link { justify-content: center; }
 }
 /* Tablet and desktop hero: copy centered between the two phones. */
 @media (min-width: 801px) {

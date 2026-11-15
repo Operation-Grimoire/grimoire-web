@@ -141,7 +141,11 @@ def main():
             for el in ET.fromstring(docs_sitemap_path.read_text(encoding="utf-8")).findall("sm:url/sm:loc", ns)
             if el.text
         }
-        expected_docs_locs = {f"{base_url}{url}" for url in pages if url.startswith("/docs/")}
+        expected_docs_locs = {
+            f"{base_url}{url}"
+            for url, page in pages.items()
+            if url.startswith("/docs/") and not page.noindex
+        }
         if docs_locs != expected_docs_locs:
             missing = sorted(expected_docs_locs - docs_locs)
             extra = sorted(docs_locs - expected_docs_locs)
@@ -149,6 +153,15 @@ def main():
                 errors.add(f"docs/sitemap.xml missing URLs: {missing}")
             if extra:
                 errors.add(f"docs/sitemap.xml has unexpected URLs: {extra}")
+
+    search_index_path = SITE / "api/search.json"
+    if not search_index_path.is_file():
+        errors.add("api/search.json is missing from assembled site")
+    else:
+        try:
+            json.loads(search_index_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            errors.add(f"api/search.json is invalid JSON: {exc}")
 
     if errors:
         print("\n".join(sorted(errors)))
