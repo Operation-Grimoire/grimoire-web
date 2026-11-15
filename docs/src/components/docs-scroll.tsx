@@ -42,7 +42,12 @@ export function DocsScroll() {
 
     const rawHash = window.location.hash.slice(1);
     if (rawHash) {
-      const id = decodeURIComponent(rawHash);
+      let id = rawHash;
+      try {
+        id = decodeURIComponent(rawHash);
+      } catch {
+        // Fall back to the raw fragment when percent-encoding is malformed.
+      }
       const target =
         document.getElementById(id) ?? document.getElementsByName(id)[0] ?? null;
       if (target) {

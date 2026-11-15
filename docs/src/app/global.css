@@ -28,7 +28,7 @@
 }
 html.dark { --color-fd-info: #95d9fa; --color-fd-warning: #e7c78b; --color-fd-error: #efa6b0; --color-fd-success: #9ed7c4; }
 html { scrollbar-gutter: stable; scroll-padding-top: 112px; font-family: var(--font-sans); scrollbar-color: #43536f #0b0d1c; }
-#nd-page [id], #nd-page [name] { scroll-margin-top: calc(var(--fd-header-height, 81px) + var(--fd-toc-popover-height, 0px) + 32px); }
+#nd-page [id], #nd-page [name] { scroll-margin-top: 0; }
 @media (max-width: 1279px) { html { scroll-padding-top: 152px; } }
 body { background: #0b0d1c; }
 ::selection { background: #95d9fa; color: #0b0d1c; }

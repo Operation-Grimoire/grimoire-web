@@ -14,6 +14,7 @@ export function SidebarTabs() {
         href="/docs/"
         className="docs-sidebar-tab"
         data-active={!isDev ? 'true' : 'false'}
+        aria-current={!isDev ? 'page' : undefined}
       >
         <BookOpen size={15} aria-hidden="true" />
         <span>For readers</span>
@@ -22,6 +23,7 @@ export function SidebarTabs() {
         href="/docs/extensions/"
         className="docs-sidebar-tab"
         data-active={isDev ? 'true' : 'false'}
+        aria-current={isDev ? 'page' : undefined}
       >
         <Code2 size={15} aria-hidden="true" />
         <span>Developers</span>
