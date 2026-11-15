@@ -3,6 +3,7 @@
 import json
 import re
 import sys
+import xml.etree.ElementTree as ET
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
@@ -73,8 +74,8 @@ def main():
     assert {f["originalLabel"] for f in features} == {f["label"] for f in historical["features"]}
     assert {(f["id"], f["href"]) for f in features} == set(pages["/"].features)
     assert len(pages["/"].features) == len(features), "Duplicate or omitted feature links"
-    for study in ("/app-preview/", "/ghost3d-lab/"):
-        assert pages[study].features == pages["/"].features, f"{study}: feature directory is out of date"
+    for removed in ("/app-preview/", "/ghost3d-lab/"):
+        assert removed not in pages, f"{removed}: should not be present in assembled site"
     assert len({urlsplit(f["href"]).path for f in features}) == 20
     for feature in features:
         url = urlsplit(feature["href"])
@@ -97,6 +98,44 @@ def main():
         for fragment in fragments:
             if url not in pages or fragment not in pages[url].ids:
                 errors.add(f"Published fragment removed: {url}#{fragment}")
+
+    ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+    base_url = site_url.rstrip("/")
+    index_locs = {
+        el.text
+        for el in ET.fromstring((SITE / "sitemap-index.xml").read_text(encoding="utf-8")).findall("sm:sitemap/sm:loc", ns)
+        if el.text
+    }
+    for expected_sitemap in (f"{base_url}/sitemap-0.xml", f"{base_url}/docs/sitemap.xml"):
+        if expected_sitemap not in index_locs:
+            errors.add(f"sitemap-index.xml missing {expected_sitemap}")
+
+    main_locs = {
+        el.text
+        for el in ET.fromstring((SITE / "sitemap-0.xml").read_text(encoding="utf-8")).findall("sm:url/sm:loc", ns)
+        if el.text
+    }
+    for removed in ("/app-preview/", "/ghost3d-lab/"):
+        if f"{base_url}{removed}" in main_locs:
+            errors.add(f"sitemap-0.xml still contains {removed}")
+
+    docs_sitemap_path = SITE / "docs/sitemap.xml"
+    if not docs_sitemap_path.is_file():
+        errors.add("docs/sitemap.xml is missing from assembled site")
+    else:
+        docs_locs = {
+            el.text
+            for el in ET.fromstring(docs_sitemap_path.read_text(encoding="utf-8")).findall("sm:url/sm:loc", ns)
+            if el.text
+        }
+        expected_docs_locs = {f"{base_url}{url}" for url in pages if url.startswith("/docs/")}
+        if docs_locs != expected_docs_locs:
+            missing = sorted(expected_docs_locs - docs_locs)
+            extra = sorted(docs_locs - expected_docs_locs)
+            if missing:
+                errors.add(f"docs/sitemap.xml missing URLs: {missing}")
+            if extra:
+                errors.add(f"docs/sitemap.xml has unexpected URLs: {extra}")
 
     if errors:
         print("\n".join(sorted(errors)))
